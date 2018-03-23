@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+
+			<p:panel id="datosPanel" header="Datos Usuario">
+				<h:panelGrid columns="3">
+
+					<h:outputLabel for="tfCedula" id="lblcedula" value="Cedula" />
+
+					<h:inputText id="tfCedula" value="#{usuarioController.cedula}"
+						class="form-control" />
+					<p:message for="tfCedula" />
+					
+					<h:outputLabel for="tfNombreUs" id="lblnombreUs"
+						value="Nombre de usuario:" />
+					<h:inputText id="tfNombreUs" value="#{usuarioController.nombreUs}"
+						class="form-control" />
+					<p:message for="tfNombreUs" />
+
+					<h:outputLabel for="tfContrasena" id="lblContrasena"
+						value="Contraseña" />
+					<h:inputText id="tfContrasena"
+						value="#{usuarioController.contrasena}" class="form-control" />
+					<p:message for="tfContrasena" />
+					
+				</h:panelGrid>
+			</p:panel>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
