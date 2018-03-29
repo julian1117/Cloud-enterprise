@@ -68,6 +68,13 @@
 	padding-right: 0em;
 	padding-bottom: 0em;
 	padding-left: 0em;
+	border-radius: 0;
+	border-color: rgba(255, 255, 255, 0);
+	color: white;
+	background: #337ab7;
+	text-shadow: -2px -2px 1px rgba(255, 255, 255, 0), 2px 2px 1px
+		rgba(255, 255, 255, 0), -2px 2px 1px rgba(255, 255, 255, 0), 2px -2px
+		1px rgba(255, 255, 255, 0);
 }
 
 .form-control {
@@ -79,6 +86,18 @@
 	font-weight: 300;
 	padding-left: 15px;
 	padding-right: 15px;
+}
+
+.ui-widget-content {
+	border: .9px solid #a8a8a8;
+}
+
+.from-control {
+	border-radius: 2px !important;
+}
+
+.ui-corner-all {
+	border-radius: 2px;
 }
 </style>
 
@@ -98,9 +117,10 @@
 						<div class="row">
 							<div class="col-md-6 col-xs-6">
 								<div id="gtco-logo">
-								<img src="#{request.contextPath}/images/logo.png" alt="Logo" with="30px" height="30px" />
-								<a href="#{request.contextPath}/index.html"><i class=""></i></a>
-								<a href="#{request.contextPath}/index.html">Cloud<em>.</em></a>
+									<img src="#{request.contextPath}/images/logo.png" alt="Logo"
+										with="30px" height="30px" /> <a
+										href="#{request.contextPath}/index.html"><i class=""></i></a>
+									<a href="#{request.contextPath}/index.html">Cloud</a>
 								</div>
 							</div>
 							<div class="col-md-6 col-xs-6 social-icons">
@@ -163,7 +183,7 @@
 
 					</div>
 				</div>
-				<div class="col-2 flex-img"></div>
+
 			</div>
 
 
