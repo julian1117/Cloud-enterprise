@@ -1,4 +1,4 @@
-package entidades;
+package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
 
 import java.io.Serializable;
 

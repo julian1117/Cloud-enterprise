@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
 
 	<meta charset="utf-8" />
@@ -63,6 +63,7 @@
 
 	<style>
 .ui-panel .ui-panel-titlebar {
+
 	margin-right: -4px;
 	margin-top: -4px;
 	margin-left: -4px;
@@ -85,23 +86,24 @@
 
 .ui-tabs .ui-tabs-nav {
 	margin-right: -4px;
+	margin-left: -4px;
 	margin-top: -4px;
 	background: #0078d7;
 	font-family: helvetica;
-	background: #0078d7;
 }
 
 .ui-tabs .ui-tabs-nav li a {
-	color: black;
+	color: white;
 	font-weight: normal;
 	font-family: helvetica;
-	padding: .3em .3em;
-	text-shadow: -2px -2px 1px rgba(255, 255, 255, 0), 2px 2px 1px
-		rgba(255, 255, 255, 0), -2px 2px 1px rgba(255, 255, 255, 0), 2px -2px
+	/* se quita para q se vea mas grande y bonito - padding: .3em .3em;*/
+	text-shadow: 2px -2px 1px rgba(255, 255, 255, 0), 2px 2px 1px
+		rgba(255, 255, 255, 0), 2px 2px 1px rgba(255, 255, 255, 0), 2px 2px
 		1px rgba(255, 255, 255, 0);
 }
 
 .form-control {
+	
 	box-shadow: none;
 	background: transparent;
 	border: 1px solid rgba(0, 0, 0, 0.1);
@@ -113,6 +115,7 @@
 }
 
 .ui-widget-content {
+	justify-content: center;
 	border: .9px solid #a8a8a8;
 }
 
@@ -146,9 +149,87 @@
 
 .sizefooter {
 	background: #4d4d4d;
-}.tex{
-font-size: 20px;
-color: #dad9d9;
+}
+/*texto pie*/
+.tex {
+	font-size: 20px;
+	color: #dad9d9;
+}
+
+.sizeselect {
+	height: 30px !important;
+	padding: 2px !important;
+}
+/* botonera */
+.button {
+	margin-left: 250px !important;
+	display: inline-block !important;
+	-webkit-box-sizing: content-box !important;
+	-moz-box-sizing: content-box !important;
+	box-sizing: content-box !important;
+	cursor: pointer !important;
+	padding: 2px 20px !important;
+	border: 0px solid #0078d7 !important;
+	/*-webkit-border-radius: 3px !important;
+  border-radius: 1px !important;*/
+	font: normal 16px/normal "fredoka-one", Helvetica, sans-serif !important;
+	color: white !important;
+	-o-text-overflow: clip !important;
+	text-overflow: clip !important;
+	background: #0078d7 !important;
+	-webkit-box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2) !important;
+	box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.2) !important;
+	-webkit-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+	-moz-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+	-o-transition: all 300ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+	transition: all 50ms cubic-bezier(0.42, 0, 0.58, 1) !important;
+	display: inline-block !important;
+}
+
+.button:hover {
+	background: #005192 !important;
+	border: 0px solid #005192 !important;
+}
+/*configuracion tabs*/
+.ui-tabs {
+	position: relative !important;
+	float: left !important;
+	width: 100% !important;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	align-items: flex-start;
+	border: 0px solid #0078d7 !important;
+	color: white !important;
+	margin-left: -4px !important;
+	margin-top: -4px !important;
+	box-shadow: inset 0 0px 0 #fff;
+}
+
+.ui-widget-header .ui-state-default {
+	background: #0078d7 !important;
+	border: 0px solid #0078d7 !important;
+	border-radius: 0px !important;
+	margin-top: 0px !important;
+	background: #0078d7 !important;
+}
+
+.ui-widget-header:hover .ui-state-default:hover {
+	background: #005192 !important;
+	border: 0px solid #005192 !important;
+	color: white !important;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-selected {
+	background: #005192 !important;
+}
+
+.ui-tabs .ui-tabs-nav .ui-tabs-selected:hover {
+	background: #005192 !important;
+}
+
+.ui-helper-reset {
+	line-height: 1;
 }
 </style>
 
@@ -219,12 +300,12 @@ color: #dad9d9;
 
 						<!-- /DIV PRINCIPAL PARA TRABAJAR-->
 
-						<section class='aboutus center' id='portafolio'>
-							<div class='container' align="center">
+						<section class='aboutus' id='portafolio'>
+							<div class='container'>
 								<div class="box">
 									<p:growl id="growl" showDetail="true" sticky="true"
 										autoUpdate="true" />
-									<ui:insert name="cuerpo" />
+									<ui:insert name="cuerpo"/>
 								</div>
 
 							</div>
@@ -236,68 +317,69 @@ color: #dad9d9;
 				</div>
 
 			</div>
-
+			<br /> <br />
 			<!-- /DIV PRINCIPAL PARA FOOTHER-->
 
-			
-				
 
-				<div class="sizefooter"><br/>
+
+
+			<div class="sizefooter">
+				<br />
 				<div class='container' align="center">
 					<spam> Diseñado y Desarrollado por<br />
 					Julian Camilo Henao y Laura Vanessa Posada<br />
 					Inteligencia de Negocios - VII semestre </spam>
 				</div>
-				<br/>
-					<div class="row row-p	b-md">
-
-						<div class="col-md-4">
-							<div class="">
-								<h3 class="tex">About Us</h3>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-									Tempore eos molestias quod sint ipsum possimus temporibus
-									officia iste perspiciatis consectetur in fugiat.</p>
-								<p>
-									<a href="#">Learn more...</a>
-								</p>
-							</div>
+				<br />
+				<div class="row row-p	b-md">
+					<div class="col-md-1"></div>
+					<div class="col-md-3">
+						<div class="">
+							<h3 class="tex">About Us</h3>
+							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+								Tempore eos molestias quod sint ipsum possimus temporibus
+								officia iste perspiciatis consectetur in fugiat.</p>
+							<p>
+								<a href="#">Learn more...</a>
+							</p>
 						</div>
+					</div>
 
-						<div class="col-md-4 col-md-push-1">
-							<div class="">
-								<h3 class="tex">Services</h3>
-								<ul class="gtco-footer-links">
-									<li>Data Analytics</li>
-									<li>Web Development</li>
-									<li>Branding &amp; Identity</li>
-									<li>eCommerce Development</li>
-									<li>Design &amp; UX</li>
-									<li>Strategt</li>
-								</ul>
-							</div>
+					<div class="col-md-3 col-md-push-1">
+						<div class="">
+							<h3 class="tex">Services</h3>
+							<ul class="gtco-footer-links">
+								<li>Data Analytics</li>
+								<li>Web Development</li>
+								<li>Branding &amp; Identity</li>
+								<li>eCommerce Development</li>
+								<li>Design &amp; UX</li>
+								<li>Strategt</li>
+							</ul>
 						</div>
-
-
-
-						<div class="col-md-3 col-md-push-1">
-							<div class="">
-								<h3 class="tex">Get In Touch</h3>
-								<ul class="gtco-quick-contact">
-									<li><a href="#"><i class="icon-phone"></i> +57 300 450
-											1088 <br /> +57 320 735 6688</a></li>
-									<li><a href="#"><i class="icon-mail2"></i>
-											julian5296@gmail.com <br /> posadalaura@gmail.com</a></li>
-									<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
-								</ul>
-							</div>
-						</div>
-
 					</div>
 
 
 
+					<div class="col-md-3 col-md-push-1">
+						<div class="">
+							<h3 class="tex">Get In Touch</h3>
+							<ul class="gtco-quick-contact">
+								<li><a href="#"><i class="icon-phone"></i> +57 300 450
+										1088 <br /> +57 320 735 6688</a></li>
+								<li><a href="#"><i class="icon-mail2"></i>
+										julian5296@gmail.com <br /> posadalaura@gmail.com</a></li>
+								<li><a href="#"><i class="icon-chat"></i> Live Chat</a></li>
+							</ul>
+						</div>
+					</div>
+
 				</div>
-			
+
+
+
+			</div>
+
 
 		</div>
 
@@ -335,6 +417,7 @@ color: #dad9d9;
 
 	<!-- Main -->
 	<script src="#{request.contextPath}/js/main.js"></script>
+
 
 </h:body>
 </html>

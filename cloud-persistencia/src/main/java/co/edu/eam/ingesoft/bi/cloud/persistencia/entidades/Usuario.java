@@ -1,4 +1,4 @@
-package entidades;
+package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
 
 import java.io.Serializable;
 
@@ -11,9 +11,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TipoUsuario")
-public class TipoUsuario implements Serializable{
-
+@Table(name="Usuario")
+public class Usuario implements Serializable{
+	
 	@Id
 	@Column(name="id")
 	private Integer id;
@@ -21,22 +21,26 @@ public class TipoUsuario implements Serializable{
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Column(name="descripcion")
-	private String descripcion;
+	@Column(name="contrasenia")
+	private String contrasenia;
 	
+	@Column(name="estado")
+	private boolean estado;
+
 	@OneToOne
 	@JoinColumn(name="Persona_cedula")
 	private Persona persona;
 
-	public TipoUsuario() {
+	public Usuario() {
 		super();
 	}
 
-	public TipoUsuario(Integer id, String nombre, String descripcion, Persona persona) {
+	public Usuario(Integer id, String nombre, String contrasenia, boolean estado, Persona persona) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.descripcion = descripcion;
+		this.contrasenia = contrasenia;
+		this.estado = estado;
 		this.persona = persona;
 	}
 
@@ -56,12 +60,20 @@ public class TipoUsuario implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getContrasenia() {
+		return contrasenia;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setContrasenia(String contrasenia) {
+		this.contrasenia = contrasenia;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
 	}
 
 	public Persona getPersona() {
@@ -73,5 +85,5 @@ public class TipoUsuario implements Serializable{
 	}
 	
 	
-	
 }
+

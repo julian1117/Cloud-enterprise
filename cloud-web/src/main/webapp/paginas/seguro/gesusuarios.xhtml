@@ -9,10 +9,11 @@
 
 		<h:form prependId="false">
 
-			<p:tabView class="nav nav-pills">
-				<p:tab title="Crear usuario">
+			<p:tabView id="tabs" >
+				<p:tab title="Crear usuario" >
+				<div align="center">
 					<p:panel id="paneldatosP" header="Datos de usuario">
-						<h:panelGrid id="paneldatos" columns="3">
+						<h:panelGrid id="paneldatos" columns="3" >
 
 							<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
 							<h:inputText id="tftCedula"
@@ -30,31 +31,25 @@
 								value="#{administradorControler.apellido}" class="form-control"></h:inputText>
 							<p:message for="tftApellido" />
 
-
-
-							<p:outputLabel for="tftFechaNacimiento" value="Fecha" />
+							<h:outputLabel for="tftFechaNacimiento" value="Fecha" />
 							<h:inputText id="tftFechaNacimiento"
 								value="#{administradorControler.fechaNacimiento}" mode="inline"
-								a:placeholder="dia-mes-anio">
+								a:placeholder="dia-mes-año" class="form-control">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:inputText>
 						<p:message for="tftFechaNacimiento" />
 
 
-
-
-
-
 							<h:outputLabel for="tftTelefono" id="lblTelefono"
 								value="Telefono"></h:outputLabel>
 							<h:inputText id="tftTelefono"
-								value="#{administradorControler.telefono}" class="form-control"></h:inputText>
+								value="#{administradorControler.telefono}" class="form-control"/>
 							<p:message for="tftTelefono" />
 
 							<h:outputLabel for="tftDireccion" id="lblDireccion"
 								value="Direccion"></h:outputLabel>
 							<h:inputText id="tftDireccion"
-								value="#{administradorControler.direccion}" class="form-control"></h:inputText>
+								value="#{administradorControler.direccion}" class="form-control"/>
 							<p:message for="tftDireccion" />
 
 
@@ -67,7 +62,7 @@
 							<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"></h:outputLabel>
 
 							<h:selectOneMenu id="tftSexo"
-								value="#{administradorControler.sexo}" class="form-control">
+								value="#{administradorControler.sexo}" class="sizeselect form-control">
 								<f:selectItem itemValue="F" itemLabel="Femenino" />
 								<f:selectItem itemValue="M" itemLabel="Masculino" />
 							</h:selectOneMenu>
@@ -77,13 +72,15 @@
 
 							<h1></h1>
 
-							<h:panelGrid id="panelbtnsCrear" columns="2">
+							
+						</h:panelGrid>
+						<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="Crear"
 									actionListener="#{administradorControler.crearAdministrador}"
-									process="@this paneldatos" />
+									process="@this paneldatos" class="button"/>
 							</h:panelGrid>
-						</h:panelGrid>
 					</p:panel>
+					</div>
 				</p:tab>
 				<p:tab title="Buscar-Editar-Eliminar">
 
