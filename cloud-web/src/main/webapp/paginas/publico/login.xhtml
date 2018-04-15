@@ -6,29 +6,33 @@
 
 	<ui:define name="cuerpo">
 		<h:form prependId="false">
+			<div align="center">
 
-			<p:panel id="datosPanel" header="Iniciar sesión en Cloud">
+				<p:panel id="datosPanel" header="Iniciar sesión en Cloud">
 
-				<p:outputLabel for="tfuser" value="Usuario:"
-					class="sizelogintextuser" />
-				<h:inputText value="#{sessionController.usuario}" id="tfuser"
-					class="form-control sizelogin" />
-				<p:message for="tfuser" />
+					<p:outputLabel for="tfuser" value="Usuario:"
+						class="sizelogintextuser" />
+					<h:inputText value="#{sessionController.usuario}" id="tfuser"
+						class="form-control sizelogin" />
+					<p:message for="tfuser" />
 
-				<p:outputLabel for="tfpass" value="Contraseña:"
-					class="sizelogintextpass" />
-				<h:inputSecret value="#{sessionController.contrasena}" id="tfpass"
-					class="form-control sizelogin" />
-				<p:message for="tfpass" />
+					<p:outputLabel for="tfpass" value="Contraseña:"
+						class="sizelogintextpass" />
+					<h:inputSecret value="#{sessionController.contrasena}" id="tfpass"
+						class="form-control sizelogin" />
+					<p:message for="tfpass" />
 
 
-				<p:commandButton value="Iniciar sesión" ajax="false"
-					action="#{sessionController.login}" class="ui-priority-primary" />
+					<p:commandButton value="Registrar usuario" ajax="false"
+						action="#{sessionController.registrar}" class="buttonReg" />
+						
+					<p:commandButton value="Iniciar sesión" ajax="false"
+						action="#{sessionController.login}" class="buttonIni" />
 
-				<p:commandButton value="Registrar usuario" ajax="false"
-					action="#{sessionController.registrar}" class="btn" />
 
-			</p:panel>
+
+				</p:panel>
+			</div>
 		</h:form>
 	</ui:define>
 

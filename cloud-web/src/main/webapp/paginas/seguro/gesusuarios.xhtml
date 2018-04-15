@@ -9,77 +9,83 @@
 
 		<h:form prependId="false">
 
-			<p:tabView id="tabs" >
-				<p:tab title="Crear usuario" >
-				<div align="center">
-					<p:panel id="paneldatosP" header="Datos de usuario">
-						<h:panelGrid id="paneldatos" columns="3" >
+			<p:tabView id="tabs">
+				<p:tab title="Crear usuario">
+					<div align="center">
+						<p:panel id="paneldatosP" header="Datos de usuario">
+							<h:panelGrid id="paneldatos" columns="3">
 
-							<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
-							<h:inputText id="tftCedula"
-								value="#{administradorControler.idPersona}" class="form-control"></h:inputText>
-							<p:message for="tftCedula" />
+								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
+								<h:inputText id="tftCedula"
+									value="#{administradorControler.idPersona}"
+									class="form-control"></h:inputText>
+								<p:message for="tftCedula" />
 
-							<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
-							<h:inputText id="tftNombre"
-								value="#{administradorControler.nombre}" class="form-control"></h:inputText>
-							<p:message for="tftNombre" />
+								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
+								<h:inputText id="tftNombre"
+									value="#{administradorControler.nombre}" class="form-control"></h:inputText>
+								<p:message for="tftNombre" />
 
-							<h:outputLabel for="tftApellido" id="lblApellido"
-								value="Apellido"></h:outputLabel>
-							<h:inputText id="tftApellido"
-								value="#{administradorControler.apellido}" class="form-control"></h:inputText>
-							<p:message for="tftApellido" />
+								<h:outputLabel for="tftApellido" id="lblApellido"
+									value="Apellido"></h:outputLabel>
+								<h:inputText id="tftApellido"
+									value="#{administradorControler.apellido}" class="form-control"></h:inputText>
+								<p:message for="tftApellido" />
 
-							<h:outputLabel for="tftFechaNacimiento" value="Fecha" />
-							<h:inputText id="tftFechaNacimiento"
-								value="#{administradorControler.fechaNacimiento}" mode="inline"
-								a:placeholder="dia-mes-año" class="form-control">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:inputText>
-						<p:message for="tftFechaNacimiento" />
-
-
-							<h:outputLabel for="tftTelefono" id="lblTelefono"
-								value="Telefono"></h:outputLabel>
-							<h:inputText id="tftTelefono"
-								value="#{administradorControler.telefono}" class="form-control"/>
-							<p:message for="tftTelefono" />
-
-							<h:outputLabel for="tftDireccion" id="lblDireccion"
-								value="Direccion"></h:outputLabel>
-							<h:inputText id="tftDireccion"
-								value="#{administradorControler.direccion}" class="form-control"/>
-							<p:message for="tftDireccion" />
+								<h:outputLabel for="tftFechaNacimiento" value="Fecha" />
+								<h:inputText id="tftFechaNacimiento"
+									value="#{administradorControler.fechaNacimiento}" mode="inline"
+									a:placeholder="dia-mes-año" class="form-control">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+								<p:message for="tftFechaNacimiento" />
 
 
+								<h:outputLabel for="tftTelefono" id="lblTelefono"
+									value="Telefono"></h:outputLabel>
+								<h:inputText id="tftTelefono"
+									value="#{administradorControler.telefono}" class="form-control" />
+								<p:message for="tftTelefono" />
 
-							<h:outputLabel for="tftEmail" id="lblEmail" value="Email"></h:outputLabel>
-							<h:inputText id="tftEmail"
-								value="#{administradorControler.email}" class="form-control"></h:inputText>
-							<p:message for="tftEmail" />
-
-							<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"></h:outputLabel>
-
-							<h:selectOneMenu id="tftSexo"
-								value="#{administradorControler.sexo}" class="sizeselect form-control">
-								<f:selectItem itemValue="F" itemLabel="Femenino" />
-								<f:selectItem itemValue="M" itemLabel="Masculino" />
-							</h:selectOneMenu>
-
-							<p:message for="tftSexo" />
+								<h:outputLabel for="tftDireccion" id="lblDireccion"
+									value="Direccion"></h:outputLabel>
+								<h:inputText id="tftDireccion"
+									value="#{administradorControler.direccion}"
+									class="form-control" />
+								<p:message for="tftDireccion" />
 
 
-							<h1></h1>
 
-							
-						</h:panelGrid>
-						<h:panelGrid id="panelbtnsCrear" columns="2">
+								<h:outputLabel for="tftEmail" id="lblEmail" value="Email"></h:outputLabel>
+								<h:inputText id="tftEmail"
+									value="#{administradorControler.email}" class="form-control"></h:inputText>
+								<p:message for="tftEmail" />
+
+
+								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo" />
+								<h:selectOneMenu id="tftSexo"
+									value="#{gestionNuevosController.genero}"
+									converter="sexoConverter" class="form-control">
+
+									<f:selectItems value="#{gestionNuevosController.listaGeneros}"
+										var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}" />
+								</h:selectOneMenu>
+
+								<p:message for="tftSexo" />
+
+
+
+
+								<h1></h1>
+
+
+							</h:panelGrid>
+							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="Crear"
 									actionListener="#{administradorControler.crearAdministrador}"
-									process="@this paneldatos" class="button"/>
+									process="@this paneldatos" class="button" />
 							</h:panelGrid>
-					</p:panel>
+						</p:panel>
 					</div>
 				</p:tab>
 				<p:tab title="Buscar-Editar-Eliminar">
