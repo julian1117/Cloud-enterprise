@@ -15,16 +15,16 @@
 
 						<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
 						<h:inputText id="tftNombre"
-							value="#{administradorControler.nombre}" class="form-control"></h:inputText>
+							value="#{gestionNuevosController.nombre}" class="form-control" required="*"></h:inputText>
 						<p:message for="tftNombre" />
 
 						<h:outputLabel for="tftApellido" id="lblApellido" value="Apellido"></h:outputLabel>
 						<h:inputText id="tftApellido"
-							value="#{administradorControler.apellido}" class="form-control"></h:inputText>
+							value="#{gestionNuevosController.apellido}" class="form-control" required="*"></h:inputText>
 						<p:message for="tftApellido" />
 
 						<p:outputLabel for="tftFecha" value="Fecha" />
-						<h:inputText id="tftFecha"
+						<h:inputText id="tftFecha" class="form-control"
 							value="#{gestionNuevosController.fechaNacimiento}" mode="inline"
 							a:placeholder="dia-mes-anio">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
@@ -33,34 +33,34 @@
 
 						<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
 						<h:inputText id="tftCedula"
-							value="#{administradorControler.idPersona}" class="form-control"></h:inputText>
+							value="#{gestionNuevosController.cedula}" class="form-control"></h:inputText>
 						<p:message for="tftCedula" />
 
 						<h:outputLabel for="tftTelefono" id="lblTelefono" value="Telefono"></h:outputLabel>
 						<h:inputText id="tftTelefono"
-							value="#{administradorControler.telefono}" class="form-control" />
+							value="#{gestionNuevosController.telefono}" class="form-control" />
 						<p:message for="tftTelefono" />
 
 						<h:outputLabel for="tftDireccion" id="lblDireccion"
 							value="Direccion"></h:outputLabel>
 						<h:inputText id="tftDireccion"
-							value="#{administradorControler.direccion}" class="form-control" />
+							value="#{gestionNuevosController.direccion}" class="form-control" />
 						<p:message for="tftDireccion" />
 
 						<h:outputLabel for="tftEmail" id="lblEmail" value="Email"></h:outputLabel>
-						<h:inputText id="tftEmail" value="#{administradorControler.email}"
-							class="form-control"></h:inputText>
+						<h:inputText id="tftEmail"
+							value="#{gestionNuevosController.email}" class=" form-control"></h:inputText>
 						<p:message for="tftEmail" />
 
 
 
-						<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo" />
+						<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo" class="labelSelect"/>
 						<h:selectOneMenu id="tftSexo"
 							value="#{gestionNuevosController.genero}"
-							converter="sexoConverter" class="form-control">
+							converter="sexoConverter" class="sizeselect form-control">
 
 							<f:selectItems value="#{gestionNuevosController.listGeneros}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}" />
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}" class="sizeselect form-control" />
 						</h:selectOneMenu>
 
 						<br />
@@ -72,7 +72,7 @@
 					</h:panelGrid>
 					<h:panelGrid id="panelbtnsCrear" columns="2">
 						<p:commandButton id="btnCrear" value="Crear"
-							actionListener="#{administradorControler.crearAdministrador}"
+							actionListener="#{gestionNuevosController.crearAdministrador}"
 							process="@this paneldatos" class="button" />
 					</h:panelGrid>
 				</p:panel>

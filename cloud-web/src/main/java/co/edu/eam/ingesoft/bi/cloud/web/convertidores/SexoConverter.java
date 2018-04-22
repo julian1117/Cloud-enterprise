@@ -8,7 +8,7 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
-import co.edu.eam.ingesoft.pa.negocio.beans.RegistroNuevosEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 
 @FacesConverter(value = "sexoConverter", forClass = Genero.class)
 @Named("sexoConverter")

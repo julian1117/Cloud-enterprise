@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.pa.negocio.excepciones;
+package co.edu.eam.ingesoft.bi.negocio.excepciones;
 
 import javax.ejb.ApplicationException;
 

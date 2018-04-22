@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.pa.negocio.beans;
+package co.edu.eam.ingesoft.bi.negocio.beans;
 
 import java.util.List;
 
@@ -22,9 +22,6 @@ public class SeguridadEJB {
 	public Usuario buscar(String us){
 		
 		List<Usuario> use = em.createNamedQuery(Usuario.USUARIO).setParameter(1, us).getResultList();
-		List<Genero>listGeneros =  em.createNamedQuery(Genero.LISTA_GENEROS).getResultList();
-		System.out.println("---------------------------------------------------------------"
-				+ ""+listGeneros.get(0).getGenero());
 		if(use.isEmpty()){
 			return null;
 		}else{

@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.pa.negocio.beans;
+package co.edu.eam.ingesoft.bi.negocio.beans;
 
 import java.util.List;
 

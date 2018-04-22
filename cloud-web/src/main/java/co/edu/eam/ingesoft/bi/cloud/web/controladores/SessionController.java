@@ -12,7 +12,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
-import co.edu.eam.ingesoft.pa.negocio.beans.SeguridadEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.SeguridadEJB;
 
 @Named("sessionController")
 @SessionScoped
