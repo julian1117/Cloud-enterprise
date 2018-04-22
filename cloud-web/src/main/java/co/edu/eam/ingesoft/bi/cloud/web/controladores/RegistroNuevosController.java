@@ -13,7 +13,7 @@ import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
-import co.edu.eam.ingesoft.bi.negocio.beans.GeneralEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 
 
@@ -58,7 +58,7 @@ public class RegistroNuevosController implements Serializable {
 		private RegistroNuevosEJB registroNuevosEJB;	
 		
 		@EJB
-		private GeneralEJB generalEJB;
+		private General_EJB generalEJB;
 	
 	//Declaracion de get y set
 
