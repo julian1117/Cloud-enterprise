@@ -5,11 +5,15 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Pais")
+@NamedQuery(name=Pais.LISTA_PAISES,query="select p from Pais p")
 public class Pais implements Serializable{
+	
+	public static final  String LISTA_PAISES = "Pais.listaPaises";
 	
 	@Id
 	@Column(name="id")

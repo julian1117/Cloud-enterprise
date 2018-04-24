@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -19,41 +22,43 @@ public class Usuario implements Serializable{
 	public static final String USUARIO = "Usuario.listUs";
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
+    @SequenceGenerator(sequenceName = "USUARIOS_SEQ", allocationSize = 1, name = "USUARIO_SEQ")
 	@Column(name="id")
-	private Integer id;
+	private Integer codigo;
 	
-	@Column(name="nombre")
+	@Column(name="nombre",nullable=false,length=30)
 	private String nombre;
 	
-	@Column(name="contrasenia")
+	@Column(name="contrasenia",nullable=false,length=30)
 	private String contrasenia;
 	
-	@Column(name="estado")
+	@Column(name="estado",nullable=false)
 	private boolean estado;
 
 	@OneToOne
-	@JoinColumn(name="Persona_cedula")
+	@JoinColumn(name="Persona_cedula",nullable=false)
 	private Persona persona;
 
 	public Usuario() {
 		super();
 	}
 
-	public Usuario(Integer id, String nombre, String contrasenia, boolean estado, Persona persona) {
+	public Usuario(Integer codigo, String nombre, String contrasenia, boolean estado, Persona persona) {
 		super();
-		this.id = id;
+		this.codigo = codigo;
 		this.nombre = nombre;
 		this.contrasenia = contrasenia;
 		this.estado = estado;
 		this.persona = persona;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getCodigo() {
+		return codigo;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNombre() {
@@ -88,11 +93,15 @@ public class Usuario implements Serializable{
 		this.persona = persona;
 	}
 
+	public static String getUsuario() {
+		return USUARIO;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -105,13 +114,14 @@ public class Usuario implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (codigo == null) {
+			if (other.codigo != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}
+
 	
 	
 }

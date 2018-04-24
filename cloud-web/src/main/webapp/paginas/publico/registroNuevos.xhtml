@@ -15,12 +15,14 @@
 
 						<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
 						<h:inputText id="tftNombre"
-							value="#{gestionNuevosController.nombre}" class="form-control" required="true"></h:inputText>
+							value="#{gestionNuevosController.nombre}" class="form-control"
+							required="true"></h:inputText>
 						<p:message for="tftNombre" />
 
 						<h:outputLabel for="tftApellido" id="lblApellido" value="Apellido"></h:outputLabel>
 						<h:inputText id="tftApellido"
-							value="#{gestionNuevosController.apellido}" class="form-control" required="true"></h:inputText>
+							value="#{gestionNuevosController.apellido}" class="form-control"
+							required="true"></h:inputText>
 						<p:message for="tftApellido" />
 
 						<p:outputLabel for="tftFecha" value="Fecha" />
@@ -54,14 +56,52 @@
 
 
 
-						<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo" class="labelSelect"/>
+						<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
+							class="labelSelect" />
 						<h:selectOneMenu id="tftSexo"
 							value="#{gestionNuevosController.genero}"
 							converter="sexoConverter" class="sizeselect form-control">
 
 							<f:selectItems value="#{gestionNuevosController.listGeneros}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}" class="sizeselect form-control" />
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+								class="sizeselect form-control" />
 						</h:selectOneMenu>
+						<p:message for="tftSexo" />
+
+						<h:outputLabel for="tftPais" id="lblpais" value="Pais "
+							class="labelSelect" />
+						<h:selectOneMenu id="tftPais"
+							value="#{gestionNuevosController.pais}" converter="paisConverter"
+							class="sizeselect form-control">
+
+							<f:selectItems value="#{gestionNuevosController.listPais}"
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.nombre}"
+								class="sizeselect form-control" />
+						</h:selectOneMenu>
+						<p:message for="tftPais" />
+
+						<h:outputLabel for="tftDep" id="lblDep" value="Departamento " />
+						<h:selectOneMenu id="tftDep"
+							value="#{gestionNuevosController.genero}"
+							converter="sexoConverter" class="sizeselect form-control">
+
+							<f:selectItems value="#{gestionNuevosController.listGeneros}"
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+								class="sizeselect form-control" />
+						</h:selectOneMenu>
+						<p:message for="lblDep" />
+
+						<h:outputLabel for="tftCiudad" id="lblCiudad" value="Ciudad " />
+						<h:selectOneMenu id="tftCiudad"
+							value="#{gestionNuevosController.genero}"
+							converter="sexoConverter" class="sizeselect form-control">
+
+							<f:selectItems value="#{gestionNuevosController.listGeneros}"
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+								class="sizeselect form-control" />
+						</h:selectOneMenu>
+						<p:message for="tftCiudad" />
+
 
 						<br />
 						<br />
