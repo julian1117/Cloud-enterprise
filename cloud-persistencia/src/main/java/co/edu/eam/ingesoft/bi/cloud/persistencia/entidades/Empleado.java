@@ -20,9 +20,6 @@ public class Empleado implements Serializable{
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name="cargo")
-	private String cargo;
-	
 	@Column(name="salario")
 	private double salario;
 	
@@ -37,19 +34,23 @@ public class Empleado implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="AreaEmpresa_id")
 	private AreaEmpresa area;
+	
+	@ManyToOne
+	@JoinColumn(name="AreaEmpresa_id")
+	private Cargo cargo;
 
 	public Empleado() {
 		super();
 	}
 
-	public Empleado(Integer id, String cargo, double salario, Date fechaIngreso, Persona persona, AreaEmpresa area) {
+	public Empleado(Integer id, double salario, Date fechaIngreso, Persona persona, AreaEmpresa area, Cargo cargo) {
 		super();
 		this.id = id;
-		this.cargo = cargo;
 		this.salario = salario;
 		this.fechaIngreso = fechaIngreso;
 		this.persona = persona;
 		this.area = area;
+		this.cargo = cargo;
 	}
 
 	public Integer getId() {
@@ -58,14 +59,6 @@ public class Empleado implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(String cargo) {
-		this.cargo = cargo;
 	}
 
 	public double getSalario() {
@@ -99,6 +92,15 @@ public class Empleado implements Serializable{
 	public void setArea(AreaEmpresa area) {
 		this.area = area;
 	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
 	
 	
 }
