@@ -62,20 +62,19 @@
 								<p:message for="tftEmail" />
 
 
-								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo" />
+								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo " />
 								<h:selectOneMenu id="tftSexo"
 									value="#{gestionNuevosController.genero}"
 									converter="sexoConverter" class="form-control">
 
-									<f:selectItems value="#{gestionNuevosController.listaGeneros}"
+									<f:selectItems value="#{gestionNuevosController.listGeneros}"
 										var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}" />
 								</h:selectOneMenu>
 
 								<p:message for="tftSexo" />
 
 
-
-
+								
 								<h1></h1>
 
 

@@ -12,7 +12,10 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Ciudad;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Departamento;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 
@@ -52,6 +55,18 @@ public class RegistroNuevosController implements Serializable {
 	private List<Genero> listGeneros;
 	
 	private Genero genero;
+	
+	private List<Pais> listPais;
+	
+	private Pais pais;
+	
+	private List<Departamento> listDepartamento;
+	
+	private Departamento departamento;
+	
+	private List<Ciudad> listCiudad;
+	
+	private Ciudad ciudad;
 
 	//Declaracion de EJB
 		@EJB
@@ -146,21 +161,73 @@ public class RegistroNuevosController implements Serializable {
 		return genero;
 	}
 
-
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 
-	
+	public List<Pais> getListPais() {
+		return listPais;
+	}
 
-	
-	
+
+	public void setListPais(List<Pais> listPais) {
+		this.listPais = listPais;
+	}
+
+
+	public Pais getPais() {
+		return pais;
+	}
+
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+
+	public List<Departamento> getListDepartamento() {
+		return listDepartamento;
+	}
+
+
+	public void setListDepartamento(List<Departamento> listDepartamento) {
+		this.listDepartamento = listDepartamento;
+	}
+
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+
+	public List<Ciudad> getListCiudad() {
+		return listCiudad;
+	}
+
+
+	public void setListCiudad(List<Ciudad> listCiudad) {
+		this.listCiudad = listCiudad;
+	}
+
+
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
+
 
 	@PostConstruct
 	public void inicializar() {
 		listGeneros = registroNuevosEJB.listaGeneros();
-		System.out.println("---------------------------------------------------------------"
-				+ ""+listGeneros.get(0).getGenero());
+		listPais = generalEJB.listaPaises();
 	}
 	
 	/**
@@ -171,6 +238,7 @@ public class RegistroNuevosController implements Serializable {
 		
 		try {
 			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
+			
 			
 			
 		}catch (Exception e) {
