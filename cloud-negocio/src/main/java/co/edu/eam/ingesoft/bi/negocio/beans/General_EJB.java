@@ -61,9 +61,8 @@ public class General_EJB {
 	 * @param pais
 	 * @return lista de departamento
 	 */
-	public List<Departamento> listaDepartamento (Pais pais){
-		return em.createNativeQuery("select * from DEPARTAMENTO where ID =?1;", Departamento.class).setParameter(1, pais.getIdPais())
-				.getResultList();
+	public List<Departamento> listaDepartamento (Integer id){
+		return em.createNamedQuery(Departamento.LISTA_DEPARTAMENTO).setParameter(1, id).getResultList();
 	}
 	
 	/**
@@ -71,9 +70,8 @@ public class General_EJB {
 	 * @param Ciudad
 	 * @return lista de ciudades
 	 */
-	public List<Ciudad> listCiudad(Ciudad Ciudad){
-		return em.createNativeQuery("select * from CIUDAD where ID =?1;", Ciudad.class).setParameter(1, Ciudad.getId())
-				.getResultList();
+	public List<Ciudad> listCiudad(){
+		return em.createNamedQuery(Ciudad.LISTA_CIUDAD).setParameter(1, 1).getResultList();
 	}
 
 	/**

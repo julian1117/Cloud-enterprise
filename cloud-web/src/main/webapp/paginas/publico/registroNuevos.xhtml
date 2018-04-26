@@ -15,14 +15,12 @@
 
 						<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
 						<h:inputText id="tftNombre"
-							value="#{gestionNuevosController.nombre}" class="form-control"
-							required="true"></h:inputText>
+							value="#{gestionNuevosController.nombre}" class="form-control"></h:inputText>
 						<p:message for="tftNombre" />
 
 						<h:outputLabel for="tftApellido" id="lblApellido" value="Apellido"></h:outputLabel>
 						<h:inputText id="tftApellido"
-							value="#{gestionNuevosController.apellido}" class="form-control"
-							required="true"></h:inputText>
+							value="#{gestionNuevosController.apellido}" class="form-control"></h:inputText>
 						<p:message for="tftApellido" />
 
 						<p:outputLabel for="tftFecha" value="Fecha" />
@@ -71,36 +69,48 @@
 						<h:outputLabel for="tftPais" id="lblpais" value="Pais "
 							class="labelSelect" />
 						<h:selectOneMenu id="tftPais"
-							value="#{gestionNuevosController.pais}" converter="paisConverter"
-							class="sizeselect form-control">
+							value="#{gestionNuevosController.pais}"
+							converter="paisConverter" class="sizeselect form-control">
+
+							<p:ajax update="tftDep"
+								listener="#{gestionNuevosController.cargarDep}" />
 
 							<f:selectItems value="#{gestionNuevosController.listPais}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.nombre}"
+								var="doc" itemValue="#{doc.idPais}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
+
+
+
 						</h:selectOneMenu>
-						<p:message for="tftPais" />
+						<br />
 
 						<h:outputLabel for="tftDep" id="lblDep" value="Departamento " />
 						<h:selectOneMenu id="tftDep"
-							value="#{gestionNuevosController.genero}"
-							converter="sexoConverter" class="sizeselect form-control">
+							value="#{gestionNuevosController.departamento}"
+							converter="departamentoConverter" class="sizeselect form-control">
 
-							<f:selectItems value="#{gestionNuevosController.listGeneros}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+							<f:selectItems
+								value="#{gestionNuevosController.listDepartamento}" var="doc"
+								itemValue="#{doc}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
+
+							<p:ajax event="change" execute="@this" render=":tftCiudad"
+								listener="#{gestionNuevosController.cargarCiu}" />
+
+
 						</h:selectOneMenu>
-						<p:message for="lblDep" />
+
+						<p:message for="tftDep" />
 
 						<h:outputLabel for="tftCiudad" id="lblCiudad" value="Ciudad " />
 						<h:selectOneMenu id="tftCiudad"
-							value="#{gestionNuevosController.genero}"
-							converter="sexoConverter" class="sizeselect form-control">
+							value="#{gestionNuevosController.ciudad}"
+							converter="ciudadConverter" class="sizeselect form-control">
 
-							<f:selectItems value="#{gestionNuevosController.listGeneros}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+							<f:selectItems value="#{gestionNuevosController.listCiudad}"
+								var="doc" itemValue="#{doc}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
 						</h:selectOneMenu>
-						<p:message for="tftCiudad" />
 
 
 						<br />
@@ -112,7 +122,7 @@
 					</h:panelGrid>
 					<h:panelGrid id="panelbtnsCrear" columns="2">
 						<p:commandButton id="btnCrear" value="Crear"
-							actionListener="#{gestionNuevosController.crearAdministrador}"
+							actionListener="#{gestionNuevosController.crearUsuarioNuevo}"
 							process="@this paneldatos" class="button" />
 					</h:panelGrid>
 				</p:panel>

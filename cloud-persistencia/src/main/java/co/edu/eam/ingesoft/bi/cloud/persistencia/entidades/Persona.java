@@ -20,13 +20,8 @@ import javax.persistence.TemporalType;
 public class Persona implements Serializable {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSONA_SEQ")
-    @SequenceGenerator(sequenceName = "PERSONAS_SEQ", allocationSize = 1, name = "PERSONA_SEQ")
-	@Column(name="idPersona")
-	private Integer codigo;
-	
-	@Column(name="cedula",nullable=false,length=12)
-	private String cedula;
+	@Column(name="cedula")
+	private Integer cedula;
 	
 	@Column(name="nombre",nullable=false,length=30)
 	private String nombre;
@@ -59,10 +54,9 @@ public class Persona implements Serializable {
 		super();
 	}
 
-	public Persona(Integer codigo, String cedula, String nombre, String apellido, String direccion, String telefono,
-			String email, Date fechaNacimiento, Genero genero, Ciudad ciudad) {
+	public Persona(Integer cedula, String nombre, String apellido, String direccion, String telefono, String email,
+			Date fechaNacimiento, Genero genero, Ciudad ciudad) {
 		super();
-		this.codigo = codigo;
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -74,19 +68,11 @@ public class Persona implements Serializable {
 		this.ciudad = ciudad;
 	}
 
-	public Integer getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(Integer codigo) {
-		this.codigo = codigo;
-	}
-
-	public String getCedula() {
+	public Integer getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(String cedula) {
+	public void setCedula(Integer cedula) {
 		this.cedula = cedula;
 	}
 
@@ -158,7 +144,7 @@ public class Persona implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		return result;
 	}
 
@@ -171,14 +157,15 @@ public class Persona implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Persona other = (Persona) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
+		if (cedula == null) {
+			if (other.cedula != null)
 				return false;
-		} else if (!codigo.equals(other.codigo))
+		} else if (!cedula.equals(other.cedula))
 			return false;
 		return true;
 	}
 
+	
 	
 	
 	
