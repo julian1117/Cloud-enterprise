@@ -29,7 +29,7 @@ public class Empleado implements Serializable{
 	private AreaEmpresa area;
 	
 	@ManyToOne
-	@JoinColumn(name="AreaEmpresa_id")
+	@JoinColumn(name="Cargo_id")
 	private Cargo cargo;
 	
 	@Id

@@ -55,7 +55,7 @@
 						<h:panelGrid id="panelBuscar" columns="3">
 							<h:outputLabel for="tftIdBuscar" id="lblIdBuscar"
 								value="Identificacion"></h:outputLabel>
-							<h:inputText id="tftIdBuscar" value="#{cargoControlador.id}"></h:inputText>
+							<h:inputText id="tftIdBuscar" value="#{cargoControlador.idCargo}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
 								action="#{cargoControlador.buscarCarga}" class="btn"
@@ -75,7 +75,7 @@
 								<h:outputLabel for="tftdescripcionBuscar"
 									id="lbldescripcionBuscar" value="descripcion"></h:outputLabel>
 								<h:inputTextarea id="tftdescripcionBuscar"
-									value="#{cargoControlador.descirpcion}"></h:inputTextarea>
+									value="#{cargoControlador.descripcion}"></h:inputTextarea>
 
 
 

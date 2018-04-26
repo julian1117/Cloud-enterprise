@@ -25,13 +25,12 @@
 									value="#{productoControlador.nombre}" class="form-control"></h:inputText>
 								<p:message for="tftNombre" />
 
-								<h:out for="tftDescripcion" id="lblDescripcion"
+								<h:outputLabel for="tftDescripcion" id="lblDescripcion"
 									value="Descripcion">
 									</h:outputLabel>
 									<h:inputTextarea id="tftDescripcion"
 										value="#{productoControlador.descirpcion}"
-										class="form-control" rows="10" cols="100" completeMethod="#"
-										queryDelay="750" minQueryLength="6" />
+										class="form-control"  />
 									<p:message for="tftDescripcion" />
 
 									<h:outputLabel for="tftCodigoLote" id="lblCodigoLote"

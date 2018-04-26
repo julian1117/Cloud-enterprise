@@ -20,10 +20,10 @@ public class CargoEJB {
 	public void crearCargo(Cargo cargo) {
 		Cargo ca = buscarCargo(cargo.getId());
 		
-		if(ca != null ) {
+		if(ca == null ) {
 			em.persist(cargo);
 		}else {
-			throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
+		throw new ExcepcionNegocio("El cargo ya se encuentra registrado");
 			
 		}
 	}
@@ -43,8 +43,6 @@ public class CargoEJB {
 		}
 	}
 
-	public List<Cargo> listarCargos() {
-		return em.createNamedQuery(Cargo.LISTA_CARGOS).getResultList();
-	}
+	
 
 }

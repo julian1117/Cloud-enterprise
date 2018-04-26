@@ -1,11 +1,13 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 
@@ -38,6 +40,10 @@ public class RecursosHumanosEJB {
 		}
 	}
 	
+	public List<Cargo> listarCargos() {
+		List<Cargo> list= em.createNamedQuery(Cargo.LISTA_CARGOS).getResultList();
+		return list;
+	}
 	
 
 }

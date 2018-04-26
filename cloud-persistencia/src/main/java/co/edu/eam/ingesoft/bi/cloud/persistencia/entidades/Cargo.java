@@ -7,13 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="Cargo")
-@NamedNativeQuery(name=Cargo.LISTA_CARGOS, query="SELECT c FROM Cargo c ")
+@NamedQuery(name=Cargo.LISTA_CARGOS, query="SELECT c FROM Cargo c ")
 public class Cargo implements Serializable{
 	
 	public static final  String LISTA_CARGOS = "Cargo.listaCargos";

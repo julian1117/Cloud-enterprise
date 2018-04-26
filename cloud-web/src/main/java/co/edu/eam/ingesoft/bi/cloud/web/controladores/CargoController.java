@@ -1,8 +1,10 @@
 package co.edu.eam.ingesoft.bi.cloud.web.controladores;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
@@ -17,7 +19,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.CargoEJB;
 
 @Named("cargoControlador")
 @ViewScoped
-public class CargoController {
+public class CargoController implements Serializable{
 
 	private String idCargo;
 
@@ -25,14 +27,12 @@ public class CargoController {
 
 	private String descripcion;
 
+	
+	
+	@EJB
 	private CargoEJB cargoEJB;
 
-	//private List<Cargo> listaCargo;
 
-//	@PostConstruct
-	//public void inicializar() {
-		//listaCargo = cargoEJB.listarCargos();
-	//}
 
 	public String getIdCargo() {
 		return idCargo;
