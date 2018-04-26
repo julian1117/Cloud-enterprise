@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
@@ -43,6 +44,15 @@ public class RecursosHumanosEJB {
 	public List<Cargo> listarCargos() {
 		List<Cargo> list= em.createNamedQuery(Cargo.LISTA_CARGOS).getResultList();
 		return list;
+	}
+	
+	public List<AreaEmpresa> listarAreas() {
+		List<AreaEmpresa> list= em.createNamedQuery(AreaEmpresa.LISTA_AREA_EMPRESA).getResultList();
+		return list;
+	}
+	
+	public Cargo buscarCargo(Integer idCargo) {
+		return em.find(Cargo.class, idCargo);
 	}
 	
 

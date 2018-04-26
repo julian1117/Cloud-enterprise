@@ -16,60 +16,35 @@
 							<h:panelGrid id="paneldatos" columns="3">
 
 								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
-								<h:inputText id="tftCedula" value="#{productoControlador.id}"
+								<h:inputText id="tftCedula" value="#{recursosControlador.cedula}"
 									class="form-control"></h:inputText>
 								<p:message for="tftCedula " />
 
-								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
-								<h:inputText id="tftNombre"
-									value="#{productoControlador.nombre}" class="form-control"></h:inputText>
-								<p:message for="tftNombre" />
+								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
+								<h:inputText id="tftSalario"
+									value="#{recursosControlador.salario}" class="form-control"></h:inputText>
+								<p:message for="tftSalario" />
 
-								<h:outputLabel for="tftApellido" id="lblApellido"
-									value="Apellido"></h:outputLabel>
-								<h:inputText id="tftApellido"
-									value="#{productoControlador.descirpcion}" class="form-control" />
-								<p:message for="tftApellido" />
-
-								<h:outputLabel for="tftEmail" id="lblEmail"
-									value="Email"></h:outputLabel>
-								<h:inputText id="tftEmail"
-									value="#{productoControlador.Email}" class="form-control" />
-								<p:message for="tftEmail" />
-
-								<h:outputLabel for="tftFechaNacimiento" value="Fecha Ingreso" />
-								<h:inputText id="tftFechaNacimiento"
-									value="#{productoControlador.FechaNacimiento}" mode="inline"
+								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
+								<h:inputText id="tftFechaIngreso"
+									value="#{recursosControlador.fechaIngreso}" mode="inline"
 									a:placeholder="dia-mes-año" class="form-control">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
-								<p:message for="tftFechaNacimiento" />
+								<p:message for="tftFechaIngreso" />
 
 
-								<h:outputLabel for="tftDireccion" id="lblDireccion"
-									value="Codigo Lote"></h:outputLabel>
-								<h:inputText id="tftDireccion"
-									value="#{productoControlador.Direccion}" class="form-control"></h:inputText>
-								<p:message for="tftDireccion" />
-								
-								----------------------------------
+								<h:outputLabel for="tftCargo" id="lblCargo"
+									value="Cargo" />
+								<h:selectOneMenu id="tftCargo"
+									value="#{proceControler.idCargo}"
+									converter="cargoConverter" class="form-control">
 
-								<h:outputLabel for="tftPeso" id="lblPeso" value="Peso"></h:outputLabel>
-								<h:inputText id="tftPeso" value="#{productoControlador.peso}"
-									class="form-control"></h:inputText>
-								<p:message for="tftPeso" />
+									<f:selectItems value="#{recursosControlador.listaCargo}" var="rh"
+										itemValue="#{rh}" itemLabel="#{rh.nombre}" />
 
-								<h:outputLabel for="tftDimensiones" id="lblDimensiones"
-									value="Dimensiones"></h:outputLabel>
-								<h:inputText id="tftDimensiones"
-									value="#{productoControlador.dimensiones}" class="form-control"></h:inputText>
-								<p:message for="tftDimensiones" />
 
-								<h:outputLabel for="tftValor" id="lblValor" value="Valor"></h:outputLabel>
-								<h:inputText id="tftValor" value="#{productoControlador.valor}"
-									class="form-control"></h:inputText>
-								<p:message for="tftValor" />
-
+								</h:selectOneMenu>
 
 								<h1></h1>
 
@@ -77,7 +52,7 @@
 							</h:panelGrid>
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="CREAR"
-									actionListener="#{productoControlador.crearProducto}"
+									actionListener="#{recursosControlador.crearEmpleado}"
 									process="@this paneldatos" class="button" />
 							</h:panelGrid>
 						</p:panel>
@@ -92,10 +67,11 @@
 						<h:panelGrid id="panelBuscar" columns="3">
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="Identificacion"></h:outputLabel>
-							<h:inputText id="tftCedulaBuscar" value="#{productoControlador.id}"></h:inputText>
+							<h:inputText id="tftCedulaBuscar"
+								value="#{recursosControlador.id}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
-								action="#{productoControlador.buscarProducto}" class="btn"
+								action="#{recursosControlador.buscarEmpleado}" class="btn"
 								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
 						</h:panelGrid>
 
@@ -104,51 +80,19 @@
 							<h:panelGrid id="paneldatosBuscar" columns="2">
 
 
-								<h:outputLabel for="tftNombreBuscar" id="lblNombreBuscar"
-									value="nombre"></h:outputLabel>
-								<h:inputText id="tftNombreBuscar"
-									value="#{productoControlador.nombre}"></h:inputText>
-
-								<h:outputLabel for="tftApellidoBuscar"
-									id="lblApellidoBuscar" value="Apellido"></h:outputLabel>
-								<h:inputText id="tftApellidoBuscar"
-									value="#{productoControlador.descirpcion}"></h:inputText>
-
-								<h:outputLabel for="tftEmailBuscar" id="lblEmailBuscar"
-									value="Email"></h:outputLabel>
-								<h:inputText id="tftEmailBuscar"
-									value="#{productoControlador.Email}"></h:inputText>
+								<h:outputLabel for="tftSalarioBuscar" id="lblSalarioBuscar"
+									value="Salario"></h:outputLabel>
+								<h:inputText id="tftSalarioBuscar"
+									value="#{recursosControlador.Salario}"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"
-									value="#{productoControlador.FechaNacimiento}" mode="inline"
+									value="#{recursosControlador.fechaIngreso}" mode="inline"
 									a:placeholder="dia-mes-anio">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 
-								<h:outputLabel for="tftDireccionBuscar"
-									id="lblDireccionBuscar" value="Codigo Lote"></h:outputLabel>
-								<h:inputText id="tftDireccionBuscar"
-									value="#{productoControlador.Direccion}"></h:inputText>
-
-								<h:outputLabel for="tftPesoBuscar" id="lblPesoBuscar"
-									value="Peso"></h:outputLabel>
-								<h:inputText id="tftPesoBuscar"
-									value="#{productoControlador.peso}"></h:inputText>
-
-
-								<h:outputLabel for="tftDimensionesBuscar"
-									id="lblDimensionesBuscar" value="Dimensiones"></h:outputLabel>
-								<h:inputText id="tftDimensionesBuscar"
-									value="#{productoControlador.dimensiones}"></h:inputText>
-
-								<h:outputLabel for="tftValorBuscar" id="lblValorBuscar"
-									value="Valor"></h:outputLabel>
-								<h:inputText id="tftValorBuscar"
-									value="#{productoControlador.valor}"></h:inputText>
-
-
-
+						
 
 
 
@@ -159,13 +103,12 @@
 						<h2>Otras Opciones</h2>
 						<h:panelGrid id="panelbtns" columns="2">
 							<p:commandButton id="btnEditar" value="Editar"
-								action="#{productoControlador.editarProducto}" class="btn"
+								action="#{recursosControlador.editarEmpleado}" class="btn"
 								process="@this paneldatosPBuscar" />
 
 
-							<p:commandButton id="btnEliminar"
-								value="Eliminar"
-								action="#{productoControlador.eliminarProdducto}" class="btn"
+							<p:commandButton id="btnEliminar" value="Eliminar"
+								action="#{recursosControlador.eliminarEmpleado}" class="btn"
 								process="@this tftCedulaBuscar" />
 						</h:panelGrid>
 

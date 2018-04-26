@@ -7,15 +7,14 @@ import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
-import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
-import co.edu.eam.ingesoft.bi.negocio.beans.CargoEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 
 @FacesConverter(value = "cargoConverter", forClass = Cargo.class)
 @Named("cargoConverter")
 public class CargoConvertidor {
 	
 	@EJB
-	private CargoEJB cargoEJB;
+	private RecursosHumanosEJB cargoEJB;
 	
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String value) {
 		if (value == null || value.trim().length() == 0 || value.equals("Seleccione...")) {

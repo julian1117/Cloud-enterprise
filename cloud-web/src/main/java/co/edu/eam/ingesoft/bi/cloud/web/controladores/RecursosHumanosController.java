@@ -6,17 +6,24 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Ciudad;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
+import co.edu.eam.ingesoft.bi.negocio.beans.AreaEmpresaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.CargoEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 
 @Named("recursosControlador")
@@ -46,14 +53,14 @@ public class RecursosHumanosController implements Serializable {
 	//private static Persona persona;
 	
 	private String email;
-	
-	private List<Genero> listGeneros;
-	
+		
 	private List<Cargo> listaCargo;
+	
+	private Cargo idCargo;
 	
 	private List<AreaEmpresa> listaAreaEmpresa;
 	
-	private Genero genero;
+	private AreaEmpresa idAreaEmpresa;
 	
 	private double salario;
 	
@@ -62,128 +69,208 @@ public class RecursosHumanosController implements Serializable {
 	@EJB
 	private RecursosHumanosEJB recursosEJB;
 	
-	@PostConstruct
-	public void inicializar() {
-		listaCargo = recursosEJB.listarCargos();
-	}
-
+	@EJB
+	private General_EJB generalEJB;
+	
+	@EJB
+	private CargoEJB cargoEJB;
+	
+	@EJB
+	private AreaEmpresaEJB areaEJB;
+	
+	
+	
+	
 	public String getNombre() {
 		return nombre;
 	}
+
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
+
 	public String getApellido() {
 		return apellido;
 	}
+
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
 
+
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
+
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+
 	public String getCedula() {
 		return cedula;
 	}
+
 
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 
+
 	public String getTelefono() {
 		return telefono;
 	}
+
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
+
 	public String getDireccion() {
 		return direccion;
 	}
+
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
 
+
 	public String getEmail() {
 		return email;
 	}
+
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public List<Genero> getListGeneros() {
-		return listGeneros;
-	}
 
-	public void setListGeneros(List<Genero> listGeneros) {
-		this.listGeneros = listGeneros;
-	}
 
 	public List<Cargo> getListaCargo() {
 		return listaCargo;
 	}
 
+
 	public void setListaCargo(List<Cargo> listaCargo) {
 		this.listaCargo = listaCargo;
 	}
+
+
+	public Cargo getIdCargo() {
+		return idCargo;
+	}
+
+
+	public void setIdCargo(Cargo idCargo) {
+		this.idCargo = idCargo;
+	}
+
 
 	public List<AreaEmpresa> getListaAreaEmpresa() {
 		return listaAreaEmpresa;
 	}
 
+
 	public void setListaAreaEmpresa(List<AreaEmpresa> listaAreaEmpresa) {
 		this.listaAreaEmpresa = listaAreaEmpresa;
 	}
 
-	public Genero getGenero() {
-		return genero;
+
+	public AreaEmpresa getIdAreaEmpresa() {
+		return idAreaEmpresa;
 	}
 
-	public void setGenero(Genero genero) {
-		this.genero = genero;
+
+	public void setIdAreaEmpresa(AreaEmpresa idAreaEmpresa) {
+		this.idAreaEmpresa = idAreaEmpresa;
 	}
 
 	public double getSalario() {
 		return salario;
 	}
 
+
 	public void setSalario(double salario) {
 		this.salario = salario;
 	}
+
 
 	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
 
+
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
+
 
 	public RecursosHumanosEJB getRecursosEJB() {
 		return recursosEJB;
 	}
 
+
 	public void setRecursosEJB(RecursosHumanosEJB recursosEJB) {
 		this.recursosEJB = recursosEJB;
 	}
+
+
+	public General_EJB getGeneralEJB() {
+		return generalEJB;
+	}
+
+
+	public void setGeneralEJB(General_EJB generalEJB) {
+		this.generalEJB = generalEJB;
+	}
+
+
+	public CargoEJB getCargoEJB() {
+		return cargoEJB;
+	}
+
+
+	public void setCargoEJB(CargoEJB cargoEJB) {
+		this.cargoEJB = cargoEJB;
+	}
+
+
+	public AreaEmpresaEJB getAreaEJB() {
+		return areaEJB;
+	}
+
+
+	public void setAreaEJB(AreaEmpresaEJB areaEJB) {
+		this.areaEJB = areaEJB;
+	}
 	
+	@PostConstruct
+	public void inicializar() {
+		listaCargo = recursosEJB.listarCargos();
+	}
+
+
 	public void crearEmpleado() {
 		try {
+			Cargo cargo = cargoEJB.buscarCargo(idCargo.getId());
+			AreaEmpresa area = areaEJB.buscarArea(idAreaEmpresa.getId());
+			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
+			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, persona);
+			
+			recursosEJB.crearEmpleado(empleado);
+			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 			
 		}catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+
 		}
 	}
 	
@@ -192,6 +279,10 @@ public class RecursosHumanosController implements Serializable {
 	}
 	
 	public void editarEmpleado() {
+		
+	}
+	
+	public void eliminarEmpleado() {
 		
 	}
 	
