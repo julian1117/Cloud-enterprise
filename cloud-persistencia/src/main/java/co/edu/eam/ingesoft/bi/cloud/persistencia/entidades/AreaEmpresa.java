@@ -5,11 +5,16 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="AreaEmpresa")
+@NamedQuery(name=AreaEmpresa.LISTA_AREA_EMPRESA,query="select a from AreaEmpresa a")
 public class AreaEmpresa implements Serializable{
+	
+	public static final  String LISTA_AREA_EMPRESA = "AreaEmpresa.listaAreaEmpresa";
+	
 
 	@Id
 	@Column(name="id")

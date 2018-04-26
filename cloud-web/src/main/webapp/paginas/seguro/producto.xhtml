@@ -25,53 +25,40 @@
 									value="#{productoControlador.nombre}" class="form-control"></h:inputText>
 								<p:message for="tftNombre" />
 
-								<h:outputLabel for="tftDescripcion" id="lblDescripcion"
-									value="Descripcion"></h:outputLabel>
-								<h:inputText id="tftDescripcion"
-									value="#{productoControlador.descirpcion}" class="form-control" />
-								<p:message for="tftDescripcion" />
+								<h:out for="tftDescripcion" id="lblDescripcion"
+									value="Descripcion">
+									</h:outputLabel>
+									<h:inputTextarea id="tftDescripcion"
+										value="#{productoControlador.descirpcion}"
+										class="form-control" rows="10" cols="100" completeMethod="#"
+										queryDelay="750" minQueryLength="6" />
+									<p:message for="tftDescripcion" />
 
-								<h:outputLabel for="tftCantidad" id="lblCantidad"
-									value="Cantidad"></h:outputLabel>
-								<h:inputText id="tftCantidad"
-									value="#{productoControlador.cantidad}" class="form-control" />
-								<p:message for="tftCantidad" />
+									<h:outputLabel for="tftCodigoLote" id="lblCodigoLote"
+										value="Codigo Lote"></h:outputLabel>
+									<h:inputText id="tftCodigoLote"
+										value="#{productoControlador.codigoLote}" class="form-control"></h:inputText>
+									<p:message for="tftCodigoLote" />
 
-								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
-								<h:inputText id="tftFechaIngreso"
-									value="#{productoControlador.fechaIngreso}" mode="inline"
-									a:placeholder="dia-mes-año" class="form-control">
-									<f:convertDateTime pattern="dd-MM-yyyy" />
-								</h:inputText>
-								<p:message for="tftFechaIngreso" />
+									<h:outputLabel for="tftPeso" id="lblPeso" value="Peso"></h:outputLabel>
+									<h:inputText id="tftPeso" value="#{productoControlador.peso}"
+										class="form-control"></h:inputText>
+									<p:message for="tftPeso" />
 
+									<h:outputLabel for="tftDimensiones" id="lblDimensiones"
+										value="Dimensiones"></h:outputLabel>
+									<h:inputText id="tftDimensiones"
+										value="#{productoControlador.dimensiones}"
+										class="form-control"></h:inputText>
+									<p:message for="tftDimensiones" />
 
-								<h:outputLabel for="tftCodigoLote" id="lblCodigoLote"
-									value="Codigo Lote"></h:outputLabel>
-								<h:inputText id="tftCodigoLote"
-									value="#{productoControlador.codigoLote}" class="form-control"></h:inputText>
-								<p:message for="tftCodigoLote" />
-
-								<h:outputLabel for="tftPeso" id="lblPeso" value="Peso"></h:outputLabel>
-								<h:inputText id="tftPeso" value="#{productoControlador.peso}"
-									class="form-control"></h:inputText>
-								<p:message for="tftPeso" />
-
-								<h:outputLabel for="tftDimensiones" id="lblDimensiones"
-									value="Dimensiones"></h:outputLabel>
-								<h:inputText id="tftDimensiones"
-									value="#{productoControlador.dimensiones}" class="form-control"></h:inputText>
-								<p:message for="tftDimensiones" />
-
-								<h:outputLabel for="tftValor" id="lblValor" value="Valor"></h:outputLabel>
-								<h:inputText id="tftValor" value="#{productoControlador.valor}"
-									class="form-control"></h:inputText>
-								<p:message for="tftValor" />
+									<h:outputLabel for="tftValor" id="lblValor" value="Valor"></h:outputLabel>
+									<h:inputText id="tftValor" value="#{productoControlador.valor}"
+										class="form-control"></h:inputText>
+									<p:message for="tftValor" />
 
 
-								<h1></h1>
-
-
+									<h1></h1>
 							</h:panelGrid>
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="CREAR"
@@ -109,21 +96,10 @@
 
 								<h:outputLabel for="tftdescripcionBuscar"
 									id="lbldescripcionBuscar" value="descripcion"></h:outputLabel>
-								<h:inputText id="tftdescripcionBuscar"
-									value="#{productoControlador.descirpcion}"></h:inputText>
+								<h:inputTextarea id="tftdescripcionBuscar"
+									value="#{productoControlador.descirpcion}"></h:inputTextarea>
 
-								<h:outputLabel for="tftCantidadBuscar" id="lblCantidadBuscar"
-									value="Cantidad"></h:outputLabel>
-								<h:inputText id="tftCantidadBuscar"
-									value="#{productoControlador.cantidad}"></h:inputText>
-
-								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
-								<h:inputText id="tftFechaBuscar"
-									value="#{productoControlador.fechaIngreso}" mode="inline"
-									a:placeholder="dia-mes-anio">
-									<f:convertDateTime pattern="dd-MM-yyyy" />
-								</h:inputText>
-
+								
 								<h:outputLabel for="tftCodigoLoteBuscar"
 									id="lblCodigoLoteBuscar" value="Codigo Lote"></h:outputLabel>
 								<h:inputText id="tftCodigoLoteBuscar"
@@ -161,8 +137,7 @@
 								process="@this paneldatosPBuscar" />
 
 
-							<p:commandButton id="btnEliminar"
-								value="Eliminar"
+							<p:commandButton id="btnEliminar" value="Eliminar"
 								action="#{productoControlador.eliminarProdducto}" class="btn"
 								process="@this tftIdBuscar" />
 						</h:panelGrid>

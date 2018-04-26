@@ -140,8 +140,7 @@ public class ProductoController implements Serializable {
 
 	public void crearProducto() {
 		try {
-			Producto producto = new Producto(Integer.parseInt(id), nombre, fechaIngreso, descirpcion, cantidad, codigoLote, peso,
-					dimensiones, valor);
+			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
 			productoEJB.crearProducto(producto);
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 
@@ -157,9 +156,7 @@ public class ProductoController implements Serializable {
 		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id));
 		if (pro != null) {
 			nombre = pro.getNombre();
-			descirpcion = pro.getDescirpcion();			
-			cantidad = pro.getCantidad();
-			fechaIngreso = pro.getFechaIngreso();
+			descirpcion = pro.getDescirpcion();	
 			codigoLote= pro.getCodigoLote();
 			peso = pro.getPeso();
 			dimensiones = pro.getDimensiones();
@@ -173,7 +170,7 @@ public class ProductoController implements Serializable {
 	public void editarProducto() {
 		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id));
 		if (pro != null) {
-			Producto producto = new Producto(Integer.parseInt(id), nombre, fechaIngreso, descirpcion, cantidad, codigoLote, peso, dimensiones, valor);
+			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
 			productoEJB.editar(producto);
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
 

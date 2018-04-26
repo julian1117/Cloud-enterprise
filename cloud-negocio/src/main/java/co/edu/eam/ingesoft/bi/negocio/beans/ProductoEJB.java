@@ -20,7 +20,7 @@ public class ProductoEJB {
 		if(pr== null ) {
 			em.persist(producto);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("El quierofano ya se encuentra registrado");
+			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("El Producto ya se encuentra registrado");
 		}
 	}
 	

@@ -19,17 +19,10 @@ public class Producto implements Serializable{
 	private Integer id;
 	
 	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="fechaIngreso")
-	@Temporal(TemporalType.DATE)
-	private Date fechaIngreso;
+	private String nombre;		
 	
 	@Column(name="descripcion")
-	private String descirpcion;
-		
-	@Column(name="cantidad")
-	private String cantidad;
+	private String descirpcion;	
 	
 	@Column(name="codigoLote")
 	private Integer codigoLote;
@@ -47,14 +40,12 @@ public class Producto implements Serializable{
 		super();
 	}
 
-	public Producto(Integer id, String nombre, Date fechaIngreso, String descirpcion, String cantidad,
-			Integer codigoLote, String peso, String dimensiones, double valor) {
+	public Producto(Integer id, String nombre, String descirpcion, Integer codigoLote, String peso, String dimensiones,
+			double valor) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.fechaIngreso = fechaIngreso;
 		this.descirpcion = descirpcion;
-		this.cantidad = cantidad;
 		this.codigoLote = codigoLote;
 		this.peso = peso;
 		this.dimensiones = dimensiones;
@@ -77,28 +68,12 @@ public class Producto implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
 	public String getDescirpcion() {
 		return descirpcion;
 	}
 
 	public void setDescirpcion(String descirpcion) {
 		this.descirpcion = descirpcion;
-	}
-
-	public String getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(String cantidad) {
-		this.cantidad = cantidad;
 	}
 
 	public Integer getCodigoLote() {
@@ -133,7 +108,6 @@ public class Producto implements Serializable{
 		this.valor = valor;
 	}
 
-	
 	
 
 }

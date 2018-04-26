@@ -1,0 +1,178 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabs">
+				<p:tab title="Gestionar Recursos Humanos">
+					<div align="center">
+						<p:panel id="paneldatosP" header="Datos de Producto">
+							<h:panelGrid id="paneldatos" columns="3">
+
+								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
+								<h:inputText id="tftCedula" value="#{productoControlador.id}"
+									class="form-control"></h:inputText>
+								<p:message for="tftCedula " />
+
+								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
+								<h:inputText id="tftNombre"
+									value="#{productoControlador.nombre}" class="form-control"></h:inputText>
+								<p:message for="tftNombre" />
+
+								<h:outputLabel for="tftApellido" id="lblApellido"
+									value="Apellido"></h:outputLabel>
+								<h:inputText id="tftApellido"
+									value="#{productoControlador.descirpcion}" class="form-control" />
+								<p:message for="tftApellido" />
+
+								<h:outputLabel for="tftEmail" id="lblEmail"
+									value="Email"></h:outputLabel>
+								<h:inputText id="tftEmail"
+									value="#{productoControlador.Email}" class="form-control" />
+								<p:message for="tftEmail" />
+
+								<h:outputLabel for="tftFechaNacimiento" value="Fecha Ingreso" />
+								<h:inputText id="tftFechaNacimiento"
+									value="#{productoControlador.FechaNacimiento}" mode="inline"
+									a:placeholder="dia-mes-año" class="form-control">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+								<p:message for="tftFechaNacimiento" />
+
+
+								<h:outputLabel for="tftDireccion" id="lblDireccion"
+									value="Codigo Lote"></h:outputLabel>
+								<h:inputText id="tftDireccion"
+									value="#{productoControlador.Direccion}" class="form-control"></h:inputText>
+								<p:message for="tftDireccion" />
+								
+								----------------------------------
+
+								<h:outputLabel for="tftPeso" id="lblPeso" value="Peso"></h:outputLabel>
+								<h:inputText id="tftPeso" value="#{productoControlador.peso}"
+									class="form-control"></h:inputText>
+								<p:message for="tftPeso" />
+
+								<h:outputLabel for="tftDimensiones" id="lblDimensiones"
+									value="Dimensiones"></h:outputLabel>
+								<h:inputText id="tftDimensiones"
+									value="#{productoControlador.dimensiones}" class="form-control"></h:inputText>
+								<p:message for="tftDimensiones" />
+
+								<h:outputLabel for="tftValor" id="lblValor" value="Valor"></h:outputLabel>
+								<h:inputText id="tftValor" value="#{productoControlador.valor}"
+									class="form-control"></h:inputText>
+								<p:message for="tftValor" />
+
+
+								<h1></h1>
+
+
+							</h:panelGrid>
+							<h:panelGrid id="panelbtnsCrear" columns="2">
+								<p:commandButton id="btnCrear" value="CREAR"
+									actionListener="#{productoControlador.crearProducto}"
+									process="@this paneldatos" class="button" />
+							</h:panelGrid>
+						</p:panel>
+					</div>
+				</p:tab>
+
+
+
+				<p:tab title="Buscar-Editar-Eliminar">
+					<div align="center">
+
+						<h:panelGrid id="panelBuscar" columns="3">
+							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
+								value="Identificacion"></h:outputLabel>
+							<h:inputText id="tftCedulaBuscar" value="#{productoControlador.id}"></h:inputText>
+
+							<p:commandButton id="btnBuscar" value="BUSCAR"
+								action="#{productoControlador.buscarProducto}" class="btn"
+								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
+						</h:panelGrid>
+
+
+						<p:panel id="paneldatosPBuscar" header="Datos">
+							<h:panelGrid id="paneldatosBuscar" columns="2">
+
+
+								<h:outputLabel for="tftNombreBuscar" id="lblNombreBuscar"
+									value="nombre"></h:outputLabel>
+								<h:inputText id="tftNombreBuscar"
+									value="#{productoControlador.nombre}"></h:inputText>
+
+								<h:outputLabel for="tftApellidoBuscar"
+									id="lblApellidoBuscar" value="Apellido"></h:outputLabel>
+								<h:inputText id="tftApellidoBuscar"
+									value="#{productoControlador.descirpcion}"></h:inputText>
+
+								<h:outputLabel for="tftEmailBuscar" id="lblEmailBuscar"
+									value="Email"></h:outputLabel>
+								<h:inputText id="tftEmailBuscar"
+									value="#{productoControlador.Email}"></h:inputText>
+
+								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
+								<h:inputText id="tftFechaBuscar"
+									value="#{productoControlador.FechaNacimiento}" mode="inline"
+									a:placeholder="dia-mes-anio">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+
+								<h:outputLabel for="tftDireccionBuscar"
+									id="lblDireccionBuscar" value="Codigo Lote"></h:outputLabel>
+								<h:inputText id="tftDireccionBuscar"
+									value="#{productoControlador.Direccion}"></h:inputText>
+
+								<h:outputLabel for="tftPesoBuscar" id="lblPesoBuscar"
+									value="Peso"></h:outputLabel>
+								<h:inputText id="tftPesoBuscar"
+									value="#{productoControlador.peso}"></h:inputText>
+
+
+								<h:outputLabel for="tftDimensionesBuscar"
+									id="lblDimensionesBuscar" value="Dimensiones"></h:outputLabel>
+								<h:inputText id="tftDimensionesBuscar"
+									value="#{productoControlador.dimensiones}"></h:inputText>
+
+								<h:outputLabel for="tftValorBuscar" id="lblValorBuscar"
+									value="Valor"></h:outputLabel>
+								<h:inputText id="tftValorBuscar"
+									value="#{productoControlador.valor}"></h:inputText>
+
+
+
+
+
+
+							</h:panelGrid>
+						</p:panel>
+						<br></br> <br></br>
+
+						<h2>Otras Opciones</h2>
+						<h:panelGrid id="panelbtns" columns="2">
+							<p:commandButton id="btnEditar" value="Editar"
+								action="#{productoControlador.editarProducto}" class="btn"
+								process="@this paneldatosPBuscar" />
+
+
+							<p:commandButton id="btnEliminar"
+								value="Eliminar"
+								action="#{productoControlador.eliminarProdducto}" class="btn"
+								process="@this tftCedulaBuscar" />
+						</h:panelGrid>
+
+					</div>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
