@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabs">
+				<p:tab title="Gestionar Area Empresa ">
+					<div align="center">
+						<p:panel id="paneldatosP" header="Datos de Cargo">
+							<h:panelGrid id="paneldatos" columns="3">
+							
+								<h:outputLabel for="tftId" id="lblId" value="Id"></h:outputLabel>
+								<h:inputText id="tftId" value="#{areaControlador.id}"
+									class="form-control"></h:inputText>
+								<p:message for="tftId " />
+
+								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
+								<h:inputText id="tftNombre"
+									value="#{areaControlador.nombre}" class="form-control"></h:inputText>
+								<p:message for="tftNombre" />
+
+								<h:outputLabel for="tftDescripcion" id="lblDescripcion"
+									value="Descripcion"></h:outputLabel>
+								<h:inputText id="tftDescripcion"
+									value="#{areaControlador.descripcion}" class="form-control" />
+								<p:message for="tftDescripcion" />
+
+								
+
+
+								<h1></h1>
+
+
+							</h:panelGrid>
+							<h:panelGrid id="panelbtnsCrear" columns="2">
+								<p:commandButton id="btnCrear" value="CREAR"
+									actionListener="#{areaControlador.crearArea}"
+									process="@this paneldatos" class="button" />
+							</h:panelGrid>
+						</p:panel>
+					</div>
+				</p:tab>
+
+
+
+				<p:tab title="Buscar-Editar-Eliminar">
+					<div align="center">
+
+						<h:panelGrid id="panelBuscar" columns="3">
+							<h:outputLabel for="tftIdBuscar" id="lblIdBuscar"
+								value="Identificacion"></h:outputLabel>
+							<h:inputText id="tftIdBuscar" value="#{areaControlador.id}"></h:inputText>
+
+							<p:commandButton id="btnBuscar" value="BUSCAR"
+								action="#{areaControlador.buscarAreaEmpresa}" class="btn"
+								process="@this tftIdBuscar" update="paneldatosBuscar " />
+						</h:panelGrid>
+
+
+						<p:panel id="paneldatosPBuscar" header="Datos">
+							<h:panelGrid id="paneldatosBuscar" columns="2">
+
+
+								<h:outputLabel for="tftNombreBuscar" id="lblNombreBuscar"
+									value="nombre"></h:outputLabel>
+								<h:inputText id="tftNombreBuscar"
+									value="#{areaControlador.nombre}"></h:inputText>
+
+								<h:outputLabel for="tftdescripcionBuscar"
+									id="lbldescripcionBuscar" value="descripcion"></h:outputLabel>
+								<h:inputTextarea id="tftdescripcionBuscar"
+									value="#{areaControlador.descripcion}"></h:inputTextarea>
+
+
+
+							</h:panelGrid>
+						</p:panel>
+						<br></br> <br></br>
+
+						<h2>Otras Opciones</h2>
+						<h:panelGrid id="panelbtns" columns="2">
+							<p:commandButton id="btnEditar" value="Editar"
+								action="#{areaControlador.editarAreaEmpresa}" class="btn"
+								process="@this paneldatosPBuscar" />
+
+
+							<p:commandButton id="btnEliminar"
+								value="Eliminar"
+								action="#{areaControlador.eliminarAreaEmpresa}" class="btn"
+								process="@this tftIdBuscar" />
+						</h:panelGrid>
+
+					</div>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

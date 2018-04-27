@@ -20,11 +20,11 @@ public class RecursosHumanosEJB {
 	private EntityManager em;
 
 	public void crearEmpleado(Empleado Empleado) {
-		Persona per = buscarEmpleado(Integer.parseInt(Empleado.getIdPersona().getCedula()));
+		Persona per = buscarEmpleado(Empleado.getIdPersona().getCedula());
 		if(per != null) {
 			em.persist(Empleado);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("La Empleado ya se encuentra registrado");
+	//		throw new ExcepcionNegocio("La Empleado ya se encuentra registrado");
 		}
 	}
 	
@@ -33,11 +33,11 @@ public class RecursosHumanosEJB {
 		}
 	
 	public void editarEmpleado(Empleado Empleado) {
-		Persona per = buscarEmpleado(Integer.parseInt(Empleado.getIdPersona().getCedula()));
+		Persona per = buscarEmpleado(Empleado.getIdPersona().getCedula());
 		if(per != null) {
 			em.merge(Empleado);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("La Empleado ya se encuentra registrado");
+	//		throw new ExcepcionNegocio("La Empleado ya se encuentra registrado");
 		}
 	}
 	
