@@ -41,10 +41,9 @@ public class RegistroNuevosController implements Serializable {
 
 	private Date fechaNacimiento;
 
-	// @Pattern(regexp = "[0-9]*", message = "El campo numero de identificacion solo
-	// puede llevar caracteres numericos")
-	// @Length(min = 4, max = 10, message = "Cedula - longitud entre 7 y 10")
-	private Integer cedula;
+	@Pattern(regexp = "[0-9]*", message = "El campo numero de identificacion solo puede llevar caracteres numericos")
+	@Length(min = 4, max = 10, message = "Cedula - longitud entre 7 y 10")
+	private String cedula;
 
 	@Pattern(regexp = "[0-9]*", message = "El campo numero de  telefonosolo puede llevar caracteres numericos")
 	@Length(min = 4, max = 10, message = "Cedula - longitud entre 7 y 12")
@@ -103,11 +102,11 @@ public class RegistroNuevosController implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public Integer getCedula() {
+	public String getCedula() {
 		return cedula;
 	}
 
-	public void setCedula(Integer cedula) {
+	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
 
@@ -228,7 +227,7 @@ public class RegistroNuevosController implements Serializable {
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
 			persona.setApellido(apellido);
-			persona.setCedula(cedula);
+			persona.setCedula(Integer.parseInt(cedula));
 			persona.setCiudad(buscarCiudad);
 			persona.setDireccion(direccion);
 			persona.setEmail(email);
