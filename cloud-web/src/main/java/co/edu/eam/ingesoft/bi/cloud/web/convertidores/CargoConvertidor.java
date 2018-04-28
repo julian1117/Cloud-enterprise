@@ -29,7 +29,7 @@ public class CargoConvertidor implements Converter{
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if(value instanceof Cargo) {
 			Cargo cargo = (Cargo) value;
-			return String.valueOf(cargo.getId());
+			return String.valueOf(cargo.getIdCar());
 		}
 		return null;
 	}

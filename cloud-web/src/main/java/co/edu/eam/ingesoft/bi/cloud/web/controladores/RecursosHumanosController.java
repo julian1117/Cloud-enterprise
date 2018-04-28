@@ -38,10 +38,11 @@ public class RecursosHumanosController implements Serializable {
 	@Length(min=3,max=20,message="El campo apellido-longitud entre 3 y 30")
 	private String apellido;
 	
+	//@Pattern(regexp="[0-9]*",message="El campo numero de  fecha solo puede llevar caracteres numericos")
 	private Date fechaNacimiento;
 	
 	@Pattern(regexp="[0-9]*",message="El campo numero de  identificacion solo puede llevar caracteres numericos")
-	@Length(min=4,max=10,message="Cedula - longitud entre 7 y 10")
+	@Length(min=4,max=10,message="Cedula - longitud entre 5 y 10")
 	private String cedula;
 	
 	@Pattern(regexp="[0-9]*",message="El campo numero de  telefonosolo puede llevar caracteres numericos")
@@ -56,14 +57,16 @@ public class RecursosHumanosController implements Serializable {
 		
 	private List<Cargo> listaCargo;
 	
-	private Cargo idCargo;
+	private String idCargo;
 	
 	private List<AreaEmpresa> listaAreaEmpresa;
 	
-	private AreaEmpresa idAreaEmpresa;
+	private String idAreaEmpresa;
 	
+	//@Pattern(regexp="[0-9]*",message="El campo salario solo puede llevar caracteres numericos")
 	private double salario;
 	
+	//@Pattern(regexp="[0-9]*",message="El campo fecha de ingreso solo puede llevar caracteres numericos")
 	private Date fechaIngreso;
 	
 	@EJB
@@ -162,16 +165,6 @@ public class RecursosHumanosController implements Serializable {
 	}
 
 
-	public Cargo getIdCargo() {
-		return idCargo;
-	}
-
-
-	public void setIdCargo(Cargo idCargo) {
-		this.idCargo = idCargo;
-	}
-
-
 	public List<AreaEmpresa> getListaAreaEmpresa() {
 		return listaAreaEmpresa;
 	}
@@ -181,15 +174,27 @@ public class RecursosHumanosController implements Serializable {
 		this.listaAreaEmpresa = listaAreaEmpresa;
 	}
 
+	
 
-	public AreaEmpresa getIdAreaEmpresa() {
+	public String getIdCargo() {
+		return idCargo;
+	}
+
+
+	public void setIdCargo(String idCargo) {
+		this.idCargo = idCargo;
+	}
+
+
+	public String getIdAreaEmpresa() {
 		return idAreaEmpresa;
 	}
 
 
-	public void setIdAreaEmpresa(AreaEmpresa idAreaEmpresa) {
+	public void setIdAreaEmpresa(String idAreaEmpresa) {
 		this.idAreaEmpresa = idAreaEmpresa;
 	}
+
 
 	public double getSalario() {
 		return salario;
@@ -259,14 +264,22 @@ public class RecursosHumanosController implements Serializable {
 
 	public void crearEmpleado() {
 		try {
-			Cargo cargo = cargoEJB.buscarCargo(idCargo.getId());
-			AreaEmpresa area = areaEJB.buscarArea(idAreaEmpresa.getId());
+			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
+			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa));
 			//Messages.addFlashGlobalInfo("hola" + area);
-			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
-			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, persona);
 			
-			recursosEJB.crearEmpleado(empleado);
-			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
+			
+			if(persona != null) {
+				Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, persona);
+				
+				recursosEJB.crearEmpleado(empleado);
+				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+			}else {
+				Messages.addFlashGlobalInfo("Verifique que la persona exista!!");
+			}
+			
+			
 			
 		}catch (Exception e) {
 			e.printStackTrace();

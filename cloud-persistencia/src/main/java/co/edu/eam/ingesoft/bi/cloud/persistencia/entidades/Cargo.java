@@ -21,7 +21,7 @@ public class Cargo implements Serializable{
 	
 	@Id
 	@Column(name="id")
-	private Integer id;
+	private Integer idCar;
 	
 	@Column(name="nombre")
 	private String nombre;
@@ -33,44 +33,59 @@ public class Cargo implements Serializable{
 		super();
 	}
 
-	public Cargo(Integer id, String nombre, String descripcion) {
+	
+	public Cargo(Integer idCar, String nombre, String descripcion) {
 		super();
-		this.id = id;
+		this.idCar = idCar;
 		this.nombre = nombre;
 		Descripcion = descripcion;
 	}
 
-	public Integer getId() {
-		return id;
+
+	public Integer getIdCar() {
+		return idCar;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+
+	public void setIdCar(Integer idCar) {
+		this.idCar = idCar;
 	}
+
 
 	public String getNombre() {
 		return nombre;
 	}
 
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 
 	public String getDescripcion() {
 		return Descripcion;
 	}
 
+
 	public void setDescripcion(String descripcion) {
 		Descripcion = descripcion;
 	}
+
+
+	@Override
+	public String toString() {
+		return  nombre;
+	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idCar == null) ? 0 : idCar.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -81,17 +96,12 @@ public class Cargo implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Cargo other = (Cargo) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idCar == null) {
+			if (other.idCar != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idCar.equals(other.idCar))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return  nombre;
 	}
 	
 	

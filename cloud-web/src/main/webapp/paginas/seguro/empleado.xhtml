@@ -16,8 +16,8 @@
 							<h:panelGrid id="paneldatos" columns="3">
 
 								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
-								<h:inputText id="tftCedula" value="#{recursosControlador.cedula}"
-									class="form-control"></h:inputText>
+								<h:inputText id="tftCedula"
+									value="#{recursosControlador.cedula}" class="form-control"></h:inputText>
 								<p:message for="tftCedula " />
 
 								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
@@ -34,25 +34,26 @@
 								<p:message for="tftFechaIngreso" />
 
 
-								<h:outputLabel for="tftCargo" id="lblCargo"
-									value="Cargo" />
+								<h:outputLabel id="lblCargo" value="Cargo" class="labelSelect" />
+
 								<h:selectOneMenu id="tftCargo"
 									value="#{recursosControlador.idCargo}"
-									converter="cargoConverter" class="form-control">
+									class="sizeselect form-control">
 
-									<f:selectItems value="#{recursosControlador.listaCargo}" var="rh"
-										itemValue="#{rh}" itemLabel="#{rh.nombre}" />
+									<f:selectItems value="#{recursosControlador.listaCargo}"
+										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
+
 								</h:selectOneMenu>
-								<p:message for="tftCargo " />
-								
-								<h:outputLabel for="cbArea" id="lblArea"
-									value="Area" />
+								<br />
+
+								<h:outputLabel for="cbArea" id="lblArea" value="Area" class="labelSelect"/>
 								<h:selectOneMenu id="cbArea"
 									value="#{recursosControlador.idAreaEmpresa}"
-									converter="areaConvertidor" class="form-control">
+									 class="sizeselect form-control">
 
-									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}" var="areaE"
-										itemValue="#{areaE}" itemLabel="#{areaE.nombreArea}" />
+									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
+										var="areaE" itemValue="#{areaE.idArea}"
+										itemLabel="#{areaE.nombreArea}" />
 								</h:selectOneMenu>
 
 								<h1></h1>
@@ -101,7 +102,7 @@
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 
-						
+
 
 
 

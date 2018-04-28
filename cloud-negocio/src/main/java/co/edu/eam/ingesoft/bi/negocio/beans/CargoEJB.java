@@ -18,7 +18,7 @@ public class CargoEJB {
 	private EntityManager em;
 	
 	public void crearCargo(Cargo cargo) {
-		Cargo ca = buscarCargo(cargo.getId());
+		Cargo ca = buscarCargo(cargo.getIdCar());
 		
 		if(ca == null ) {
 			em.persist(cargo);
@@ -33,7 +33,7 @@ public class CargoEJB {
 	}
 	
 	public void editarCargo(Cargo cargo) {
-		Cargo ca = buscarCargo(cargo.getId());
+		Cargo ca = buscarCargo(cargo.getIdCar());
 		
 		if(ca != null ) {
 			em.merge(cargo);

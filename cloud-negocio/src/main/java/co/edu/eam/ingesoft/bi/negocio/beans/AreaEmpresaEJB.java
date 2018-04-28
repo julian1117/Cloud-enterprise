@@ -17,7 +17,7 @@ public class AreaEmpresaEJB {
 	private EntityManager em;
 	
 	public void crearArea(AreaEmpresa idArea) {
-		AreaEmpresa area = buscarArea(idArea.getId());
+		AreaEmpresa area = buscarArea(idArea.getIdArea());
 		
 		if(area == null) {
 			em.persist(idArea);
@@ -32,7 +32,7 @@ public class AreaEmpresaEJB {
 	}
 	
 	public void editarArea (AreaEmpresa area) {
-		AreaEmpresa areaEm = buscarArea(area.getId());
+		AreaEmpresa areaEm = buscarArea(area.getIdArea());
 		
 		if(areaEm != null) {
 			em.merge(area);

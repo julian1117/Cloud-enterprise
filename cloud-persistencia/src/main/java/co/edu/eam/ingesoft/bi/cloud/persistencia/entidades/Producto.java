@@ -6,17 +6,21 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="Producto")
+@NamedQuery(name=Producto.LISTA_PRODUCTO, query="SELECT p FROM Producto p ")
 public class Producto implements Serializable{
+	
+	public static final  String LISTA_PRODUCTO = "Producto.listaProducto";
 	
 	@Id
 	@Column(name="id")
-	private Integer id;
+	private Integer idProducto;
 	
 	@Column(name="nombre")
 	private String nombre;		
@@ -43,7 +47,7 @@ public class Producto implements Serializable{
 	public Producto(Integer id, String nombre, String descirpcion, Integer codigoLote, String peso, String dimensiones,
 			double valor) {
 		super();
-		this.id = id;
+		this.idProducto = id;
 		this.nombre = nombre;
 		this.descirpcion = descirpcion;
 		this.codigoLote = codigoLote;
@@ -52,12 +56,18 @@ public class Producto implements Serializable{
 		this.valor = valor;
 	}
 
-	public Integer getId() {
-		return id;
+	
+
+	public Integer getIdProducto() {
+		return idProducto;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdProducto(Integer idProducto) {
+		this.idProducto = idProducto;
+	}
+
+	public static String getListaProducto() {
+		return LISTA_PRODUCTO;
 	}
 
 	public String getNombre() {
@@ -107,6 +117,35 @@ public class Producto implements Serializable{
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idProducto == null) ? 0 : idProducto.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Producto other = (Producto) obj;
+		if (idProducto == null) {
+			if (other.idProducto != null)
+				return false;
+		} else if (!idProducto.equals(other.idProducto))
+			return false;
+		return true;
+	}
+
+	
+	
+	
 
 	
 

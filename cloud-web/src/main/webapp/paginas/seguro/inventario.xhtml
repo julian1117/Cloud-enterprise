@@ -1,0 +1,137 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabs">
+				<p:tab title="Gestionar Inventario">
+					<div align="center">
+						<p:panel id="paneldatosP" header="Datos de Inventario">
+							<h:panelGrid id="paneldatos" columns="3">
+
+								<h:outputLabel for="tftIdInventario" id="lblIdInventario"
+									value="Id Inventario"></h:outputLabel>
+								<h:inputText id="tftIdInventario"
+									value="#{inventarioControlador.idInventario}"
+									class="form-control"></h:inputText>
+								<p:message for="tftIdInventario " />
+
+								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula Empleado"></h:outputLabel>
+								<h:inputText id="tftCedula"
+									value="#{inventarioControlador.cedula}" class="form-control"></h:inputText>
+								<p:message for="tftCedula " />
+
+								<h:outputLabel for="tftCantidad" id="lblCantidad"
+									value="Cantidad"></h:outputLabel>
+								<h:inputText id="tftCantidad"
+									value="#{inventarioControlador.cantidad}" class="form-control"></h:inputText>
+								<p:message for="tftCantidad" />
+
+								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
+								<h:inputText id="tftFechaIngreso"
+									value="#{inventarioControlador.fechaIngreso}" mode="inline"
+									a:placeholder="dia-mes-año" class="form-control">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+								<p:message for="tftFechaIngreso" />
+
+
+								<h:outputLabel id="lblProducto" value="Producto"
+									class="labelSelect" />
+
+								<h:selectOneMenu id="tftProducto"
+									value="#{inventarioControlador.productoId}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{inventarioControlador.listarProducto}"
+										var="doc" itemValue="#{doc.idProducto}"
+										itemLabel="#{doc.nombre}" />
+
+								</h:selectOneMenu>
+								<br />
+
+
+								<h1></h1>
+
+
+							</h:panelGrid>
+							<h:panelGrid id="panelbtnsCrear" columns="2">
+								<p:commandButton id="btnCrear" value="CREAR"
+									actionListener="#{inventarioControlador.crearInventario}"
+									process="@this paneldatos" class="button" />
+							</h:panelGrid>
+						</p:panel>
+					</div>
+				</p:tab>
+
+
+
+				<p:tab title="Buscar-Editar-Eliminar">
+					<div align="center">
+
+						<h:panelGrid id="panelBuscar" columns="3">
+							<h:outputLabel for="tftIdInventarioBuscar"
+								id="lblIdInventarioBuscar" value="Identificacion"></h:outputLabel>
+							<h:inputText id="tftIdInventarioBuscar"
+								value="#{inventarioControlador.idInventario}"></h:inputText>
+
+							<p:commandButton id="btnBuscar" value="BUSCAR"
+								action="#{inventarioControlador.buscarInventario}" class="btn"
+								process="@this tftIdInventarioBuscar" update="paneldatosBuscar " />
+						</h:panelGrid>
+
+
+						<p:panel id="paneldatosPBuscar" header="Datos">
+							<h:panelGrid id="paneldatosBuscar" columns="2">
+
+								<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
+									value="Cedula"></h:outputLabel>
+								<h:inputText id="tftCedulaBuscar"
+									value="#{recursosControlador.cedula}"></h:inputText>
+
+
+								<h:outputLabel for="tftCantidadBuscar" id="lblCantidadBuscar"
+									value="Cantidad"></h:outputLabel>
+								<h:inputText id="tftCantidadBuscar"
+									value="#{inventarioControlador.cantidad}"></h:inputText>
+
+								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
+								<h:inputText id="tftFechaBuscar"
+									value="#{inventarioControlador.fechaIngreso}" mode="inline"
+									a:placeholder="dia-mes-anio">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+
+
+
+
+
+							</h:panelGrid>
+						</p:panel>
+						<br></br> <br></br>
+
+						<h2>Otras Opciones</h2>
+						<h:panelGrid id="panelbtns" columns="2">
+							<p:commandButton id="btnEditar" value="Editar"
+								action="#{inventarioControlador.editarInventario}" class="btn"
+								process="@this paneldatosPBuscar" />
+
+
+							<p:commandButton id="btnEliminar" value="Eliminar"
+								action="#{inventarioControlador.eliminarInventario}" class="btn"
+								process="@this tftIdInventarioBuscar" />
+						</h:panelGrid>
+
+					</div>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

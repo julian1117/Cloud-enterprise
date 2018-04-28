@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,9 +19,8 @@ import javax.persistence.TemporalType;
 @Table(name="Inventario")
 public class Inventario implements Serializable{
 	
-	@Id
-	@Column(name="id")
-	private Integer id;
+	@Id@Column(name="id")
+	private Integer idInventario;
 	
 	@Column(name="cantidad")
 	private Integer cantidad;
@@ -30,24 +32,32 @@ public class Inventario implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="producto")
 	private Producto producto;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="persona_Id")
+	private Empleado idPersona;	
 
 	public Inventario() {
 		super();
 	}
 
-	public Inventario(Integer id, Integer cantidad, Producto producto) {
+	public Inventario(Integer idInventario, Integer cantidad, Date fechaIngreso, Producto producto,
+			Empleado idPersona) {
 		super();
-		this.id = id;
+		this.idInventario = idInventario;
 		this.cantidad = cantidad;
+		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
+		this.idPersona = idPersona;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getIdInventario() {
+		return idInventario;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdInventario(Integer idInventario) {
+		this.idInventario = idInventario;
 	}
 
 	public Integer getCantidad() {
@@ -58,6 +68,14 @@ public class Inventario implements Serializable{
 		this.cantidad = cantidad;
 	}
 
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
 	public Producto getProducto() {
 		return producto;
 	}
@@ -65,8 +83,19 @@ public class Inventario implements Serializable{
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
+	public Empleado getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(Empleado idPersona) {
+		this.idPersona = idPersona;
+	}
+
+
+
 	
-	
+
 	
 
 }

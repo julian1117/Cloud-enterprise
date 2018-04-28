@@ -31,7 +31,7 @@ public class AreaEmpresaConvertidor implements Converter{
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object value) {
 		if(value instanceof AreaEmpresa) {
 			AreaEmpresa areaEmpresa = (AreaEmpresa) value;
-			return String.valueOf(areaEmpresa.getId());
+			return String.valueOf(areaEmpresa.getIdArea());
 		}
 		return null;
 	}

@@ -4,7 +4,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
 
 @Stateless
@@ -15,12 +14,12 @@ public class ProductoEJB {
 	private EntityManager em;
 	
 	public void crearProducto (Producto producto) {
-		Producto pr = buscarProducto(producto.getId());
+		Producto pr = buscarProducto(producto.getIdProducto());
 		
 		if(pr== null ) {
 			em.persist(producto);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("El Producto ya se encuentra registrado");
+		//	throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
 		}
 	}
 	
@@ -34,21 +33,21 @@ public class ProductoEJB {
 	}
 	
 	public void editar(Producto producto) {
-		Producto pro = buscarProducto(producto.getId());
+		Producto pro = buscarProducto(producto.getIdProducto());
 		if(pro != null) {
 			em.merge(producto);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("El Producto no se encuentra en el sistema");
+		//	throw new Exception("El Producto no se encuentra en el sistema");
 
 		}
 	}
 	
 	public void eliminarProducto(Producto producto) {
-		Producto pro = buscarProducto(producto.getId());
+		Producto pro = buscarProducto(producto.getIdProducto());
 		if(pro != null) {
 			em.remove(producto);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("El Producto no se encuentra en el sistema");
+		//	throw new Exception("El Producto no se encuentra en el sistema");
 
 		}
 	}

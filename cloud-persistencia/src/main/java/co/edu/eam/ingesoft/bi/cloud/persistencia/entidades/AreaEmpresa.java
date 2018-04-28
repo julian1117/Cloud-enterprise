@@ -18,7 +18,7 @@ public class AreaEmpresa implements Serializable{
 
 	@Id
 	@Column(name="id")
-	private Integer id;
+	private Integer idArea;
 	
 	@Column(name="nombreArea")
 	private String nombreArea;
@@ -30,19 +30,22 @@ public class AreaEmpresa implements Serializable{
 		super();
 	}
 
-	public AreaEmpresa(Integer id, String nombreArea, String descripcion) {
+	
+	public AreaEmpresa(Integer idArea, String nombreArea, String descripcion) {
 		super();
-		this.id = id;
+		this.idArea = idArea;
 		this.nombreArea = nombreArea;
 		this.descripcion = descripcion;
 	}
 
-	public Integer getId() {
-		return id;
+
+
+	public Integer getIdArea() {
+		return idArea;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdArea(Integer idArea) {
+		this.idArea = idArea;
 	}
 
 	public String getNombreArea() {
@@ -60,6 +63,35 @@ public class AreaEmpresa implements Serializable{
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idArea == null) ? 0 : idArea.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AreaEmpresa other = (AreaEmpresa) obj;
+		if (idArea == null) {
+			if (other.idArea != null)
+				return false;
+		} else if (!idArea.equals(other.idArea))
+			return false;
+		return true;
+	}
+
+	
 	
 	
 }
