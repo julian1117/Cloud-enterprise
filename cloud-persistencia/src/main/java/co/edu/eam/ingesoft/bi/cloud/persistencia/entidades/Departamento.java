@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Departamento")
-@NamedQuery(name=Departamento.LISTA_DEPARTAMENTO,query="select d from Departamento d where d.IdPais.idPais=?1")
+@NamedQuery(name=Departamento.LISTA_DEPARTAMENTO,query="select d from Departamento d where d.IdPais.nombre=?1")
 public class Departamento implements Serializable{
 
 	public static final  String LISTA_DEPARTAMENTO = "Departamento.listaDepartamento";

@@ -1,5 +1,7 @@
 package co.edu.eam.ingesoft.bi.cloud.web.convertidores;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -13,7 +15,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.AreaEmpresaEJB;
 
 @FacesConverter(value = "areaConvertidor", forClass = AreaEmpresa.class)
 @Named("areaConvertidor")
-public class AreaEmpresaConvertidor {
+public class AreaEmpresaConvertidor implements Serializable{
 	
 	@EJB
 	private AreaEmpresaEJB areaEJB;

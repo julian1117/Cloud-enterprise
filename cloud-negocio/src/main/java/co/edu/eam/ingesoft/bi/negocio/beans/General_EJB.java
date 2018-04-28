@@ -61,8 +61,8 @@ public class General_EJB {
 	 * @param pais
 	 * @return lista de departamento
 	 */
-	public List<Departamento> listaDepartamento (Integer id){
-		return em.createNamedQuery(Departamento.LISTA_DEPARTAMENTO).setParameter(1, id).getResultList();
+	public List<Departamento> listaDepartamento (String nombre){
+		return em.createNamedQuery(Departamento.LISTA_DEPARTAMENTO).setParameter(1, nombre).getResultList();
 	}
 	
 	/**
@@ -70,8 +70,8 @@ public class General_EJB {
 	 * @param Ciudad
 	 * @return lista de ciudades
 	 */
-	public List<Ciudad> listCiudad(){
-		return em.createNamedQuery(Ciudad.LISTA_CIUDAD).setParameter(1, 1).getResultList();
+	public List<Ciudad> listCiudad(String nombre){
+		return em.createNamedQuery(Ciudad.LISTA_CIUDAD).setParameter(1, nombre).getResultList();
 	}
 
 	/**

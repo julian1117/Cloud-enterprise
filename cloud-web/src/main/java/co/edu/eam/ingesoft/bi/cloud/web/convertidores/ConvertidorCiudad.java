@@ -18,6 +18,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 @Named("ciudadConverter")
 public class ConvertidorCiudad implements Converter {
 
+	
 	@EJB
 	private General_EJB generalEJB;
 	

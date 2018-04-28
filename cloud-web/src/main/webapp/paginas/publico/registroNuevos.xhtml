@@ -70,16 +70,15 @@
 							class="labelSelect" />
 						<h:selectOneMenu id="tftPais"
 							value="#{gestionNuevosController.pais}"
-							converter="paisConverter" class="sizeselect form-control">
+							class="sizeselect form-control">
 
-							<p:ajax update="tftDep"
-								listener="#{gestionNuevosController.cargarDep}" />
-
+							<p:ajax listener="#{gestionNuevosController.cargarDep}"
+								update="tftDep" />
+							<f:selectItem itemLabel="Seleccione el Pais" itemValue=""
+								noSelectionOption="true" />
 							<f:selectItems value="#{gestionNuevosController.listPais}"
-								var="doc" itemValue="#{doc.idPais}" itemLabel="#{doc.nombre}"
+								var="doc" itemValue="#{doc.nombre}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
-
-
 
 						</h:selectOneMenu>
 						<br />
@@ -87,28 +86,29 @@
 						<h:outputLabel for="tftDep" id="lblDep" value="Departamento " />
 						<h:selectOneMenu id="tftDep"
 							value="#{gestionNuevosController.departamento}"
-							converter="departamentoConverter" class="sizeselect form-control">
+							class="sizeselect form-control">
+							<f:selectItem itemLabel="Seleccione el Departamento" itemValue=""
+								noSelectionOption="true" />
+							<p:ajax listener="#{gestionNuevosController.cargarCiu}"
+								update="tftCiudad" />
 
 							<f:selectItems
 								value="#{gestionNuevosController.listDepartamento}" var="doc"
-								itemValue="#{doc}" itemLabel="#{doc.nombre}"
+								itemValue="#{doc.nombre}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
 
-							<p:ajax event="change" execute="@this" render=":tftCiudad"
-								listener="#{gestionNuevosController.cargarCiu}" />
-
-
 						</h:selectOneMenu>
-
 						<p:message for="tftDep" />
 
-						<h:outputLabel for="tftCiudad" id="lblCiudad" value="Ciudad " />
+
+						<h:outputLabel id="lblCiudad" value="Ciudad " />
 						<h:selectOneMenu id="tftCiudad"
 							value="#{gestionNuevosController.ciudad}"
-							converter="ciudadConverter" class="sizeselect form-control">
-
+							class="sizeselect form-control">
+							<f:selectItem itemLabel="Seleccione la ciudad" itemValue=""
+								noSelectionOption="true" />
 							<f:selectItems value="#{gestionNuevosController.listCiudad}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.nombre}"
+								var="doc" itemValue="#{doc.id}" itemLabel="#{doc.nombre}"
 								class="sizeselect form-control" />
 						</h:selectOneMenu>
 

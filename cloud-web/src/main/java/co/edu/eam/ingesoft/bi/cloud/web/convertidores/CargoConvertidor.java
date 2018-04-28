@@ -3,6 +3,7 @@ package co.edu.eam.ingesoft.bi.cloud.web.convertidores;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
@@ -11,7 +12,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 
 @FacesConverter(value = "cargoConverter", forClass = Cargo.class)
 @Named("cargoConverter")
-public class CargoConvertidor {
+public class CargoConvertidor implements Converter{
 	
 	@EJB
 	private RecursosHumanosEJB cargoEJB;

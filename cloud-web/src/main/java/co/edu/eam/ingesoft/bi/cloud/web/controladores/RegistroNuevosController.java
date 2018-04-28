@@ -41,8 +41,9 @@ public class RegistroNuevosController implements Serializable {
 
 	private Date fechaNacimiento;
 
-	//@Pattern(regexp = "[0-9]*", message = "El campo numero de  identificacion solo puede llevar caracteres numericos")
-	//@Length(min = 4, max = 10, message = "Cedula - longitud entre 7 y 10")
+	// @Pattern(regexp = "[0-9]*", message = "El campo numero de identificacion solo
+	// puede llevar caracteres numericos")
+	// @Length(min = 4, max = 10, message = "Cedula - longitud entre 7 y 10")
 	private Integer cedula;
 
 	@Pattern(regexp = "[0-9]*", message = "El campo numero de  telefonosolo puede llevar caracteres numericos")
@@ -59,15 +60,15 @@ public class RegistroNuevosController implements Serializable {
 
 	private List<Pais> listPais;
 
-	private Pais pais;
+	private String pais;
 
 	private List<Departamento> listDepartamento;
 
-	private Departamento departamento;
+	private String departamento;
 
 	private List<Ciudad> listCiudad;
 
-	private Ciudad ciudad;
+	private Integer ciudad;
 
 	// Declaracion de EJB
 	@EJB
@@ -158,28 +159,12 @@ public class RegistroNuevosController implements Serializable {
 		this.listPais = listPais;
 	}
 
-	public Pais getPais() {
-		return pais;
-	}
-
-	public void setPais(Pais pais) {
-		this.pais = pais;
-	}
-
 	public List<Departamento> getListDepartamento() {
 		return listDepartamento;
 	}
 
 	public void setListDepartamento(List<Departamento> listDepartamento) {
 		this.listDepartamento = listDepartamento;
-	}
-
-	public Departamento getDepartamento() {
-		return departamento;
-	}
-
-	public void setDepartamento(Departamento departamento) {
-		this.departamento = departamento;
 	}
 
 	public List<Ciudad> getListCiudad() {
@@ -190,11 +175,27 @@ public class RegistroNuevosController implements Serializable {
 		this.listCiudad = listCiudad;
 	}
 
-	public Ciudad getCiudad() {
+	public String getPais() {
+		return pais;
+	}
+
+	public void setPais(String pais) {
+		this.pais = pais;
+	}
+
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
+	}
+
+	public Integer getCiudad() {
 		return ciudad;
 	}
 
-	public void setCiudad(Ciudad ciudad) {
+	public void setCiudad(Integer ciudad) {
 		this.ciudad = ciudad;
 	}
 
@@ -202,17 +203,17 @@ public class RegistroNuevosController implements Serializable {
 	public void inicializar() {
 		listGeneros = registroNuevosEJB.listaGeneros();
 		listPais = generalEJB.listaPaises();
-		//listDepartamento = generalEJB.listaDepartamento();
-		listCiudad = generalEJB.listCiudad();
+		// listDepartamento = generalEJB.listaDepartamento();
+		// listCiudad = generalEJB.listCiudad();
 
 	}
 
 	public void cargarDep() {
-		listDepartamento = generalEJB.listaDepartamento(pais.getIdPais());
+		listDepartamento = generalEJB.listaDepartamento(pais);
 	}
 
 	public void cargarCiu() {
-		//listCiudad = generalEJB.listCiudad(departamento.getIdDepartamento());
+		listCiudad = generalEJB.listCiudad(departamento);
 	}
 
 	/**
@@ -222,7 +223,7 @@ public class RegistroNuevosController implements Serializable {
 
 		try {
 			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad.getId());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad);
 
 			Persona persona = new Persona();
 			persona.setNombre(nombre);

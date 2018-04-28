@@ -37,7 +37,7 @@
 								<h:outputLabel for="tftCargo" id="lblCargo"
 									value="Cargo" />
 								<h:selectOneMenu id="tftCargo"
-									value="#{proceControler.idCargo}"
+									value="#{recursosControlador.idCargo}"
 									converter="cargoConverter" class="form-control">
 
 									<f:selectItems value="#{recursosControlador.listaCargo}" var="rh"
@@ -68,7 +68,7 @@
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="Identificacion"></h:outputLabel>
 							<h:inputText id="tftCedulaBuscar"
-								value="#{recursosControlador.id}"></h:inputText>
+								value="#{recursosControlador.cedula}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
 								action="#{recursosControlador.buscarEmpleado}" class="btn"
@@ -83,7 +83,7 @@
 								<h:outputLabel for="tftSalarioBuscar" id="lblSalarioBuscar"
 									value="Salario"></h:outputLabel>
 								<h:inputText id="tftSalarioBuscar"
-									value="#{recursosControlador.Salario}"></h:inputText>
+									value="#{recursosControlador.salario}"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"

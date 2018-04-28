@@ -10,11 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ManyToAny;
-
 @Entity
 @Table(name="Ciudad")
-@NamedQuery(name=Ciudad.LISTA_CIUDAD,query="select c from Ciudad c where c.departamento.IdDepartamento=?1")
+@NamedQuery(name=Ciudad.LISTA_CIUDAD,query="select c from Ciudad c where c.departamento.nombre=?1")
 public class Ciudad implements Serializable{
 	
 	public static final  String LISTA_CIUDAD = "Ciudad.listaCiudad";
