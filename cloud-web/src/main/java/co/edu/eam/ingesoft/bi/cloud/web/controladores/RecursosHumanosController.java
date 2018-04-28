@@ -253,6 +253,7 @@ public class RecursosHumanosController implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		listaCargo = recursosEJB.listarCargos();
+		listaAreaEmpresa = recursosEJB.listarAreas();
 	}
 
 
@@ -260,6 +261,7 @@ public class RecursosHumanosController implements Serializable {
 		try {
 			Cargo cargo = cargoEJB.buscarCargo(idCargo.getId());
 			AreaEmpresa area = areaEJB.buscarArea(idAreaEmpresa.getId());
+			//Messages.addFlashGlobalInfo("hola" + area);
 			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
 			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, persona);
 			

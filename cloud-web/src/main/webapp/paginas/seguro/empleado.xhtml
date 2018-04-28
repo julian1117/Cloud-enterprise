@@ -42,8 +42,17 @@
 
 									<f:selectItems value="#{recursosControlador.listaCargo}" var="rh"
 										itemValue="#{rh}" itemLabel="#{rh.nombre}" />
+								</h:selectOneMenu>
+								<p:message for="tftCargo " />
+								
+								<h:outputLabel for="cbArea" id="lblArea"
+									value="Area" />
+								<h:selectOneMenu id="cbArea"
+									value="#{recursosControlador.idAreaEmpresa}"
+									converter="areaConvertidor" class="form-control">
 
-
+									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}" var="areaE"
+										itemValue="#{areaE}" itemLabel="#{areaE.nombreArea}" />
 								</h:selectOneMenu>
 
 								<h1></h1>

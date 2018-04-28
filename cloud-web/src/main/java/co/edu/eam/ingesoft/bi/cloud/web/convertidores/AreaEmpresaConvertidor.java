@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Named;
 
@@ -15,7 +16,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.AreaEmpresaEJB;
 
 @FacesConverter(value = "areaConvertidor", forClass = AreaEmpresa.class)
 @Named("areaConvertidor")
-public class AreaEmpresaConvertidor implements Serializable{
+public class AreaEmpresaConvertidor implements Converter{
 	
 	@EJB
 	private AreaEmpresaEJB areaEJB;

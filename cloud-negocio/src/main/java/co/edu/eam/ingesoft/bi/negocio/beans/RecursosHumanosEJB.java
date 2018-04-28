@@ -24,7 +24,7 @@ public class RecursosHumanosEJB {
 		if(per != null) {
 			em.persist(Empleado);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("La Empleado ya se encuentra registrado");
+	//		throw new ExcepcionNegocio("La Empleado ya se encuentra registrado");
 		}
 	}
 	
@@ -37,7 +37,7 @@ public class RecursosHumanosEJB {
 		if(per != null) {
 			em.merge(Empleado);
 		}else {
-			throw new co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio("La Empleado ya se encuentra registrado");
+	//		throw new ExcepcionNegocio("La Empleado ya se encuentra registrado");
 		}
 	}
 	

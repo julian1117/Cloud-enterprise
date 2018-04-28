@@ -1,5 +1,7 @@
 package co.edu.eam.ingesoft.bi.cloud.web.convertidores;
 
+import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
