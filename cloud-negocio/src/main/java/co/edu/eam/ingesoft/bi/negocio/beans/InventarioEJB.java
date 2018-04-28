@@ -21,7 +21,7 @@ public class InventarioEJB {
 	
 	public void crearInventario(Inventario inventario) {		
 		Inventario inv = buscarInventario(inventario.getIdInventario());		
-		if(inv != null) {
+		if(inv == null) {
 			em.persist(inventario);
 		}else {
 			throw new ExcepcionNegocio("El Inventario con ese ID ya se encuentra registrado");
