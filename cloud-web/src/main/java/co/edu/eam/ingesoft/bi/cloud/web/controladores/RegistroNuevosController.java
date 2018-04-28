@@ -11,15 +11,19 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Ciudad;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Departamento;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
+import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 /*
  * @julian camilo henao
@@ -68,6 +72,12 @@ public class RegistroNuevosController implements Serializable {
 	private List<Ciudad> listCiudad;
 
 	private Integer ciudad;
+
+	private String nombreUsuario;
+
+	private String contrasenaA;
+
+	private String contrasenaB;
 
 	// Declaracion de EJB
 	@EJB
@@ -198,6 +208,30 @@ public class RegistroNuevosController implements Serializable {
 		this.ciudad = ciudad;
 	}
 
+	public String getNombreUsuario() {
+		return nombreUsuario;
+	}
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+	public String getcontrasenaA() {
+		return contrasenaA;
+	}
+
+	public void setcontrasenaA(String contrasenaA) {
+		this.contrasenaA = contrasenaA;
+	}
+
+	public String getcontrasenaB() {
+		return contrasenaB;
+	}
+
+	public void setcontrasenaB(String contrasenaB) {
+		this.contrasenaB = contrasenaB;
+	}
+
 	@PostConstruct
 	public void inicializar() {
 		listGeneros = registroNuevosEJB.listaGeneros();
@@ -235,15 +269,56 @@ public class RegistroNuevosController implements Serializable {
 			persona.setGenero(buscarGenero);
 			persona.setTelefono(telefono);
 
-			registroNuevosEJB.crearPersona(persona);
+			// valido que el usuario no este registrado antes
+			if (registroNuevosEJB.buscarUsuarios(nombreUsuario)) {
+				// valido que las contraseñas ingresadas sean las mismas
+				if (contrasenaA.equals(contrasenaB)) {
+					
+					// creo la persona
+					registroNuevosEJB.crearPersona(persona);
+					
+					Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
+					
+					Usuario usuario = new Usuario();
+					usuario.setNombre(nombreUsuario);
+					usuario.setContrasenia(contrasenaA);
+					usuario.setEstado(false);
+					usuario.setPersona(per);
+					
+					
+					// creo el usuario
+					registroNuevosEJB.crearUsuario(usuario);
+					Messages.addFlashGlobalInfo("Registro éxitoso");
 
-			Messages.addFlashGlobalInfo("Persona creada con exito");
+				} else {
+					Messages.addFlashGlobalError("Las contraseñas no coinciden");
+				}
+
+			} else {
+				Messages.addFlashGlobalError("El nombre de usuario ingresado ya existe: " + nombreUsuario);
+			}
+
+			
 
 		} catch (Exception e) {
-			Messages.addFlashGlobalInfo("La persona no se registro");
+			Messages.addFlashGlobalFatal("=( \nLosentimos el registro no fue posible. intentalo de nuevo");
 
 		}
 
+	}
+	
+	public void registrarAuditoria(String accion) {
+	/*try {
+			Auditoria audi = new Auditoria();
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			audi.setAccion(accion);
+			audi.setRegistroRealizoAccion("Registro usuario");
+			audi.setUsuario(sesion.getUsuario());
+			audEJB.registrarAuditoria(audi,browserDetails);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		*/
 	}
 
 }

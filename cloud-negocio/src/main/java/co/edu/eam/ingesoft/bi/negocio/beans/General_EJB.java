@@ -83,4 +83,6 @@ public class General_EJB {
 		return em.find(Ciudad.class, idCiudad);
 	}
 	
+	
+
 }

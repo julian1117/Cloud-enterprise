@@ -11,36 +11,36 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Auditoria")
-public class Auditoria implements Serializable{
+@Table(name = "Auditoria")
+public class Auditoria implements Serializable {
 
 	@Id
-	@Column(name="id")
-	private Integer id;
-	
-	@Column(name="nombre")
+	@Column(name = "id")
+	private Integer idAuditoria;
+
+	@Column(name = "nombre")
 	private String nombre;
-	
-	@Column(name="accion")
+
+	@Column(name = "accion")
 	private String accion;
-	
-	@Column(name="origen")
+
+	@Column(name = "origen")
 	private String origen;
-	
-	@Column(name="navegador")
+
+	@Column(name = "navegador")
 	private String navegador;
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="fecha")
+	@Column(name = "fecha")
 	private Date fecha;
 
 	public Auditoria() {
 		super();
 	}
 
-	public Auditoria(Integer id, String nombre, String accion, String origen, String navegador, Date fecha) {
+	public Auditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, Date fecha) {
 		super();
-		this.id = id;
+		this.idAuditoria = idAuditoria;
 		this.nombre = nombre;
 		this.accion = accion;
 		this.origen = origen;
@@ -48,12 +48,12 @@ public class Auditoria implements Serializable{
 		this.fecha = fecha;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getIdAuditoria() {
+		return idAuditoria;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdAuditoria(Integer idAuditoria) {
+		this.idAuditoria = idAuditoria;
 	}
 
 	public String getNombre() {
@@ -95,8 +95,30 @@ public class Auditoria implements Serializable{
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
-	
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idAuditoria == null) ? 0 : idAuditoria.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Auditoria other = (Auditoria) obj;
+		if (idAuditoria == null) {
+			if (other.idAuditoria != null)
+				return false;
+		} else if (!idAuditoria.equals(other.idAuditoria))
+			return false;
+		return true;
+	}
+
 }
