@@ -158,11 +158,30 @@ public class InventarioControlador implements Serializable {
 	}
 
 	public void buscarInventario() {
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		
+		if(inv != null) {
+			cedula = inv.getIdPersona().toString();
+			cantidad= inv.getCantidad().toString();
+			fechaIngreso= inv.getFechaIngreso();
+			productoId = inv.getProducto().getNombre();
+		}else {
+			Messages.addFlashGlobalInfo("El Inventario no se encuentra registardo");
 
+		}
 	}
 
 	public void editarInventario() {
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		if (inv != null) {
+			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(cedula));
+			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId));
 
+			Inventario inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad), fechaIngreso, producto, persona);
+			inventarioEJB.editarInventario(inventario);
+			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+
+		}
 	}
 
 	public void eliminarInventario() {

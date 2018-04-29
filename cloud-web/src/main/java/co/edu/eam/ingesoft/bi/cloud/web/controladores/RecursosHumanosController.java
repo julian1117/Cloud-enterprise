@@ -290,11 +290,34 @@ public class RecursosHumanosController implements Serializable {
 	}
 	
 	public void buscarEmpleado() {
+		Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
 		
+		if(emp != null) {
+			salario= emp.getSalario();
+			fechaIngreso =  emp.getFechaIngreso();
+			idAreaEmpresa = emp.getCargo().getNombre();
+			idCargo = emp.getArea().getNombreArea();
+		}else {
+			Messages.addFlashGlobalInfo("El Empleado no se encuentra registardo");
+
+		}
 	}
 	
 	public void editarEmpleado() {
+Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
 		
+		if(emp != null) {
+			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
+			
+			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa));
+			//Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
+			
+			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, emp.getIdPersona());
+			recursosEJB.editarEmpleado(empleado);
+			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+
+			
+		}
 	}
 	
 	public void eliminarEmpleado() {
