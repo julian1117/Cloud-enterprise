@@ -98,6 +98,30 @@
 
 					</div>
 				</p:tab>
+				
+				<p:tab title="Lista">
+					<div align="center">
+					
+					<p:panel header="Listado Areas Empresa" id="panelTab">
+				<p:dataTable id="panelTablas" value="#{recursosControlador.listaAreaEmpresa}"
+					var="doc" border="1" class="table table-striped">
+					<p:column headerText="Id Area">
+						<h:outputLabel value="#{doc.idArea}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputLabel
+							value="#{doc.nombreArea}" />
+					</p:column>
+					<p:column headerText="Descripcion">
+						<h:outputLabel
+							value="#{doc.descripcion}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+					
+					</div>
+				</p:tab>
 			</p:tabView>
 		</h:form>
 	</ui:define>

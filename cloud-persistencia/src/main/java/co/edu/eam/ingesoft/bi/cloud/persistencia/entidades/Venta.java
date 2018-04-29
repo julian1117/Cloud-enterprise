@@ -4,44 +4,52 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="GestionInventario")
-public class GestionInventario implements Serializable {
+@Table(name="Venta")
+public class Venta implements Serializable {
 	
 	@Id
-	@Column(name="id")
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENTA_SEQ")
+    @SequenceGenerator(sequenceName = "VENTAS_SEQ", allocationSize = 1, name = "VENTA_SEQ")
+	private Integer idVenta;
 	
 	@ManyToOne
 	@JoinColumn(name = "Inventario_id")
 	private Inventario inventario;
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "GestionVenta_id")
 	private GestionVenta gestionVenta;
+	
+	private Integer cantidad;
 
-	public GestionInventario() {
+	public Venta() {
 		super();
 	}
 
-	public GestionInventario(Integer id, Inventario inventario, GestionVenta gestionVenta) {
+	public Venta(Integer idVenta, Inventario inventario, GestionVenta gestionVenta, Integer cantidad) {
 		super();
-		this.id = id;
+		this.idVenta = idVenta;
 		this.inventario = inventario;
 		this.gestionVenta = gestionVenta;
+		this.cantidad = cantidad;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getIdVenta() {
+		return idVenta;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdVenta(Integer idVenta) {
+		this.idVenta = idVenta;
 	}
 
 	public Inventario getInventario() {
@@ -59,6 +67,18 @@ public class GestionInventario implements Serializable {
 	public void setGestionVenta(GestionVenta gestionVenta) {
 		this.gestionVenta = gestionVenta;
 	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
+
+	
+	
+
 	
 	
 

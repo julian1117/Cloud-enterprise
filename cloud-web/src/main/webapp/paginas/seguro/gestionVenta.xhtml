@@ -1,0 +1,201 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabs">
+				<p:tab title="Gestionar Recursos Humanos">
+					<div align="center">
+						<p:panel id="paneldatosP" header="Datos de Empleado">
+							<h:panelGrid id="paneldatos" columns="3">
+
+								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
+								<h:inputText id="tftCedula"
+									value="#{recursosControlador.cedula}" class="form-control"></h:inputText>
+								<p:message for="tftCedula " />
+
+								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
+								<h:inputText id="tftSalario"
+									value="#{recursosControlador.salario}" class="form-control"></h:inputText>
+								<p:message for="tftSalario" />
+
+								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
+								<h:inputText id="tftFechaIngreso"
+									value="#{recursosControlador.fechaIngreso}" mode="inline"
+									a:placeholder="dia-mes-año" class="form-control">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+								<p:message for="tftFechaIngreso" />
+
+
+								<h:outputLabel id="lblCargo" value="Cargo" class="labelSelect" />
+
+								<h:selectOneMenu id="tftCargo"
+									value="#{recursosControlador.idCargo}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaCargo}"
+										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
+
+								</h:selectOneMenu>
+								<br />
+
+								<h:outputLabel for="cbArea" id="lblArea" value="Area"
+									class="labelSelect" />
+								<h:selectOneMenu id="cbArea"
+									value="#{recursosControlador.idAreaEmpresa}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
+										var="areaE" itemValue="#{areaE.idArea}"
+										itemLabel="#{areaE.nombreArea}" />
+								</h:selectOneMenu>
+
+								<h1></h1>
+
+
+							</h:panelGrid>
+							<h:panelGrid id="panelbtnsCrear" columns="2">
+								<p:commandButton id="btnCrear" value="CREAR"
+									actionListener="#{recursosControlador.crearEmpleado}"
+									process="@this paneldatos" class="button" />
+							</h:panelGrid>
+						</p:panel>
+					</div>
+				</p:tab>
+
+
+
+				<p:tab title="Buscar-Editar-Eliminar">
+					<div align="center">
+
+						<h:panelGrid id="panelBuscar" columns="3">
+							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
+								value="Identificacion"></h:outputLabel>
+							<h:inputText id="tftCedulaBuscar"
+								value="#{recursosControlador.cedula}"></h:inputText>
+
+							<p:commandButton id="btnBuscar" value="BUSCAR"
+								action="#{recursosControlador.buscarEmpleado}" class="btn"
+								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
+						</h:panelGrid>
+
+
+						<p:panel id="paneldatosPBuscar" header="Datos">
+							<h:panelGrid id="paneldatosBuscar" columns="2">
+
+
+								<h:outputLabel for="tftSalarioBuscar" id="lblSalarioBuscar"
+									value="Salario"></h:outputLabel>
+								<h:inputText id="tftSalarioBuscar"
+									value="#{recursosControlador.salario}"></h:inputText>
+
+								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
+								<h:inputText id="tftFechaBuscar"
+									value="#{recursosControlador.fechaIngreso}" mode="inline"
+									a:placeholder="dia-mes-anio">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+
+
+
+								<h:outputLabel for="tftCargoBuscar" id="lblCargoBuscar"
+									value="Cargo"></h:outputLabel>
+								<h:selectOneMenu id="tftCargoBuscar"
+									value="#{recursosControlador.idCargo}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaCargo}"
+										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
+
+								</h:selectOneMenu>
+								
+
+								<h:outputLabel for="tftAreaBuscar" id="lblAreaBuscar"
+									value="Area"></h:outputLabel>
+								<h:selectOneMenu id="tftAreaBuscar"
+									value="#{recursosControlador.idAreaEmpresa}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
+										var="areaE" itemValue="#{areaE.idArea}"
+										itemLabel="#{areaE.nombreArea}" />
+								</h:selectOneMenu>
+
+
+
+
+							</h:panelGrid>
+						</p:panel>
+						<br></br> <br></br>
+
+						<h2>Otras Opciones</h2>
+						<h:panelGrid id="panelbtns" columns="2">
+							<p:commandButton id="btnEditar" value="Editar"
+								action="#{recursosControlador.editarEmpleado}" class="btn"
+								process="@this paneldatosPBuscar" />
+
+
+							<p:commandButton id="btnEliminar" value="Eliminar"
+								action="#{recursosControlador.eliminarEmpleado}" class="btn"
+								process="@this tftCedulaBuscar" />
+						</h:panelGrid>
+
+					</div>
+				</p:tab>
+				
+				<p:tab title="Lista">
+					<div align="center">
+					
+					<p:panel header="Listado Empleados" id="panelTab">
+				<p:dataTable id="panelTablas" value="#{recursosControlador.listarEmpleado}"
+					var="doc" border="1" class="table table-striped">
+					<p:column headerText="Cedula">
+						<h:outputLabel value="#{doc.idPersona.cedula}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputLabel
+							value="#{doc.idPersona.nombre}" />
+					</p:column>
+					<p:column headerText="Nombre">
+						<h:outputLabel
+							value="#{doc.idPersona.apellido}" />
+					</p:column>
+					
+					<p:column headerText="Cargo">
+						<h:outputLabel
+							value="#{doc.cargo.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Area">
+						<h:outputLabel
+							value="#{doc.area.nombreArea}" />
+					</p:column>
+					
+					<p:column headerText="Fecha Ingreso">
+						<h:outputLabel
+							value="#{doc.fechaIngreso}" />
+					</p:column>
+					
+					<p:column headerText="Salario">
+						<h:outputLabel
+							value="#{doc.salario}" />
+					</p:column>
+					
+				</p:dataTable>
+			</p:panel>
+					
+					</div>
+				</p:tab>
+				
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

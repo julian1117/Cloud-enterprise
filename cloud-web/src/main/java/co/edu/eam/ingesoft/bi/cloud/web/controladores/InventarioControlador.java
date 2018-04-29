@@ -48,6 +48,10 @@ public class InventarioControlador implements Serializable {
 	private String productoId;
 
 	private List<Producto> listarProducto;
+	
+	private List<Inventario> listaInventario;
+	
+	private String idInventariolista;
 
 	@EJB
 	private InventarioEJB inventarioEJB;
@@ -60,7 +64,33 @@ public class InventarioControlador implements Serializable {
 	
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
+	
+	
+	
 
+	public List<Inventario> getListaInventario() {
+		return listaInventario;
+	}
+
+	public void setListaInventario(List<Inventario> listaInventario) {
+		this.listaInventario = listaInventario;
+	}
+
+	public String getIdInventariolista() {
+		return idInventariolista;
+	}
+
+	public void setIdInventariolista(String idInventariolista) {
+		this.idInventariolista = idInventariolista;
+	}
+
+	public AuditoriaEJB getAuditoriaEJB() {
+		return auditoriaEJB;
+	}
+
+	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
+		this.auditoriaEJB = auditoriaEJB;
+	}
 
 	public String getIdInventario() {
 		return idInventario;
@@ -134,10 +164,13 @@ public class InventarioControlador implements Serializable {
 	public void setProductoEJB(ProductoEJB productoEJB) {
 		this.productoEJB = productoEJB;
 	}
+	
+	
 
 	@PostConstruct
 	public void inicializar() {
 		listarProducto = inventarioEJB.listarProductos();
+		listaInventario = inventarioEJB.listarInventario();
 	}
 	
 	public void crearInventario() {
@@ -170,7 +203,7 @@ public class InventarioControlador implements Serializable {
 			cedula = inv.getIdPersona().toString();
 			cantidad= inv.getCantidad().toString();
 			fechaIngreso= inv.getFechaIngreso();
-			productoId = inv.getProducto().getNombre();
+			productoId = inv.getProducto().getIdProducto().toString();
 		}else {
 			Messages.addFlashGlobalInfo("El Inventario no se encuentra registardo");
 

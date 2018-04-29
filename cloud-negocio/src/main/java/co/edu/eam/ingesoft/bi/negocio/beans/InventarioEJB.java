@@ -60,5 +60,10 @@ public class InventarioEJB {
 		return list;
 	}
 	
+	public List<Inventario> listarInventario(){
+		List<Inventario> list = em.createNamedQuery(Inventario.LISTA_InventarioS).getResultList();
+		return list;
+	}
+	
 
 }

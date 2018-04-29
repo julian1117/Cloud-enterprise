@@ -51,6 +51,11 @@ public class RecursosHumanosEJB {
 		return list;
 	}
 	
+	public List<Empleado> listarEmpleado(){
+		List<Empleado> list = em.createNamedQuery(Empleado.LISTA_EMPLEADOS).getResultList();
+		return list;
+	}
+	
 	public Cargo buscarCargo(Integer idCargo) {
 		return em.find(Cargo.class, idCargo);
 	}
