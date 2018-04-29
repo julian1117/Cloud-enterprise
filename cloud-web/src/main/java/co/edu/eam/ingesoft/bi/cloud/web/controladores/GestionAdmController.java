@@ -12,6 +12,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
@@ -23,6 +24,8 @@ import co.edu.eam.ingesoft.bi.negocio.beans.GestionAdmEJB;
 public class GestionAdmController implements Serializable {
 
 	private List<Usuario> listUsuarioInact;
+	
+	private List<Usuario> listaPersona;
 
 	public List<Usuario> getListUsuarioInact() {
 		return listUsuarioInact;
@@ -32,11 +35,24 @@ public class GestionAdmController implements Serializable {
 		this.listUsuarioInact = listUsuarioInact;
 	}
 
+	public List<Usuario> getListaPersona() {
+		return listaPersona;
+	}
+
+	public void setListaPersona(List<Usuario> listaPersona) {
+		this.listaPersona = listaPersona;
+	}
+
+
+
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
 
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
+	
+	@Inject
+	private RecursosHumanosController recursosH;
 
 	@Inject
 	private SessionController sesion;
@@ -44,6 +60,7 @@ public class GestionAdmController implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		listUsuarioInact = gestionAdmEJB.listaUsuarioI();
+		listaPersona = gestionAdmEJB.listaUsuarioI();
 	}
 
 	/**
@@ -105,4 +122,16 @@ public class GestionAdmController implements Serializable {
 		}
 	}
 
+	/**
+	 * Metodo para cargar la cedula de una persona de manera statica
+	 * para configurarla con el empleado
+	 * @param persona
+	 */
+	public String cedulaStaticaEmpleado(Usuario persona) {
+		recursosH.cedula=String.valueOf(persona.getPersona().getCedula());
+		return "/paginas/seguro/adm/empleado.xhtml?faces-redirect=true";
+
+	}
+	
+	
 }

@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
@@ -67,4 +68,6 @@ public class GestionAdmEJB {
 					"No fue posible realizar el cambio de estado del usuario: " + usuario.getNombre());
 		}
 	}
+
+	
 }

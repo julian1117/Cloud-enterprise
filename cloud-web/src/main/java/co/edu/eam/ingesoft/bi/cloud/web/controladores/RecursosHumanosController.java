@@ -43,9 +43,9 @@ public class RecursosHumanosController implements Serializable {
 	//@Pattern(regexp="[0-9]*",message="El campo numero de  fecha solo puede llevar caracteres numericos")
 	private Date fechaNacimiento;
 	
-	@Pattern(regexp="[0-9]*",message="El campo numero de  identificacion solo puede llevar caracteres numericos")
-	@Length(min=4,max=10,message="Cedula - longitud entre 5 y 10")
-	private String cedula;
+	//@Pattern(regexp="[0-9]*",message="El campo numero de  identificacion solo puede llevar caracteres numericos")
+	//@Length(min=4,max=10,message="Cedula - longitud entre 5 y 10")
+	public static String cedula;
 	
 	@Pattern(regexp="[0-9]*",message="El campo numero de  telefonosolo puede llevar caracteres numericos")
 	@Length(min=4,max=10,message="Cedula - longitud entre 7 y 12")

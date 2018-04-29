@@ -9,8 +9,7 @@
 
 		<h:form prependId="false">
 
-			<p:panel header="Gestion de usuarios"
-				id="panelTab">
+			<p:panel header="Gestion de usuarios" id="panelTab">
 				<p:accordionPanel>
 					<p:tab title="Listado de usuarios activos / inactivos">
 
@@ -49,6 +48,31 @@
 					</p:tab>
 					<p:tab title="Roles de usuario">
 
+						<p:dataTable id="panelTablasRol"
+							value="#{gestionAdmController.listaPersona}" var="doc"
+							border="1" class="table table-striped">
+
+							<p:column headerText="Cedula">
+								<h:outputLabel value="#{doc.persona.cedula}" />
+							</p:column>
+
+							<p:column headerText="Nombre persona">
+								<h:outputLabel
+									value="#{doc.persona.nombre} #{doc.persona.apellido}" />
+							</p:column>
+
+							<p:column headerText="Email">
+								<h:outputLabel value="#{doc.persona.email}" />
+							</p:column>
+
+							<p:column headerText="Opciones">
+								<p:commandButton
+									action="#{gestionAdmController.cedulaStaticaEmpleado(doc)}"
+									styleClass="buttonIni" process="@this" value="Configurar rol"
+									update="panelTablasRol" />
+								
+							</p:column>
+						</p:dataTable>
 
 					</p:tab>
 				</p:accordionPanel>
