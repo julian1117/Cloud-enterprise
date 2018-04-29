@@ -139,6 +139,61 @@
 
 					</div>
 				</p:tab>
+				
+				<p:tab title="Lista">
+					<div align="center">
+					
+					<p:panel header="Listado Inventario" id="panelTab">
+				<p:dataTable id="panelTablas" value="#{inventarioControlador.listaInventario}"
+					var="doc" border="1" class="table table-striped">
+					<p:column headerText="Id Inventario">
+						<h:outputLabel value="#{doc.idInventario}" />
+					</p:column>
+					<p:column headerText="Nombre Producto">
+						<h:outputLabel
+							value="#{doc.producto.nombre}" />
+					</p:column>
+					<p:column headerText="Fecha de Ingreso">
+						<h:outputLabel
+							value="#{doc.fechaIngreso}" />
+					</p:column>
+					
+					<p:column headerText="Descripcion del producto">
+						<h:outputLabel
+							value="#{doc.producto.descirpcion}" />
+					</p:column>
+					
+					<p:column headerText="Cantidad del producto">
+						<h:outputLabel
+							value="#{doc.cantidad}" />
+					</p:column>
+					
+					<p:column headerText="Codigo Lote">
+						<h:outputLabel
+							value="#{doc.producto.codigoLote}" />
+					</p:column>
+					
+					<p:column headerText="Cedula Empleado">
+						<h:outputLabel
+							value="#{doc.idPersona.idPersona.cedula}" />
+					</p:column>
+					
+					<p:column headerText="Nombre Empleado">
+						<h:outputLabel
+							value="#{doc.idPersona.idPersona.nombre}" />
+					</p:column>
+					
+					<p:column headerText="Valor Producto">
+						<h:outputLabel
+							value="#{doc.producto.valor}" />
+					</p:column>
+					
+					
+				</p:dataTable>
+			</p:panel>
+					
+					</div>
+				</p:tab>
 			</p:tabView>
 		</h:form>
 	</ui:define>

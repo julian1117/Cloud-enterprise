@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 
 @Stateless
 @LocalBean
@@ -41,6 +42,10 @@ public class CargoEJB {
 			throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
 			
 		}
+	}
+	
+	public List<Cargo> listarCargo(){		
+		return em.createNamedQuery(Cargo.LISTA_CARGOS).getResultList();		
 	}
 
 	

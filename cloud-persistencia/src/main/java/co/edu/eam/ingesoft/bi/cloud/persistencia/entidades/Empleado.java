@@ -8,13 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="Empelado")
+@NamedQuery(name=Empleado.LISTA_EMPLEADOS, query="SELECT e FROM Empleado e ")
 public class Empleado implements Serializable{
+	
+	public static final  String LISTA_EMPLEADOS = "Empleado.listaEmpleado";
 
 	
 	@Column(name="salario")
@@ -101,9 +105,37 @@ public class Empleado implements Serializable{
 	public void setIdPersona(Persona idPersona) {
 		this.idPersona = idPersona;
 	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idPersona == null) ? 0 : idPersona.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Empleado other = (Empleado) obj;
+		if (idPersona == null) {
+			if (other.idPersona != null)
+				return false;
+		} else if (!idPersona.equals(other.idPersona))
+			return false;
+		return true;
+	}
 	
 	
 
+	
 
 	
 	

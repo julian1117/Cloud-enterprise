@@ -53,6 +53,10 @@ public class RecursosHumanosController implements Serializable {
 	
 	private String direccion;
 	
+	private List<Empleado> listarEmpleado;
+	
+	private String idEmpleado;
+	
 	//private static Persona persona;
 	
 	private String email;
@@ -259,10 +263,43 @@ public class RecursosHumanosController implements Serializable {
 		this.areaEJB = areaEJB;
 	}
 	
+	
+	
+	public List<Empleado> getListarEmpleado() {
+		return listarEmpleado;
+	}
+
+
+	public void setListarEmpleado(List<Empleado> listarEmpleado) {
+		this.listarEmpleado = listarEmpleado;
+	}
+
+
+	public String getIdEmpleado() {
+		return idEmpleado;
+	}
+
+
+	public void setIdEmpleado(String idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+
+	public AuditoriaEJB getAuditoriaEJB() {
+		return auditoriaEJB;
+	}
+
+
+	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
+		this.auditoriaEJB = auditoriaEJB;
+	}
+
+
 	@PostConstruct
 	public void inicializar() {
 		listaCargo = recursosEJB.listarCargos();
 		listaAreaEmpresa = recursosEJB.listarAreas();
+		listarEmpleado = recursosEJB.listarEmpleado();
 	}
 
 
@@ -299,8 +336,8 @@ public class RecursosHumanosController implements Serializable {
 		if(emp != null) {
 			salario= emp.getSalario();
 			fechaIngreso =  emp.getFechaIngreso();
-			idAreaEmpresa = emp.getCargo().getNombre();
-			idCargo = emp.getArea().getNombreArea();
+			idAreaEmpresa = emp.getArea().getIdArea().toString();
+			idCargo = emp.getCargo().getIdCar().toString();
 		}else {
 			Messages.addFlashGlobalInfo("El Empleado no se encuentra registardo");
 
