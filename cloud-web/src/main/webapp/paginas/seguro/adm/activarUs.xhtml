@@ -9,39 +9,50 @@
 
 		<h:form prependId="false">
 
-			<p:panel header="Listado de usuarios inactivos" id="panelTab">
-				<p:dataTable id="panelTablas"
-					value="#{gestionAdmController.listUsuarioInact}" var="doc"
-					border="1" class="table table-striped">
-					
-					<p:column headerText="Nombre usuario">
-						<h:outputLabel value="#{doc.nombre}" />
-					</p:column>
-					<p:column headerText="Estado">
-						<h:outputLabel
-							value="#{doc.estado}" />
-					</p:column>
-					
-					<p:column headerText="Nombre">
-						<h:outputLabel
-							value="#{doc.persona.nombre} #{doc.persona.apellido}" />
-					</p:column>
-					
-					<p:column headerText="Documento">
-						<h:outputLabel
-							value="#{doc.persona.cedula}" />
-					</p:column>
-					
-					<p:column headerText="Opciones">
-						<p:commandButton
-							action="#{gestionAdmController.activarUsuario(doc)}"
-							styleClass="buttonIni" process="@this panelTablas"
-							value="Activar Usuario" update="panelTablas growl" />
-					</p:column>
-				</p:dataTable>
+			<p:panel header="Gestion de usuarios"
+				id="panelTab">
+				<p:accordionPanel>
+					<p:tab title="Listado de usuarios activos / inactivos">
+
+
+						<p:dataTable id="panelTablas"
+							value="#{gestionAdmController.listUsuarioInact}" var="doc"
+							border="1" class="table table-striped">
+
+							<p:column headerText="Nombre usuario">
+								<h:outputLabel value="#{doc.nombre}" />
+							</p:column>
+							<p:column headerText="Estado">
+								<h:outputLabel value="#{doc.estado}" />
+							</p:column>
+
+							<p:column headerText="Nombre">
+								<h:outputLabel
+									value="#{doc.persona.nombre} #{doc.persona.apellido}" />
+							</p:column>
+
+							<p:column headerText="Documento">
+								<h:outputLabel value="#{doc.persona.cedula}" />
+							</p:column>
+
+							<p:column headerText="Opciones">
+								<p:commandButton
+									action="#{gestionAdmController.activarUsuario(doc)}"
+									styleClass="buttonIni" process="@this" value="Activar"
+									update="panelTablas growl" />
+								<p:commandButton
+									action="#{gestionAdmController.inactivarUsuario(doc)}"
+									styleClass="buttonInactivar" process="@this panelTablas"
+									value="Inactivar" update="panelTablas growl" />
+							</p:column>
+						</p:dataTable>
+					</p:tab>
+					<p:tab title="Roles de usuario">
+
+
+					</p:tab>
+				</p:accordionPanel>
 			</p:panel>
-
-
 		</h:form>
 	</ui:define>
 </ui:composition>

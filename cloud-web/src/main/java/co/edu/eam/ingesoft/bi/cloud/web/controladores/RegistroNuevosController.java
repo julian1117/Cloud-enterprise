@@ -244,9 +244,6 @@ public class RegistroNuevosController implements Serializable {
 	public void inicializar() {
 		listGeneros = registroNuevosEJB.listaGeneros();
 		listPais = generalEJB.listaPaises();
-		// listDepartamento = generalEJB.listaDepartamento();
-		// listCiudad = generalEJB.listCiudad();
-
 	}
 
 	public void cargarDep() {
@@ -328,7 +325,7 @@ public class RegistroNuevosController implements Serializable {
 			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

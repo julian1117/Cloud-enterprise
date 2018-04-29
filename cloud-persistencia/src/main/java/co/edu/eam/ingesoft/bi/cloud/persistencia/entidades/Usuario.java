@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "Usuario")
 @NamedQueries({
 		@NamedQuery(name = Usuario.USUARIO, query = "SELECT us FROM Usuario us WHERE us.nombre=?1"),
-		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u where u.estado=false")
+		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u")
 })
 public class Usuario implements Serializable {
 

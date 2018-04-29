@@ -89,7 +89,7 @@ public class AuditoriaEJB {
 	 * @param browserDeta os y brows del que se conecta
 	 * @param usuario usuario que emplea la accion sobre los registros
 	 */
-	public void crearAuditoria(String accion, String nombreReg, String browserDeta, String usuario) {
+	public void crearAuditoria(String accion, String nombreReg, String browserDeta, String usuario,String usuarioAf) {
 
 		Calendar fecha = new GregorianCalendar();
 
@@ -106,6 +106,7 @@ public class AuditoriaEJB {
 		audi.setNavegador(browser);
 		audi.setFecha(fecha.getTime());
 		audi.setUsuarioSe(usuario);
+		audi.setUsuarioAfectado(usuarioAf);
 
 		em.persist(audi);
 

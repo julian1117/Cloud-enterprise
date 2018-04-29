@@ -52,4 +52,19 @@ public class GestionAdmEJB {
 		}
 	}
 
+	/**
+	 * Actualizacion de estado del usuario a inactivo
+	 * 
+	 * @param usuario
+	 */
+	public void inactivarUsario(Usuario usuario) {
+		Usuario us = buscarUsuario(usuario.getCodigo());
+		if (us != null) {
+			us.setEstado(false);
+			em.merge(us);
+		} else {
+			throw new ExcepcionNegocio(
+					"No fue posible realizar el cambio de estado del usuario: " + usuario.getNombre());
+		}
+	}
 }

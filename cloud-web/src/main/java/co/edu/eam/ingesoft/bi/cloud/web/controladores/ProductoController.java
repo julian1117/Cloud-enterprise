@@ -215,7 +215,7 @@ public class ProductoController implements Serializable {
 			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

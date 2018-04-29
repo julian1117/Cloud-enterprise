@@ -42,13 +42,16 @@ public class Auditoria implements Serializable {
 
 	@Column(name = "usuarioSe",nullable = false)
 	private String usuarioSe;
+	
+	@Column(name = "usuarioAfectado",nullable = false)
+	private String usuarioAfectado;
 
 	public Auditoria() {
 		super();
 	}
 
 	public Auditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, Date fecha,
-			String usuarioSe) {
+			String usuarioSe, String usuarioAfectado) {
 		super();
 		this.idAuditoria = idAuditoria;
 		this.nombre = nombre;
@@ -57,6 +60,7 @@ public class Auditoria implements Serializable {
 		this.navegador = navegador;
 		this.fecha = fecha;
 		this.usuarioSe = usuarioSe;
+		this.usuarioAfectado = usuarioAfectado;
 	}
 
 	public Integer getIdAuditoria() {
@@ -113,6 +117,14 @@ public class Auditoria implements Serializable {
 
 	public void setUsuarioSe(String usuarioSe) {
 		this.usuarioSe = usuarioSe;
+	}
+
+	public String getUsuarioAfectado() {
+		return usuarioAfectado;
+	}
+
+	public void setUsuarioAfectado(String usuarioAfectado) {
+		this.usuarioAfectado = usuarioAfectado;
 	}
 
 	@Override
