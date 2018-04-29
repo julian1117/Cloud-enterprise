@@ -12,9 +12,11 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.CargoEJB;
 
 @Named("cargoControlador")
@@ -27,7 +29,9 @@ public class CargoController implements Serializable{
 
 	private String descripcion;
 
-	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
 	
 	@EJB
 	private CargoEJB cargoEJB;
@@ -122,6 +126,25 @@ public class CargoController implements Serializable{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+	}
+	
+	
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

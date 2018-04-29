@@ -13,6 +13,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
@@ -22,6 +23,7 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.negocio.beans.AreaEmpresaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.CargoEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
@@ -81,7 +83,9 @@ public class RecursosHumanosController implements Serializable {
 	@EJB
 	private AreaEmpresaEJB areaEJB;
 	
-	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
 	
 	
 	public String getNombre() {
@@ -324,7 +328,23 @@ Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
 		
 	}
 	
-	
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 	
