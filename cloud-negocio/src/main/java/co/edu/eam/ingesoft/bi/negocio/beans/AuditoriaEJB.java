@@ -1,10 +1,21 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
+
+/**
+ * 
+ * @author CAMILO
+ *
+ */
 @Stateless
 @LocalBean
 public class AuditoriaEJB {
@@ -12,11 +23,15 @@ public class AuditoriaEJB {
 	@PersistenceContext
 	private EntityManager em;
 
-	String userAgent = "";
-	String os = "";
-	String browser = "";
-	String user2 = "";
+	private String userAgent = "";
+	private String os = "";
+	private String browser = "";
+	private String user2 = "";
+	private String browserDetails = "";
 
+	/**
+	 * Identifico el nevegador y el os
+	 */
 	public void identificarNavegadorPeticion() {
 
 		if (userAgent.toLowerCase().indexOf("windows") >= 0) {
@@ -63,6 +78,36 @@ public class AuditoriaEJB {
 		} else {
 			browser = "UnKnown, More-Info: " + userAgent;
 		}
+
+	}
+
+	/**
+	 * @Autor JULIAN CAMILO HENAO
+	 * Creao la auditoria
+	 * @param accion tipo de accion realizada
+	 * @param nombreReg nombre del modulo empleado
+	 * @param browserDeta os y brows del que se conecta
+	 * @param usuario usuario que emplea la accion sobre los registros
+	 */
+	public void crearAuditoria(String accion, String nombreReg, String browserDeta, String usuario) {
+
+		Calendar fecha = new GregorianCalendar();
+
+		this.browserDetails = browserDeta;
+		userAgent = browserDetails;
+		user2 = userAgent.toLowerCase();
+
+		identificarNavegadorPeticion();
+
+		Auditoria audi = new Auditoria();
+		audi.setNombre(nombreReg);
+		audi.setAccion(accion);
+		audi.setOrigen(os);
+		audi.setNavegador(browser);
+		audi.setFecha(fecha.getTime());
+		audi.setUsuarioSe(usuario);
+
+		em.persist(audi);
 
 	}
 }

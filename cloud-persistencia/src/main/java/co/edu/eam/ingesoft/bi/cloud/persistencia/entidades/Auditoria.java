@@ -1,11 +1,15 @@
 package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -15,30 +19,36 @@ import javax.persistence.TemporalType;
 public class Auditoria implements Serializable {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_SEQ")
+	@SequenceGenerator(sequenceName = "AUDIT_SEQ", allocationSize = 1, name = "AUDITORIA_SEQ")
 	@Column(name = "id")
 	private Integer idAuditoria;
 
-	@Column(name = "nombre")
+	@Column(name = "nombre",nullable = false)
 	private String nombre;
 
-	@Column(name = "accion")
+	@Column(name = "accion",nullable = false)
 	private String accion;
 
-	@Column(name = "origen")
+	@Column(name = "origen",nullable = false)
 	private String origen;
 
-	@Column(name = "navegador")
+	@Column(name = "navegador",nullable = false)
 	private String navegador;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "fecha")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "fecha",nullable = false)
 	private Date fecha;
+
+	@Column(name = "usuarioSe",nullable = false)
+	private String usuarioSe;
 
 	public Auditoria() {
 		super();
 	}
 
-	public Auditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, Date fecha) {
+	public Auditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, Date fecha,
+			String usuarioSe) {
 		super();
 		this.idAuditoria = idAuditoria;
 		this.nombre = nombre;
@@ -46,6 +56,7 @@ public class Auditoria implements Serializable {
 		this.origen = origen;
 		this.navegador = navegador;
 		this.fecha = fecha;
+		this.usuarioSe = usuarioSe;
 	}
 
 	public Integer getIdAuditoria() {
@@ -94,6 +105,14 @@ public class Auditoria implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public String getUsuarioSe() {
+		return usuarioSe;
+	}
+
+	public void setUsuarioSe(String usuarioSe) {
+		this.usuarioSe = usuarioSe;
 	}
 
 	@Override

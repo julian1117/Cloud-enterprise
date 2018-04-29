@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -21,6 +22,7 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
@@ -85,6 +87,12 @@ public class RegistroNuevosController implements Serializable {
 
 	@EJB
 	private General_EJB generalEJB;
+	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+	
+	@Inject
+	private SessionController sesion;
 
 	// Declaracion de get y set
 
@@ -288,6 +296,7 @@ public class RegistroNuevosController implements Serializable {
 					
 					// creo el usuario
 					registroNuevosEJB.crearUsuario(usuario);
+					registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 					Messages.addFlashGlobalInfo("Registro éxitoso");
 
 				} else {
@@ -307,18 +316,23 @@ public class RegistroNuevosController implements Serializable {
 
 	}
 	
-	public void registrarAuditoria(String accion) {
-	/*try {
-			Auditoria audi = new Auditoria();
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
-			audi.setAccion(accion);
-			audi.setRegistroRealizoAccion("Registro usuario");
-			audi.setUsuario(sesion.getUsuario());
-			audEJB.registrarAuditoria(audi,browserDetails);
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		*/
 	}
+
 
 }
