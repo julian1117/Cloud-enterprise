@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:panel header="Listado de usuarios inactivos" id="panelTab">
+				<p:dataTable id="panelTablas"
+					value="#{gestionAdmController.listUsuarioInact}" var="doc"
+					border="1" class="table table-striped">
+					
+					<p:column headerText="Nombre usuario">
+						<h:outputLabel value="#{doc.nombre}" />
+					</p:column>
+					<p:column headerText="Estado">
+						<h:outputLabel
+							value="#{doc.estado}" />
+					</p:column>
+					
+					<p:column headerText="Nombre">
+						<h:outputLabel
+							value="#{doc.persona.nombre} #{doc.persona.apellido}" />
+					</p:column>
+					
+					<p:column headerText="Documento">
+						<h:outputLabel
+							value="#{doc.persona.cedula}" />
+					</p:column>
+					
+					<p:column headerText="Opciones">
+						<p:commandButton
+							action="#{gestionAdmController.activarUsuario(doc)}"
+							styleClass="buttonIni" process="@this panelTablas"
+							value="Activar Usuario" update="panelTablas growl" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

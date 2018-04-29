@@ -9,35 +9,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Usuario")
-@NamedQuery(name=Usuario.USUARIO,query="SELECT us FROM Usuario us WHERE us.nombre=?1")
-public class Usuario implements Serializable{
-	
+@Table(name = "Usuario")
+@NamedQueries({
+		@NamedQuery(name = Usuario.USUARIO, query = "SELECT us FROM Usuario us WHERE us.nombre=?1"),
+		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u where u.estado=false")
+})
+public class Usuario implements Serializable {
+
 	public static final String USUARIO = "Usuario.listUs";
-	
+	public static final String USUARIO_I = "Usuario.listUsI";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
-    @SequenceGenerator(sequenceName = "USUARIOS_SEQ", allocationSize = 1, name = "USUARIO_SEQ")
-	@Column(name="id")
+	@SequenceGenerator(sequenceName = "USUARIOS_SEQ", allocationSize = 1, name = "USUARIO_SEQ")
+	@Column(name = "id")
 	private Integer codigo;
-	
-	@Column(name="nombre",nullable=false,length=30)
+
+	@Column(name = "nombre", nullable = false, length = 30)
 	private String nombre;
-	
-	@Column(name="contrasenia",nullable=false,length=30)
+
+	@Column(name = "contrasenia", nullable = false, length = 30)
 	private String contrasenia;
-	
-	@Column(name="estado",nullable=false)
+
+	@Column(name = "estado", nullable = false)
 	private boolean estado;
 
 	@OneToOne
-	@JoinColumn(name="Persona_cedula",nullable=false)
+	@JoinColumn(name = "Persona_cedula", nullable = false)
 	private Persona persona;
 
 	public Usuario() {
@@ -122,7 +127,4 @@ public class Usuario implements Serializable{
 		return true;
 	}
 
-	
-	
 }
-
