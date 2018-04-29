@@ -55,5 +55,9 @@ public class RecursosHumanosEJB {
 		return em.find(Cargo.class, idCargo);
 	}
 	
+	public Empleado buscarEmp(Integer empleado) {
+		return em.find(Empleado.class, empleado);
+	}
+	
 
 }

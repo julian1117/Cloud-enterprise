@@ -46,10 +46,11 @@
 								</h:selectOneMenu>
 								<br />
 
-								<h:outputLabel for="cbArea" id="lblArea" value="Area" class="labelSelect"/>
+								<h:outputLabel for="cbArea" id="lblArea" value="Area"
+									class="labelSelect" />
 								<h:selectOneMenu id="cbArea"
 									value="#{recursosControlador.idAreaEmpresa}"
-									 class="sizeselect form-control">
+									class="sizeselect form-control">
 
 									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
 										var="areaE" itemValue="#{areaE.idArea}"
@@ -102,6 +103,30 @@
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 
+
+
+								<h:outputLabel for="tftCargoBuscar" id="lblCargoBuscar"
+									value="Cargo"></h:outputLabel>
+								<h:selectOneMenu id="tftCargoBuscar"
+									value="#{recursosControlador.idCargo}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaCargo}"
+										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
+
+								</h:selectOneMenu>
+								
+
+								<h:outputLabel for="tftAreaBuscar" id="lblAreaBuscar"
+									value="Area"></h:outputLabel>
+								<h:selectOneMenu id="tftAreaBuscar"
+									value="#{recursosControlador.idAreaEmpresa}"
+									class="sizeselect form-control">
+
+									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
+										var="areaE" itemValue="#{areaE.idArea}"
+										itemLabel="#{areaE.nombreArea}" />
+								</h:selectOneMenu>
 
 
 

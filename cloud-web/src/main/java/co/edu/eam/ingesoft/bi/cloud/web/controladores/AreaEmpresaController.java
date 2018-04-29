@@ -8,10 +8,12 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.negocio.beans.AreaEmpresaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 
 @Named(value = "areaControlador")
 @ViewScoped
@@ -25,6 +27,10 @@ public class AreaEmpresaController implements Serializable{
 	
 	@EJB
 	private AreaEmpresaEJB areaEJB;
+	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
 
 	public String getId() {
 		return id;
@@ -112,6 +118,24 @@ public class AreaEmpresaController implements Serializable{
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+	}
+	
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	

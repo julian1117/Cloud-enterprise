@@ -108,8 +108,17 @@
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 
+								<h:outputLabel for="tftProductoBuscar" id="lblProductoBuscar"
+									value="Producto"></h:outputLabel>
+								<h:selectOneMenu id="tftProductoBuscar"
+									value="#{inventarioControlador.productoId}"
+									class="sizeselect form-control">
 
+									<f:selectItems value="#{inventarioControlador.listarProducto}"
+										var="doc" itemValue="#{doc.idProducto}"
+										itemLabel="#{doc.nombre}" />
 
+								</h:selectOneMenu>
 
 
 							</h:panelGrid>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,9 +13,12 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.InventarioEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.ProductoEJB;
 
 @Named("productoControlador")
@@ -48,6 +52,12 @@ public class ProductoController implements Serializable {
 	@EJB
 	private ProductoEJB productoEJB;
 
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+	
+	@EJB
+	private InventarioEJB inventarioEJB;
+	
 	
 
 	public String getId() {
@@ -137,6 +147,11 @@ public class ProductoController implements Serializable {
 	public void setProductoEJB(ProductoEJB productoEJB) {
 		this.productoEJB = productoEJB;
 	}
+	
+	@PostConstruct
+	public void inicializar() {
+	listaProducto = inventarioEJB.listarProductos();
+	}
 
 	public void crearProducto() {
 		try {
@@ -185,6 +200,24 @@ public class ProductoController implements Serializable {
 		}else {
 			Messages.addFlashGlobalInfo("El producto no se encuentra registardo");
 
+		}
+	}
+	
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

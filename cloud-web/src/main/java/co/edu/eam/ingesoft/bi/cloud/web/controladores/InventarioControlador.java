@@ -13,6 +13,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
@@ -21,6 +22,7 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Inventario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.InventarioEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.ProductoEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
@@ -55,6 +57,10 @@ public class InventarioControlador implements Serializable {
 
 	@EJB
 	private RecursosHumanosEJB recursosEJB;
+	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
 
 	public String getIdInventario() {
 		return idInventario;
@@ -158,15 +164,52 @@ public class InventarioControlador implements Serializable {
 	}
 
 	public void buscarInventario() {
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		
+		if(inv != null) {
+			cedula = inv.getIdPersona().toString();
+			cantidad= inv.getCantidad().toString();
+			fechaIngreso= inv.getFechaIngreso();
+			productoId = inv.getProducto().getNombre();
+		}else {
+			Messages.addFlashGlobalInfo("El Inventario no se encuentra registardo");
 
+		}
 	}
 
 	public void editarInventario() {
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		if (inv != null) {
+			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(cedula));
+			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId));
 
+			Inventario inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad), fechaIngreso, producto, persona);
+			inventarioEJB.editarInventario(inventario);
+			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+
+		}
 	}
 
 	public void eliminarInventario() {
 
+	}
+	
+	/**
+	 * Metodo para  registrar las auditorias generales
+	 * @param accion Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, String nombreReg) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			//----obtengo el usuario que esta en session
+			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			
+			//----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
