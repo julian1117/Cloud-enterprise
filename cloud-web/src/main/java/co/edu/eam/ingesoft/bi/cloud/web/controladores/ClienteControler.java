@@ -75,6 +75,8 @@ public class ClienteControler implements Serializable {
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
 
+	
+
 	public String getNombre() {
 		return nombre;
 	}

@@ -82,7 +82,7 @@
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="Crear"
 									actionListener="#{administradorControler.crearAdministrador}"
-									process="@this paneldatos" class="button" />
+									process="@this paneldatos" class="buttonIni" />
 							</h:panelGrid>
 						</p:panel>
 					</div>
@@ -159,13 +159,13 @@
 
 					<h:panelGrid id="panelbtns" columns="2">
 						<p:commandButton id="btnEditar" value="#{msj['persona.editar']}"
-							action="#{administradorControler.editar}" class="btn"
+							action="#{administradorControler.editar}" class="buttonIni"
 							process="@this paneldatosPBuscar" />
 
 
 						<p:commandButton id="btnEliminar"
 							value="#{msj['persona.eliminar']}"
-							action="#{administradorControler.eliminar}" class="btn"
+							action="#{administradorControler.eliminar}" class="buttonInactivar"
 							process="@this tftCedulaBuscar" />
 					</h:panelGrid>
 

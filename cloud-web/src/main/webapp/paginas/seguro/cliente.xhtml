@@ -63,10 +63,10 @@
 								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
 									class="labelSelect" />
 								<h:selectOneMenu id="tftSexo"
-									value="#{gestionNuevosController.genero}"
-									converter="sexoConverter" class="sizeselect form-control">
+									value="#{gestionClienteController.genero}"
+									 class="sizeselect form-control">
 
-									<f:selectItems value="#{gestionNuevosController.listGeneros}"
+									<f:selectItems value="#{gestionClienteController.listGeneros}"
 										var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
@@ -75,14 +75,14 @@
 								<h:outputLabel for="tftPais" id="lblpais" value="Pais "
 									class="labelSelect" />
 								<h:selectOneMenu id="tftPais"
-									value="#{gestionNuevosController.pais}"
+									value="#{gestionClienteController.pais}"
 									class="sizeselect form-control">
 
-									<p:ajax listener="#{gestionNuevosController.cargarDep}"
+									<p:ajax listener="#{gestionClienteController.departamento}"
 										update="tftDep" />
 									<f:selectItem itemLabel="Seleccione el Pais" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{gestionNuevosController.listPais}"
+									<f:selectItems value="#{gestionClienteController.listPais}"
 										var="doc" itemValue="#{doc.nombre}" itemLabel="#{doc.nombre}"
 										class="sizeselect form-control" />
 
@@ -91,17 +91,17 @@
 
 								<h:outputLabel id="lblDep" value="Departamento " />
 								<h:selectOneMenu id="tftDep"
-									value="#{gestionNuevosController.departamento}"
+									value="#{gestionClienteController.departamento}"
 									class="sizeselect form-control">
 
-									<p:ajax listener="#{gestionNuevosController.cargarCiu}"
+									<p:ajax listener="#{gestionClienteController.ciudad}"
 										update="tftCiudad" />
 
 									<f:selectItem itemLabel="Seleccione el Departamento"
 										itemValue="" noSelectionOption="true" />
 
 									<f:selectItems
-										value="#{gestionNuevosController.listDepartamento}" var="doc"
+										value="#{gestionClienteController.listDepartamento}" var="doc"
 										itemValue="#{doc.nombre}" itemLabel="#{doc.nombre}"
 										class="sizeselect form-control" />
 
@@ -110,11 +110,11 @@
 
 								<h:outputLabel id="lblCiudad" value="Ciudad " />
 								<h:selectOneMenu id="tftCiudad"
-									value="#{gestionNuevosController.ciudad}"
+									value="#{gestionClienteController.ciudad}"
 									class="sizeselect form-control">
 									<f:selectItem itemLabel="Seleccione la ciudad" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{gestionNuevosController.listCiudad}"
+									<f:selectItems value="#{gestionClienteController.listCiudad}"
 										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.nombre}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
@@ -124,7 +124,7 @@
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="Crear"
 									actionListener="#{gestionClienteController.crearCliente}"
-									process="@this paneldatos" class="button" />
+									process="@this paneldatos" class="buttonIni" />
 							</h:panelGrid>
 
 						</p:panel>
@@ -191,7 +191,7 @@
 									value="#{msj['persona.sexo']}:"></h:outputLabel>
 
 								<h:selectOneMenu id="tftSexoBuscar"
-									value="#{gestionNuevosController.genero}" class="form-control">
+									value="#{gestionClienteController.genero}" class="form-control">
 									<f:selectItem itemValue="F" itemLabel="Femenino" />
 									<f:selectItem itemValue="M" itemLabel="Masculino" />
 								</h:selectOneMenu>

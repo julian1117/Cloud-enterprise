@@ -61,7 +61,7 @@
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="CREAR"
 									actionListener="#{inventarioControlador.crearInventario}"
-									process="@this paneldatos" class="button" />
+									process="@this paneldatos" class="buttonIni" />
 							</h:panelGrid>
 						</p:panel>
 					</div>
@@ -74,12 +74,12 @@
 
 						<h:panelGrid id="panelBuscar" columns="3">
 							<h:outputLabel for="tftIdInventarioBuscar"
-								id="lblIdInventarioBuscar" value="Identificacion"></h:outputLabel>
+								id="lblIdInventarioBuscar" value="Identificacion" ></h:outputLabel>
 							<h:inputText id="tftIdInventarioBuscar"
-								value="#{inventarioControlador.idInventario}"></h:inputText>
+								value="#{inventarioControlador.idInventario}" class="form-control"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
-								action="#{inventarioControlador.buscarInventario}" class="btn"
+								action="#{inventarioControlador.buscarInventario}" class="buttonIni"
 								process="@this tftIdInventarioBuscar" update="paneldatosBuscar " />
 						</h:panelGrid>
 
@@ -90,13 +90,13 @@
 								<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 									value="Cedula"></h:outputLabel>
 								<h:inputText id="tftCedulaBuscar"
-									value="#{inventarioControlador.cedula}"></h:inputText>
+									value="#{inventarioControlador.cedula}" class="form-control"></h:inputText>
 
 
 								<h:outputLabel for="tftCantidadBuscar" id="lblCantidadBuscar"
 									value="Cantidad"></h:outputLabel>
 								<h:inputText id="tftCantidadBuscar"
-									value="#{inventarioControlador.cantidad}"></h:inputText>
+									value="#{inventarioControlador.cantidad}" class="form-control"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"
@@ -125,12 +125,12 @@
 						<h2>Otras Opciones</h2>
 						<h:panelGrid id="panelbtns" columns="2">
 							<p:commandButton id="btnEditar" value="Editar"
-								action="#{inventarioControlador.editarInventario}" class="btn"
+								action="#{inventarioControlador.editarInventario}" class="buttonIni"
 								process="@this paneldatosPBuscar" />
 
 
 							<p:commandButton id="btnEliminar" value="Eliminar"
-								action="#{inventarioControlador.eliminarInventario}" class="btn"
+								action="#{inventarioControlador.eliminarInventario}" class="buttonInactivar"
 								process="@this tftIdInventarioBuscar" />
 						</h:panelGrid>
 

@@ -10,7 +10,7 @@
 		<h:form prependId="false">
 
 			<p:tabView id="tabs">
-				<p:tab title="Gestionar Recursos Humanos">
+				<p:tab title="Gestionar Factura">
 					<div align="center">
 						<p:panel id="paneldatosP" header="Datos de Gestion Factura">
 							<h:panelGrid id="paneldatos" columns="3">
@@ -39,7 +39,7 @@
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="CREAR"
 									actionListener="#{gestionVentaController.crearFactura}"
-									process="@this paneldatos" class="button" />
+									process="@this paneldatos" class="buttonIni" />
 							</h:panelGrid>
 						</p:panel>
 					</div>
@@ -47,47 +47,7 @@
 
 
 
-				<p:tab title="Buscar-Editar-Eliminar">
-					<div align="center">
-
-						<h:panelGrid id="panelBuscar" columns="3">
-							<h:outputLabel for="tftIdFacturaBuscar" id="lblIdFacturaBuscar"
-								value="Identificacion"></h:outputLabel>
-							<h:inputText id="tftIdFacturaBuscar"
-								value="#{gestionVentaController.idFactura}"></h:inputText>
-
-							<p:commandButton id="btnBuscar" value="BUSCAR"
-								action="#{gestionVentaController.buscarFactura}" class="btn"
-								process="@this tftIdFacturaBuscar" update="paneldatosBuscar " />
-						</h:panelGrid>
-
-
-						<p:panel id="paneldatosPBuscar" header="Datos">
-							<h:panelGrid id="paneldatosBuscar" columns="2">
-
-
-								<h:outputLabel for="tftCedulaClienteBuscar" id="lblCedulaClienteBuscar"
-									value="CedulaCliente"></h:outputLabel>
-								<h:inputText id="tftCedulaClienteBuscar"
-									value="#{gestionVentaController.persona}"></h:inputText>
-
-								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
-								<h:inputText id="tftFechaBuscar"
-									value="#{gestionVentaController.fecha}" mode="inline"
-									a:placeholder="dia-mes-anio">
-									<f:convertDateTime pattern="dd-MM-yyyy" />
-								</h:inputText>
-								
-								
-
-
-							</h:panelGrid>
-						</p:panel>
-						<br></br> <br></br>
-
-
-					</div>
-				</p:tab>
+		
 				
 				<p:tab title="Lista">
 					<div align="center">

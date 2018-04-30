@@ -227,8 +227,7 @@ public class GestionVentaController implements Serializable {
 			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFacturaLista));
 			Inventario inventario = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
 			
-			Integer can = inventario.getCantidad();
-			
+			Integer can = inventario.getCantidad();			
 
 			if(can > cantidad) {
 				
