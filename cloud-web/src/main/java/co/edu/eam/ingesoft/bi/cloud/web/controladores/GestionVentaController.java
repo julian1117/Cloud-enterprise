@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
@@ -25,6 +27,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.GestionarVentaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.InventarioEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.VentaEJB;
 
 @Named(value = "gestionVentaController")
 @ViewScoped
@@ -67,6 +70,9 @@ public class GestionVentaController implements Serializable {
 	
 	@EJB
 	private InventarioEJB inventarioEJB;
+	
+	@EJB
+	private VentaEJB ventaEJB;
 	
 
 	public List<Inventario> getListaInventario() {
@@ -181,10 +187,13 @@ public class GestionVentaController implements Serializable {
 		this.registroEJB = registroEJB;
 	}
 	
+	List<Venta> listVent;
+	
 	@PostConstruct
 	public void inicializar() {
 		listarFacturas = gestionEJB.listaFacturas();
 		listaInventario = inventarioEJB.listarInventario();
+		listVent = gestionEJB.listaVent();
 	}
 	
 	public void crearFactura() {
@@ -215,21 +224,43 @@ public class GestionVentaController implements Serializable {
 	public void crearVenta() {		
 		try {
 			
-			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFactura));
+			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFacturaLista));
 			Inventario inventario = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
 			
 			Integer can = inventario.getCantidad();
 			
-			if(can <= cantidad) {
-				Venta venta = new Venta(inventario, gestion, cantidad);
-				gestionEJB.crearVenta(venta);
+
+			if(can > cantidad) {
+				
+				Integer valor = listVent.get(0).getIdVenta()+1;
+				
+				Venta venta = new Venta();
+				venta.setIdVenta(valor);
+				venta.setCantidad(cantidad);
+				venta.setInventario(inventario);
+				venta.setGestionVenta(gestion);
+				Messages.addFlashGlobalError(cantidad+" - " +idFacturaLista +" - " +idInventario);
+
+				
+				ventaEJB.crearVenta(venta);
+				
+				//Inventario buscarInventari = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+				//Integer cantidadInventario = buscarInventari.getCantidad();
+				
+				//Integer resta = cantidadInventario - cantidad;
+				
+				//in
+				
 			}else {
 				Messages.addFlashGlobalInfo("Verifique que la cantidad sea menor a la cantidad del inventario exista!!");
 				
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		
 		}
 		
 	}

@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -57,6 +58,9 @@ public class ProductoController implements Serializable {
 	
 	@EJB
 	private InventarioEJB inventarioEJB;
+	
+	@Inject
+	private SessionController sesion;	
 	
 	
 
@@ -158,6 +162,7 @@ public class ProductoController implements Serializable {
 			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
 			productoEJB.crearProducto(producto);
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+			registrarAuditoria("CREAR", "Registro Nuevo producto");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -212,10 +217,10 @@ public class ProductoController implements Serializable {
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A",us);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

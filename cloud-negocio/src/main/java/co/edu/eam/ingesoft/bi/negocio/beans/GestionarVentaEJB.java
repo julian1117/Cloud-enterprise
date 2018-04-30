@@ -27,20 +27,7 @@ public class GestionarVentaEJB {
 		}
 	}
 	
-	public void crearVenta(Venta venta) {
-		Venta ven = buscarVenta(venta.getIdVenta());
-		
-		if(ven ==null) {
-			em.persist(venta);
-		}else {
-			throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
-			
-		}
-	}
 	
-	public Venta buscarVenta(Integer idVenta) {
-		return em.find(Venta.class, idVenta);
-	}
 	
 	/**
 	 * permite la busqueda de un GestionVenta en el sistema
@@ -76,4 +63,10 @@ public class GestionarVentaEJB {
 		List<GestionVenta> list = em.createNamedQuery(GestionVenta.LISTAR_FACTURA).getResultList();
 		return list;
 	}
+	
+	public List<Venta> listaVent(){
+		return em.createNamedQuery(Venta.LISTA_VENT).getResultList();
+	}
+	
+	
 }

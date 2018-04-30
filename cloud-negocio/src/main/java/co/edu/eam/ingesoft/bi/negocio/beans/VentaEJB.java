@@ -10,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.GestionVenta;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @Stateless
@@ -60,6 +61,20 @@ public class VentaEJB {
 		return list;
 	}
 	
+	public void crearVenta(Venta venta) {
+		Venta ven = buscarVenta(venta.getIdVenta());
+		
+		if(ven == null) {
+			em.persist(venta);
+		}else {
+			throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
+			
+		}
+	}
+	
+	public Venta buscarVenta(Integer idVenta) {
+		return em.find(Venta.class, idVenta);
+	}
 	
 
 }

@@ -21,11 +21,12 @@ import javax.persistence.TemporalType;
 @Table(name="Inventario")
 @NamedQueries({
 	@NamedQuery(name=Inventario.LISTA_InventarioS,query="SELECT m FROM Inventario m"),
-	//@NamedQuery(name=Inventario.LISTA_InventarioS_ESP,query="SELECT m FROM Inventario m WHERE m.especializaciones.idEspecializacion=?1")
+	//@NamedQuery(name=Inventario.LISTA_PRODUCTO_INVENTARIO,query="SELECT p.nombre FROM Inventario m INNER JOIN Producto p")
 })
 public class Inventario implements Serializable{
 	
 	public static final String LISTA_InventarioS = "Inventario.listaInventario";
+	public static final String LISTA_PRODUCTO_INVENTARIO ="Inventario.listaInv";
 	
 	@Id@Column(name="id")
 	private Integer idInventario;
