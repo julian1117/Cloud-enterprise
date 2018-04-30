@@ -250,6 +250,14 @@ public class ClienteControler implements Serializable{
 		}
 	}
 	
+	public void buscarCliente() {
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	/**
 	 * Metodo para  registrar las auditorias generales
 	 * @param accion Crear, Editar, Eliminar o Actualizar

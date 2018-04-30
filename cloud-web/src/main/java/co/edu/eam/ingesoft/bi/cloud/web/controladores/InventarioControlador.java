@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -35,9 +36,9 @@ public class InventarioControlador implements Serializable {
 	@Length(min = 4, max = 10, message = "Id Inventario - longitud entre 5 y 10")
 	private String idInventario;
 
-	@Pattern(regexp = "[0-9]*", message = "El campo numero de  identificacion solo puede llevar caracteres numericos")
-	@Length(min = 4, max = 10, message = "Cedula - longitud entre 5 y 10")
-	private String cedula;
+//	@Pattern(regexp = "[0-9]*", message = "El campo numero de  identificacion solo puede llevar caracteres numericos")
+	//@Length(min = 4, max = 10, message = "Cedula - longitud entre 5 y 10")
+	private String cedula ;
 
 	@Pattern(regexp = "[0-9]*", message = "El campo cantidad solo puede llevar caracteres numericos")
 	private String cantidad;
@@ -65,8 +66,11 @@ public class InventarioControlador implements Serializable {
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
 	
-	
-	
+	@Inject
+	private SessionController sesion;	
+
+
+
 
 	public List<Inventario> getListaInventario() {
 		return listaInventario;
@@ -166,6 +170,16 @@ public class InventarioControlador implements Serializable {
 	}
 	
 	
+	
+	
+
+	public SessionController getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(SessionController sesion) {
+		this.sesion = sesion;
+	}
 
 	@PostConstruct
 	public void inicializar() {
@@ -175,7 +189,8 @@ public class InventarioControlador implements Serializable {
 	
 	public void crearInventario() {
 		try {
-			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(cedula));
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(us));
 			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId));
 
 			if (persona != null) {
@@ -184,6 +199,7 @@ public class InventarioControlador implements Serializable {
 
 				inventarioEJB.crearInventario(Inventario);
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+				registrarAuditoria("CREAR", "NUEVO INVENTARIO");
 			} else {
 				Messages.addFlashGlobalInfo("Verifique que la persona exista!!");
 			}
@@ -200,10 +216,12 @@ public class InventarioControlador implements Serializable {
 		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
 		
 		if(inv != null) {
-			cedula = inv.getIdPersona().toString();
+			cedula = inv.getIdPersona().getIdPersona().getCedula().toString();
 			cantidad= inv.getCantidad().toString();
 			fechaIngreso= inv.getFechaIngreso();
 			productoId = inv.getProducto().getIdProducto().toString();
+			
+			registrarAuditoria("BUSCAR", "fue buscado el inventario numero: " + inv.getIdInventario());
 		}else {
 			Messages.addFlashGlobalInfo("El Inventario no se encuentra registardo");
 
@@ -219,6 +237,7 @@ public class InventarioControlador implements Serializable {
 			Inventario inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad), fechaIngreso, producto, persona);
 			inventarioEJB.editarInventario(inventario);
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+			registrarAuditoria("EDITAR", "fue editado el inventario numero: " + inv.getIdInventario());
 
 		}
 	}
@@ -236,10 +255,10 @@ public class InventarioControlador implements Serializable {
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

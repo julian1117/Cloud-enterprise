@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
@@ -30,6 +31,10 @@ public class AreaEmpresaController implements Serializable{
 	
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
+	
+
+	@Inject
+	private SessionController sesion;	
 
 
 	public String getId() {
@@ -70,6 +75,7 @@ public class AreaEmpresaController implements Serializable{
 			AreaEmpresa areaEmpresa = new AreaEmpresa(Integer.parseInt(id), nombre, descripcion);
 			areaEJB.crearArea(areaEmpresa);
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+			registrarAuditoria("CREAR", "Creo una nueva area de la empresa");
 
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +92,7 @@ public class AreaEmpresaController implements Serializable{
 			if(areaEmpresa != null) {
 				descripcion = areaEmpresa.getDescripcion();
 				nombre = areaEmpresa.getNombreArea();
+				registrarAuditoria("BUSCAR", "Busco el area: " + areaEmpresa.getNombreArea());
 			}else {
 				Messages.addFlashGlobalInfo("La empresa no se encuentra registardo");
 			}
@@ -103,6 +110,8 @@ public class AreaEmpresaController implements Serializable{
 			if(areaEmpresa != null) {
 				AreaEmpresa area = new AreaEmpresa(Integer.parseInt(id), nombre, descripcion);
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+				registrarAuditoria("EDITAR", "Edito el area: " + areaEmpresa.getNombreArea());
+
 				
 			}
 		} catch (Exception e) {
@@ -130,10 +139,10 @@ public class AreaEmpresaController implements Serializable{
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

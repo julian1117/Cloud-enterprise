@@ -181,6 +181,8 @@ public class ProductoController implements Serializable {
 			peso = pro.getPeso();
 			dimensiones = pro.getDimensiones();
 			valor = pro.getValor();
+			
+			registrarAuditoria("BUSCAR", "El producto " + pro + " fue buscado");
 		} else {
 			Messages.addFlashGlobalInfo("El producto no se encuentra registardo");
 
@@ -193,6 +195,7 @@ public class ProductoController implements Serializable {
 			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
 			productoEJB.editar(producto);
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+			registrarAuditoria("EDITAR", "El producto " + pro + " fue editado");
 
 		}
 	}
@@ -220,7 +223,7 @@ public class ProductoController implements Serializable {
 			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A",us);
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

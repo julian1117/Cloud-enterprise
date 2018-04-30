@@ -9,6 +9,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
@@ -35,6 +36,11 @@ public class CargoController implements Serializable{
 	
 	@EJB
 	private CargoEJB cargoEJB;
+
+
+	@Inject
+	private SessionController sesion;	
+
 
 
 
@@ -77,6 +83,8 @@ public class CargoController implements Serializable{
 			Cargo cargo = new Cargo(Integer.parseInt(idCargo), nombre, descripcion);
 			cargoEJB.crearCargo(cargo);
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+			
+			registrarAuditoria("CREAR", "Crea cargo nuevo");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -94,6 +102,8 @@ public class CargoController implements Serializable{
 				nombre = cargo.getNombre();
 			} else {
 				Messages.addFlashGlobalInfo("El Cargo no se encuentra registardo");
+				registrarAuditoria("BUSCAR", "Busco el cargo: " + cargo.getNombre());
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,6 +122,8 @@ public class CargoController implements Serializable{
 
 				cargoEJB.editarCargo(cargo);
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+				registrarAuditoria("EDITO", "Edito el cargo: " + cargo.getNombre());
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,10 +151,10 @@ public class CargoController implements Serializable{
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

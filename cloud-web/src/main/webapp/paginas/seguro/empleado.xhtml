@@ -17,7 +17,7 @@
 
 								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
 								<h:inputText id="tftCedula"
-									value="#{recursosControlador.cedula}" class="form-control"></h:inputText>
+									value="#{recursosControlador.cedulaPer}" class="form-control"></h:inputText>
 								<p:message for="tftCedula " />
 
 								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
@@ -79,7 +79,7 @@
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="Identificacion"></h:outputLabel>
 							<h:inputText id="tftCedulaBuscar"
-								value="#{recursosControlador.cedula}"></h:inputText>
+								value="#{recursosControlador.cedulaPer}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
 								action="#{recursosControlador.buscarEmpleado}" class="btn"

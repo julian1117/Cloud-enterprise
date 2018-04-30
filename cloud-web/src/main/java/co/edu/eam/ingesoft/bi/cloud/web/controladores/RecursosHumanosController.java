@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -92,6 +93,8 @@ public class RecursosHumanosController implements Serializable {
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
 
+	@Inject
+	private SessionController sesion;	
 	
 	
 	public String getCedulaPer() {
@@ -283,6 +286,8 @@ public class RecursosHumanosController implements Serializable {
 				recursosEJB.crearEmpleado(empleado);
 				
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+				
+				registrarAuditoria("CREAR", "Creo un nuevo empleado");
 			}else {
 				Messages.addFlashGlobalInfo("Verifique que la persona exista!!");
 			}
@@ -305,6 +310,8 @@ public class RecursosHumanosController implements Serializable {
 			fechaIngreso =  emp.getFechaIngreso();
 			idAreaEmpresa = emp.getArea().getIdArea().toString();
 			idCargo = emp.getCargo().getIdCar().toString();
+			
+			registrarAuditoria("BUSCAR", "Busco al empleado con cedula: " + emp.getIdPersona().getCedula());
 		}else {
 			Messages.addFlashGlobalInfo("El Empleado no se encuentra registardo");
 
@@ -323,6 +330,8 @@ Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
 			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, emp.getIdPersona());
 			recursosEJB.editarEmpleado(empleado);
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
+			registrarAuditoria("EDITAR", "Edito al empleado con cedula: " + emp.getIdPersona().getCedula());
+
 
 			
 		}
@@ -341,10 +350,10 @@ Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			
 			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
