@@ -12,13 +12,12 @@
 			<p:tabView id="tabs">
 				<p:tab title="Gestionar Recursos Humanos">
 					<div align="center">
-						<p:panel id="paneldatosP" header="Datos de Producto">
+						<p:panel id="paneldatosP" header="Datos de Empleado">
 							<h:panelGrid id="paneldatos" columns="3">
 
 								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
-								<h:inputText id="tftCedula"
-									value="#{recursosControlador.cedula}" class="form-control"
-									 ></h:inputText>
+								<h:inputText id="tftCedula" disabled="true"
+									value="#{recursosControlador.cedulaPer}" class="form-control"></h:inputText>
 								<p:message for="tftCedula " />
 
 								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
@@ -54,8 +53,7 @@
 									class="sizeselect form-control">
 
 									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
-										var="areaE" itemValue="#{areaE.idArea}"
-										itemLabel="#{areaE.nombreArea}" />
+										var="areaE" itemValue="#{areaE.idArea}"	itemLabel="#{areaE.nombreArea}" />
 								</h:selectOneMenu>
 
 								<h1></h1>
@@ -80,7 +78,7 @@
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="Identificacion"></h:outputLabel>
 							<h:inputText id="tftCedulaBuscar"
-								value="#{recursosControlador.cedula}"></h:inputText>
+								value="#{recursosControlador.cedulaPer}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
 								action="#{recursosControlador.buscarEmpleado}" class="btn"
@@ -116,7 +114,7 @@
 										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
 
 								</h:selectOneMenu>
-								
+
 
 								<h:outputLabel for="tftAreaBuscar" id="lblAreaBuscar"
 									value="Area"></h:outputLabel>
@@ -150,6 +148,46 @@
 
 					</div>
 				</p:tab>
+
+				<p:tab title="Lista">
+					<div align="center">
+
+						<p:panel header="Listado Empleados" id="panelTab">
+							<p:dataTable id="panelTablas"
+								value="#{recursosControlador.listarEmpleado}" var="doc"
+								border="1" class="table table-striped">
+								<p:column headerText="Cedula">
+									<h:outputLabel value="#{doc.idPersona.cedula}" />
+								</p:column>
+								<p:column headerText="Nombre">
+									<h:outputLabel value="#{doc.idPersona.nombre}" />
+								</p:column>
+								<p:column headerText="Nombre">
+									<h:outputLabel value="#{doc.idPersona.apellido}" />
+								</p:column>
+
+								<p:column headerText="Cargo">
+									<h:outputLabel value="#{doc.cargo.nombre}" />
+								</p:column>
+
+								<p:column headerText="Area">
+									<h:outputLabel value="#{doc.area.nombreArea}" />
+								</p:column>
+
+								<p:column headerText="Fecha Ingreso">
+									<h:outputLabel value="#{doc.fechaIngreso}" />
+								</p:column>
+
+								<p:column headerText="Salario">
+									<h:outputLabel value="#{doc.salario}" />
+								</p:column>
+
+							</p:dataTable>
+						</p:panel>
+
+					</div>
+				</p:tab>
+
 			</p:tabView>
 		</h:form>
 	</ui:define>

@@ -1,0 +1,197 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabsParametricas">
+				<p:tab title="Crear valores parametrizables">
+
+
+					<p:accordionPanel>
+						<p:tab title="Tipo de usuario">
+							<div align="center">
+								<h:panelGrid id="paneldatosTipoUs" columns="3">
+
+									<h:outputLabel for="tftNombre" id="lblNombre"
+										value="Nombre tipo de usuario" />
+									<h:inputText id="tftNombre"
+										value="#{gestionAdmController.nombreTipoUs}"
+										class="form-control" />
+									<p:message for="tftNombre" />
+
+									<h:outputLabel for="tftdescrip" id="lblDescripTus"
+										value="Descripción tipo" />
+									<h:inputTextarea id="tftdescrip"
+										value="#{gestionAdmController.descripTipoUs}"
+										class="form-control" />
+									<p:message for="tftdescrip" />
+								</h:panelGrid>
+
+								<h:panelGrid id="panelbtnsCrearT" columns="2">
+									<p:commandButton id="btnCrearT" value="Crear"
+										actionListener="#{gestionAdmController.crearTipoUs}"
+										process="@this paneldatosTipoUs" class="button" />
+								</h:panelGrid>
+							</div>
+						</p:tab>
+						<p:tab title="Area de la empresa">
+							<div align="center">
+
+								<h:panelGrid id="paneldatosAreaEmp" columns="3">
+
+									<h:outputLabel for="tftNombreA" id="lblNombreA"
+										value="Nombre del area" />
+									<h:inputText id="tftNombreA"
+										value="#{gestionAdmController.nombreAreaEmp}"
+										class="form-control" />
+									<p:message for="tftNombreA" />
+
+									<h:outputLabel for="tftdescripA" id="lblDescripA"
+										value="Descripción del area" />
+									<h:inputTextarea id="tftdescripA"
+										value="#{gestionAdmController.descripAreaEmp}"
+										class="form-control" />
+									<p:message for="tftdescripA" />
+								</h:panelGrid>
+
+								<h:panelGrid id="panelbtnsCrearA" columns="2">
+									<p:commandButton id="btnCrearA" value="Crear"
+										actionListener="#{gestionAdmController.crearAreaEmpresa}"
+										process="@this paneldatosAreaEmp" class="button" />
+								</h:panelGrid>
+
+							</div>
+						</p:tab>
+
+						<p:tab title="Tipo de usuario">
+
+
+
+						</p:tab>
+					</p:accordionPanel>
+				</p:tab>
+				<p:tab title="Buscar-Editar-Eliminar valores parametrizables">
+
+					<p:accordionPanel>
+						<p:tab title="Tipo de usuario">
+							<div align="center">
+								<h:panelGrid id="paneldatosTipoUsu" columns="3">
+
+									<h:outputLabel for="tftTipoUsu" id="lblpais"
+										value="Tipo de usuario " class="labelSelect" />
+									<h:selectOneMenu id="tftTipoUsu"
+										value="#{gestionAdmController.codigoTipoUs}"
+										class="sizeselect form-control">
+
+										<p:ajax listener="#{gestionAdmController.buscarPorTipoUs}"
+											update="tftNombreTu tftdescripTu" />
+
+										<f:selectItem itemLabel="Seleccione el tipo de usuario"
+											itemValue="" noSelectionOption="true" />
+										<f:selectItems value="#{gestionAdmController.listTipoUs}"
+											var="doc" itemValue="#{doc.idTipoUs}"
+											itemLabel="#{doc.nombre}" class="sizeselect form-control" />
+
+									</h:selectOneMenu>
+									<br />
+
+
+									<h:outputLabel for="tftNombreTu" id="lblNombre"
+										value="Nombre tipo de usuario" />
+									<h:inputText id="tftNombreTu"
+										value="#{gestionAdmController.nombreBTipoUs}"
+										class="form-control" />
+									<p:message for="tftNombreTu" />
+
+									<h:outputLabel for="tftdescripTu" id="lblDescripTus"
+										value="Descripción tipo" />
+									<h:inputTextarea id="tftdescripTu"
+										value="#{gestionAdmController.descripBTipoUs}"
+										class="form-control" />
+									<p:message for="tftdescripTu" />
+								</h:panelGrid>
+
+								<h:panelGrid id="panelbtnsCrearT" columns="2">
+
+									<p:commandButton id="btnEliminarT" value="Eliminar"
+										actionListener="#{gestionAdmController.eliminarTipoUs}"
+										process="@this paneldatosTipoUsu" class="buttonInactivar" />
+
+									<p:commandButton id="btnEditarT" value="Editar"
+										actionListener="#{gestionAdmController.editarTipoUs}"
+										process="@this paneldatosTipoUsu" class="button" />
+										
+								</h:panelGrid>
+							</div>
+						</p:tab>
+						<p:tab title="Area de la empresa">
+							<div align="center">
+
+								<h:panelGrid id="paneldatosAreaEmpresa" columns="3">
+
+									<h:outputLabel for="cbArea" id="lblArea" value="Area"
+										class="labelSelect" />
+									<h:selectOneMenu id="cbArea"
+										value="#{gestionAdmController.codigoAreaEmp}"
+										class="sizeselect form-control">
+
+										<p:ajax listener="#{gestionAdmController.buscarAreaEmpresa}"
+											update="tftNombreAEmp tftdescripAEmp" />
+
+										<f:selectItem itemLabel="Seleccione el tipo de usuario"
+											itemValue="" noSelectionOption="true" />
+
+										<f:selectItems value="#{gestionAdmController.listArea}"
+											var="areaE" itemValue="#{areaE.idArea}"
+											itemLabel="#{areaE.nombreArea}" />
+									</h:selectOneMenu>
+									<br />
+									<h:outputLabel for="tftNombreAEmp" id="lblNombreA"
+										value="Nombre del area" />
+									<h:inputText id="tftNombreAEmp"
+										value="#{gestionAdmController.nombreBAreaEmp}"
+										class="form-control" />
+									<p:message for="tftNombreAEmp" />
+
+									<h:outputLabel for="tftdescripAEmp" id="lblDescripA"
+										value="Descripción del area" />
+									<h:inputTextarea id="tftdescripAEmp"
+										value="#{gestionAdmController.descripBAreaEmp}"
+										class="form-control" />
+									<p:message for="tftdescripAEmp" />
+								</h:panelGrid>
+
+								<h:panelGrid id="panelbtnsCrearA" columns="2">
+
+									<p:commandButton id="btnEliminarA" value="Eliminar"
+										actionListener="#{gestionAdmController.eliminarAreaEmpresa}"
+										process="@this paneldatosAreaEmpresa" class="buttonInactivar" />
+
+									<p:commandButton id="btnCrearA" value="Crear"
+										actionListener="#{gestionAdmController.editarAreaEmpresa}"
+										process="@this paneldatosAreaEmpresa" class="button" />
+
+								</h:panelGrid>
+							</div>
+						</p:tab>
+
+						<p:tab title="Tipo de usuario">
+
+
+
+						</p:tab>
+					</p:accordionPanel>
+
+				</p:tab>
+
+			</p:tabView>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

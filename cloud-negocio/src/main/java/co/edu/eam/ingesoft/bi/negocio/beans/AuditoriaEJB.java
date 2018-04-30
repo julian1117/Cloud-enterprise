@@ -83,7 +83,7 @@ public class AuditoriaEJB {
 
 	/**
 	 * @Autor JULIAN CAMILO HENAO
-	 * Creao la auditoria
+	 * Creo la auditoria
 	 * @param accion tipo de accion realizada
 	 * @param nombreReg nombre del modulo empleado
 	 * @param browserDeta os y brows del que se conecta

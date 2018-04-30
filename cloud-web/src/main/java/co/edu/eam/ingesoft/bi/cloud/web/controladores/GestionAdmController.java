@@ -12,20 +12,47 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.GestionAdmEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 
 @Named(value = "gestionAdmController")
 @ViewScoped
 public class GestionAdmController implements Serializable {
 
 	private List<Usuario> listUsuarioInact;
-	
+
 	private List<Usuario> listaPersona;
+
+	private String nombreTipoUs;
+
+	private String descripTipoUs;
+
+	private String nombreAreaEmp;
+
+	private String descripAreaEmp;
+
+	private String codigoTipoUs;
+
+	private String codigoAreaEmp;
+
+	private String nombreBTipoUs;
+
+	private String descripBTipoUs;
+
+	private String nombreBAreaEmp;
+
+	private String descripBAreaEmp;
+
+	private List<TipoUsuario> listTipoUs;
+
+	private List<AreaEmpresa> listArea;
 
 	public List<Usuario> getListUsuarioInact() {
 		return listUsuarioInact;
@@ -43,14 +70,111 @@ public class GestionAdmController implements Serializable {
 		this.listaPersona = listaPersona;
 	}
 
+	public String getNombreTipoUs() {
+		return nombreTipoUs;
+	}
 
+	public void setNombreTipoUs(String nombreTipoUs) {
+		this.nombreTipoUs = nombreTipoUs;
+	}
+
+	public String getDescripTipoUs() {
+		return descripTipoUs;
+	}
+
+	public void setDescripTipoUs(String descripTipoUs) {
+		this.descripTipoUs = descripTipoUs;
+	}
+
+	public String getNombreAreaEmp() {
+		return nombreAreaEmp;
+	}
+
+	public void setNombreAreaEmp(String nombreAreaEmp) {
+		this.nombreAreaEmp = nombreAreaEmp;
+	}
+
+	public String getDescripAreaEmp() {
+		return descripAreaEmp;
+	}
+
+	public void setDescripAreaEmp(String descripAreaEmp) {
+		this.descripAreaEmp = descripAreaEmp;
+	}
+
+	public String getCodigoTipoUs() {
+		return codigoTipoUs;
+	}
+
+	public void setCodigoTipoUs(String codigoTipoUs) {
+		this.codigoTipoUs = codigoTipoUs;
+	}
+
+	public String getCodigoAreaEmp() {
+		return codigoAreaEmp;
+	}
+
+	public void setCodigoAreaEmp(String codigoAreaEmp) {
+		this.codigoAreaEmp = codigoAreaEmp;
+	}
+
+	public List<TipoUsuario> getListTipoUs() {
+		return listTipoUs;
+	}
+
+	public void setListTipoUs(List<TipoUsuario> listTipoUs) {
+		this.listTipoUs = listTipoUs;
+	}
+
+	public String getNombreBTipoUs() {
+		return nombreBTipoUs;
+	}
+
+	public void setNombreBTipoUs(String nombreBTipoUs) {
+		this.nombreBTipoUs = nombreBTipoUs;
+	}
+
+	public String getDescripBTipoUs() {
+		return descripBTipoUs;
+	}
+
+	public void setDescripBTipoUs(String descripBTipoUs) {
+		this.descripBTipoUs = descripBTipoUs;
+	}
+
+	public String getNombreBAreaEmp() {
+		return nombreBAreaEmp;
+	}
+
+	public void setNombreBAreaEmp(String nombreBAreaEmp) {
+		this.nombreBAreaEmp = nombreBAreaEmp;
+	}
+
+	public String getDescripBAreaEmp() {
+		return descripBAreaEmp;
+	}
+
+	public void setDescripBAreaEmp(String descripBAreaEmp) {
+		this.descripBAreaEmp = descripBAreaEmp;
+	}
+
+	public List<AreaEmpresa> getListArea() {
+		return listArea;
+	}
+
+	public void setListArea(List<AreaEmpresa> listArea) {
+		this.listArea = listArea;
+	}
 
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
 
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
-	
+
+	@EJB
+	private RecursosHumanosEJB recursosEJB;
+
 	@Inject
 	private RecursosHumanosController recursosH;
 
@@ -61,6 +185,8 @@ public class GestionAdmController implements Serializable {
 	public void inicializar() {
 		listUsuarioInact = gestionAdmEJB.listaUsuarioI();
 		listaPersona = gestionAdmEJB.listaUsuarioI();
+		listTipoUs = gestionAdmEJB.listaTipoUs();
+		listArea = recursosEJB.listarAreas();
 	}
 
 	/**
@@ -75,11 +201,11 @@ public class GestionAdmController implements Serializable {
 			registrarAuditoria("Activar usuarios", "Administrar Usuarios",
 					String.valueOf(usuario.getPersona().getCedula()));
 			Messages.addFlashGlobalInfo("Cambio de estado con éxitoso");
-			 return "/paginas/seguro/adm/activarUs.xhtml?faces-redirect=true";
+			return "/paginas/seguro/adm/activarUs.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			Messages.addFlashGlobalFatal("=( \n " + e);
 		}
-		 return null;
+		return null;
 	}
 
 	/**
@@ -98,7 +224,7 @@ public class GestionAdmController implements Serializable {
 		} catch (Exception e) {
 			Messages.addFlashGlobalFatal("=( \n " + e);
 		}
-		 return null;
+		return null;
 	}
 
 	/**
@@ -113,25 +239,141 @@ public class GestionAdmController implements Serializable {
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
 			// ----obtengo el usuario que esta en session
-			// String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 
 			// ----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, "N/A", usuarioAF);
+			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, us, usuarioAF);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Metodo para cargar la cedula de una persona de manera statica
-	 * para configurarla con el empleado
+	 * Metodo para cargar la cedula de una persona de manera statica para
+	 * configurarla con el empleado
+	 * 
 	 * @param persona
 	 */
 	public String cedulaStaticaEmpleado(Usuario persona) {
-		recursosH.cedula=String.valueOf(persona.getPersona().getCedula());
+		recursosH.cedula = String.valueOf(persona.getPersona().getCedula());
 		return "/paginas/seguro/adm/empleado.xhtml?faces-redirect=true";
 
 	}
-	
-	
+
+	/**
+	 * Crear tipos de usuario
+	 */
+	public void crearTipoUs() {
+		try {
+			TipoUsuario tipoUs = new TipoUsuario();
+			tipoUs.setNombre(nombreTipoUs);
+			tipoUs.setDescripcion(descripTipoUs);
+
+			gestionAdmEJB.crearTipoUs(tipoUs);
+			registrarAuditoria("Crear", "Tipos de usuario", "N/A");
+			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+
+		}
+	}
+
+	/**
+	 * Crear areas de la empresa
+	 */
+	public void crearAreaEmpresa() {
+		try {
+			AreaEmpresa areaEmp = new AreaEmpresa();
+			areaEmp.setNombreArea(nombreAreaEmp);
+			areaEmp.setDescripcion(descripAreaEmp);
+
+			gestionAdmEJB.crearAreaEmpresa(areaEmp);
+			registrarAuditoria("Crear", "Areas de la empresa", "N/A");
+
+			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
+
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+
+		}
+	}
+
+	/**
+	 * Buscar tipo de usuario
+	 */
+	public void buscarPorTipoUs() {
+
+		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
+		nombreBTipoUs = tipoUs.getNombre();
+		descripBTipoUs = tipoUs.getDescripcion();
+		registrarAuditoria("Buscar", "Tipos de usuario", "N/A");
+	}
+
+	/**
+	 * Buscar areas de la empresa
+	 */
+	public void buscarAreaEmpresa() {
+
+		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+		nombreBAreaEmp = area.getNombreArea();
+		descripBAreaEmp = area.getDescripcion();
+		registrarAuditoria("Buscar", "Areas de la empresa", "N/A");
+	}
+
+	/**
+	 * Editar tipo de usuario
+	 */
+	public void editarTipoUs() {
+		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
+		tipoUs.setNombre(nombreBTipoUs);
+		tipoUs.setDescripcion(descripBTipoUs);
+		gestionAdmEJB.editarTipoUs(tipoUs);
+		registrarAuditoria("Editar", "Tipos de usuario", "N/A");
+		Messages.addFlashGlobalInfo("Registro Editado Con Exito!!");
+
+	}
+
+	/**
+	 * Editar area de la empresa
+	 */
+	public void editarAreaEmpresa() {
+
+		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+		area.setNombreArea(nombreBAreaEmp);
+		area.setDescripcion(descripBAreaEmp);
+		gestionAdmEJB.editarAreaEmpresa(area);
+		registrarAuditoria("Editar", "Areas de la empresa", "N/A");
+		Messages.addFlashGlobalInfo("Registro Editado Con Exito!!");
+
+	}
+
+	/**
+	 * Eliminar Tipo de usuario
+	 */
+	public void eliminarTipoUs() {
+		try {
+			TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
+			gestionAdmEJB.eliminarTipoUs(tipoUs);
+			registrarAuditoria("Eliminar", "Tipos de usuario", "N/A");
+			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("=( lo snetimos no se puedo eliminar el registro");
+
+		}
+	}
+
+	/**
+	 * Eliminar Area de la empresa
+	 */
+	public void eliminarAreaEmpresa() {
+		try {
+			AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+			gestionAdmEJB.eliminarAreaEmpresa(area);
+			registrarAuditoria("Eliminar", "Areas de la empresa", "N/A");
+			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("=( lo snetimos no se puedo eliminar el registro");
+		}
+	}
 }

@@ -7,7 +7,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
@@ -69,5 +71,95 @@ public class GestionAdmEJB {
 		}
 	}
 
-	
+	/**
+	 * Crear tipo de usuario
+	 * 
+	 * @param tipoUsuario
+	 */
+	public void crearTipoUs(TipoUsuario tipoUsuario) {
+		em.persist(tipoUsuario);
+	}
+
+	/**
+	 * Crear area de la empresa
+	 * 
+	 * @param areaEmpresa
+	 */
+	public void crearAreaEmpresa(AreaEmpresa areaEmpresa) {
+		em.persist(areaEmpresa);
+	}
+
+	/**
+	 * Lista de tipos de usuario
+	 * 
+	 * @param tipoUsuario
+	 * @return
+	 */
+	public List<TipoUsuario> listaTipoUs() {
+		return em.createNamedQuery(TipoUsuario.TIPO_IS).getResultList();
+	}
+
+	/**
+	 * Buscar por tipo de usuario
+	 * 
+	 * @param idTipo
+	 * @return
+	 */
+	public TipoUsuario buscarTipoUs(Integer idTipo) {
+		return em.find(TipoUsuario.class, idTipo);
+	}
+
+	/**
+	 * Buscar area de la empresa
+	 * 
+	 * @param idArea
+	 * @return
+	 */
+	public AreaEmpresa buscarAreaEmpresa(Integer idArea) {
+		return em.find(AreaEmpresa.class, idArea);
+	}
+
+	/**
+	 * Editar tipo de usuario
+	 * 
+	 * @param tipoUsuario
+	 */
+	public void editarTipoUs(TipoUsuario tipoUsuario) {
+		em.merge(tipoUsuario);
+	}
+
+	/**
+	 * Editar area de la empresa
+	 * 
+	 * @param areaEmpresa
+	 */
+	public void editarAreaEmpresa(AreaEmpresa areaEmpresa) {
+		em.merge(areaEmpresa);
+	}
+
+	/**
+	 * Eliminar tipo de usuario
+	 * 
+	 * @param tipoUsuario
+	 */
+	public void eliminarTipoUs(TipoUsuario tipoUsuario) {
+		try {
+			em.remove(tipoUsuario);
+		} catch (ExcepcionNegocio e) {
+			throw new ExcepcionNegocio("No fue posible eliminar el tipo de usuario ");
+		}
+	}
+
+	/**
+	 * Eliminar area de la empresa
+	 * 
+	 * @param tipoUsuario
+	 */
+	public void eliminarAreaEmpresa(AreaEmpresa areaEmpresa) {
+		try {
+			em.remove(areaEmpresa);
+		} catch (ExcepcionNegocio e) {
+			throw new ExcepcionNegocio("No fue posible eliminar el area de la empresa ");
+		}
+	}
 }

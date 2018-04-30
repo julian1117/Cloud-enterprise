@@ -47,6 +47,8 @@ public class RecursosHumanosController implements Serializable {
 	//@Length(min=4,max=10,message="Cedula - longitud entre 5 y 10")
 	public static String cedula;
 	
+	private String cedulaPer = cedula;
+	
 	@Pattern(regexp="[0-9]*",message="El campo numero de  telefonosolo puede llevar caracteres numericos")
 	@Length(min=4,max=10,message="Cedula - longitud entre 7 y 12")
 	private String telefono;
@@ -92,6 +94,16 @@ public class RecursosHumanosController implements Serializable {
 
 	
 	
+	public String getCedulaPer() {
+		return cedulaPer;
+	}
+
+
+	public void setCedulaPer(String cedulaPer) {
+		this.cedulaPer = cedulaPer;
+	}
+
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -121,14 +133,13 @@ public class RecursosHumanosController implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-
-	public String getCedula() {
+	public static String getCedula() {
 		return cedula;
 	}
 
 
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
+	public static void setCedula(String cedula) {
+		RecursosHumanosController.cedula = cedula;
 	}
 
 
@@ -223,48 +234,6 @@ public class RecursosHumanosController implements Serializable {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-
-	public RecursosHumanosEJB getRecursosEJB() {
-		return recursosEJB;
-	}
-
-
-	public void setRecursosEJB(RecursosHumanosEJB recursosEJB) {
-		this.recursosEJB = recursosEJB;
-	}
-
-
-	public General_EJB getGeneralEJB() {
-		return generalEJB;
-	}
-
-
-	public void setGeneralEJB(General_EJB generalEJB) {
-		this.generalEJB = generalEJB;
-	}
-
-
-	public CargoEJB getCargoEJB() {
-		return cargoEJB;
-	}
-
-
-	public void setCargoEJB(CargoEJB cargoEJB) {
-		this.cargoEJB = cargoEJB;
-	}
-
-
-	public AreaEmpresaEJB getAreaEJB() {
-		return areaEJB;
-	}
-
-
-	public void setAreaEJB(AreaEmpresaEJB areaEJB) {
-		this.areaEJB = areaEJB;
-	}
-	
-	
-	
 	public List<Empleado> getListarEmpleado() {
 		return listarEmpleado;
 	}
@@ -284,15 +253,7 @@ public class RecursosHumanosController implements Serializable {
 		this.idEmpleado = idEmpleado;
 	}
 
-
-	public AuditoriaEJB getAuditoriaEJB() {
-		return auditoriaEJB;
-	}
-
-
-	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
-		this.auditoriaEJB = auditoriaEJB;
-	}
+	
 
 
 	@PostConstruct
@@ -312,9 +273,15 @@ public class RecursosHumanosController implements Serializable {
 			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
 			
 			if(persona != null) {
-				Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, persona);
+				Empleado empleado = new Empleado();
+				empleado.setArea(area);
+				empleado.setCargo(cargo);
+				empleado.setFechaIngreso(fechaIngreso);
+				empleado.setIdPersona(persona);
+				empleado.setSalario(salario);
 				
 				recursosEJB.crearEmpleado(empleado);
+				
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 			}else {
 				Messages.addFlashGlobalInfo("Verifique que la persona exista!!");
