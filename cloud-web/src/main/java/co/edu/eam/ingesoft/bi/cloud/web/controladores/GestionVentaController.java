@@ -232,17 +232,17 @@ public class GestionVentaController implements Serializable {
 
 			if(can > cantidad) {
 				
-				Integer valor = listVent.get(0).getIdVenta()+1;
+			//	Integer valor = listVent.get(0).getIdVenta()+1;
 				
-				Venta venta = new Venta();
-				venta.setIdVenta(valor);
-				venta.setCantidad(cantidad);
-				venta.setInventario(inventario);
-				venta.setGestionVenta(gestion);
+				//Venta venta = new Venta();
+				//venta.setIdVenta(valor);
+				//venta.setCantidad(cantidad);
+				//venta.setInventario(inventario);
+				//venta.setGestionVenta(gestion);
 				Messages.addFlashGlobalError(cantidad+" - " +idFacturaLista +" - " +idInventario);
 
 				
-				ventaEJB.crearVenta(venta);
+			//	ventaEJB.crearVenta(venta);
 				
 				//Inventario buscarInventari = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
 				//Integer cantidadInventario = buscarInventari.getCantidad();
