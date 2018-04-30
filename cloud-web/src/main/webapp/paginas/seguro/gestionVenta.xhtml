@@ -12,58 +12,33 @@
 			<p:tabView id="tabs">
 				<p:tab title="Gestionar Recursos Humanos">
 					<div align="center">
-						<p:panel id="paneldatosP" header="Datos de Empleado">
+						<p:panel id="paneldatosP" header="Datos de Gestion Factura">
 							<h:panelGrid id="paneldatos" columns="3">
 
-								<h:outputLabel for="tftCedula" id="lblCedula" value="Id"></h:outputLabel>
-								<h:inputText id="tftCedula"
-									value="#{recursosControlador.cedula}" class="form-control"></h:inputText>
-								<p:message for="tftCedula " />
+								<h:outputLabel for="tftIdFactura" id="lblIdFactura" value="IdFactura Cliente"></h:outputLabel>
+								<h:inputText id="tftIdFactura"
+									value="#{gestionVentaController.idFactura}" class="form-control"></h:inputText>
+								<p:message for="tftIdFactura " />
 
-								<h:outputLabel for="tftSalario" id="lblSalario" value="Salario"></h:outputLabel>
-								<h:inputText id="tftSalario"
-									value="#{recursosControlador.salario}" class="form-control"></h:inputText>
-								<p:message for="tftSalario" />
+								<h:outputLabel for="tftCedulaCliente" id="lblCedulaCliente" value="CedulaCliente"></h:outputLabel>
+								<h:inputText id="tftCedulaCliente"
+									value="#{gestionVentaController.persona}" class="form-control"></h:inputText>
+								<p:message for="tftCedulaCliente" />
 
-								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
-								<h:inputText id="tftFechaIngreso"
-									value="#{recursosControlador.fechaIngreso}" mode="inline"
+								<h:outputLabel for="tftFecha" value="Fecha Ingreso" />
+								<h:inputText id="tftFecha"
+									value="#{gestionVentaController.fecha}" mode="inline"
 									a:placeholder="dia-mes-año" class="form-control">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
-								<p:message for="tftFechaIngreso" />
-
-
-								<h:outputLabel id="lblCargo" value="Cargo" class="labelSelect" />
-
-								<h:selectOneMenu id="tftCargo"
-									value="#{recursosControlador.idCargo}"
-									class="sizeselect form-control">
-
-									<f:selectItems value="#{recursosControlador.listaCargo}"
-										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
-
-								</h:selectOneMenu>
-								<br />
-
-								<h:outputLabel for="cbArea" id="lblArea" value="Area"
-									class="labelSelect" />
-								<h:selectOneMenu id="cbArea"
-									value="#{recursosControlador.idAreaEmpresa}"
-									class="sizeselect form-control">
-
-									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
-										var="areaE" itemValue="#{areaE.idArea}"
-										itemLabel="#{areaE.nombreArea}" />
-								</h:selectOneMenu>
+								<p:message for="tftFecha" />
 
 								<h1></h1>
-
 
 							</h:panelGrid>
 							<h:panelGrid id="panelbtnsCrear" columns="2">
 								<p:commandButton id="btnCrear" value="CREAR"
-									actionListener="#{recursosControlador.crearEmpleado}"
+									actionListener="#{gestionVentaController.crearFactura}"
 									process="@this paneldatos" class="button" />
 							</h:panelGrid>
 						</p:panel>
@@ -76,14 +51,14 @@
 					<div align="center">
 
 						<h:panelGrid id="panelBuscar" columns="3">
-							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
+							<h:outputLabel for="tftIdFacturaBuscar" id="lblIdFacturaBuscar"
 								value="Identificacion"></h:outputLabel>
-							<h:inputText id="tftCedulaBuscar"
-								value="#{recursosControlador.cedula}"></h:inputText>
+							<h:inputText id="tftIdFacturaBuscar"
+								value="#{gestionVentaController.idFactura}"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
-								action="#{recursosControlador.buscarEmpleado}" class="btn"
-								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
+								action="#{gestionVentaController.buscarFactura}" class="btn"
+								process="@this tftIdFacturaBuscar" update="paneldatosBuscar " />
 						</h:panelGrid>
 
 
@@ -91,61 +66,25 @@
 							<h:panelGrid id="paneldatosBuscar" columns="2">
 
 
-								<h:outputLabel for="tftSalarioBuscar" id="lblSalarioBuscar"
-									value="Salario"></h:outputLabel>
-								<h:inputText id="tftSalarioBuscar"
-									value="#{recursosControlador.salario}"></h:inputText>
+								<h:outputLabel for="tftCedulaClienteBuscar" id="lblCedulaClienteBuscar"
+									value="CedulaCliente"></h:outputLabel>
+								<h:inputText id="tftCedulaClienteBuscar"
+									value="#{gestionVentaController.persona}"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"
-									value="#{recursosControlador.fechaIngreso}" mode="inline"
+									value="#{gestionVentaController.fecha}" mode="inline"
 									a:placeholder="dia-mes-anio">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
-
-
-
-								<h:outputLabel for="tftCargoBuscar" id="lblCargoBuscar"
-									value="Cargo"></h:outputLabel>
-								<h:selectOneMenu id="tftCargoBuscar"
-									value="#{recursosControlador.idCargo}"
-									class="sizeselect form-control">
-
-									<f:selectItems value="#{recursosControlador.listaCargo}"
-										var="doc" itemValue="#{doc.idCar}" itemLabel="#{doc.nombre}" />
-
-								</h:selectOneMenu>
 								
-
-								<h:outputLabel for="tftAreaBuscar" id="lblAreaBuscar"
-									value="Area"></h:outputLabel>
-								<h:selectOneMenu id="tftAreaBuscar"
-									value="#{recursosControlador.idAreaEmpresa}"
-									class="sizeselect form-control">
-
-									<f:selectItems value="#{recursosControlador.listaAreaEmpresa}"
-										var="areaE" itemValue="#{areaE.idArea}"
-										itemLabel="#{areaE.nombreArea}" />
-								</h:selectOneMenu>
-
-
+								
 
 
 							</h:panelGrid>
 						</p:panel>
 						<br></br> <br></br>
 
-						<h2>Otras Opciones</h2>
-						<h:panelGrid id="panelbtns" columns="2">
-							<p:commandButton id="btnEditar" value="Editar"
-								action="#{recursosControlador.editarEmpleado}" class="btn"
-								process="@this paneldatosPBuscar" />
-
-
-							<p:commandButton id="btnEliminar" value="Eliminar"
-								action="#{recursosControlador.eliminarEmpleado}" class="btn"
-								process="@this tftCedulaBuscar" />
-						</h:panelGrid>
 
 					</div>
 				</p:tab>
@@ -154,38 +93,33 @@
 					<div align="center">
 					
 					<p:panel header="Listado Empleados" id="panelTab">
-				<p:dataTable id="panelTablas" value="#{recursosControlador.listarEmpleado}"
+				<p:dataTable id="panelTablas" value="#{gestionVentaController.listarFacturas}"
 					var="doc" border="1" class="table table-striped">
-					<p:column headerText="Cedula">
-						<h:outputLabel value="#{doc.idPersona.cedula}" />
+					<p:column headerText="IdFactura">
+						<h:outputLabel value="#{doc.idFactura}" />
 					</p:column>
-					<p:column headerText="Nombre">
+					<p:column headerText="Cedula Empleado">
 						<h:outputLabel
-							value="#{doc.idPersona.nombre}" />
+							value="#{doc.empleado.idPersona.cedula}" />
 					</p:column>
-					<p:column headerText="Nombre">
+					<p:column headerText="Nombre empleado">
 						<h:outputLabel
-							value="#{doc.idPersona.apellido}" />
-					</p:column>
-					
-					<p:column headerText="Cargo">
-						<h:outputLabel
-							value="#{doc.cargo.nombre}" />
+							value="#{doc.empleado.idPersona.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Area">
+					<p:column headerText="Cedula Cliente">
 						<h:outputLabel
-							value="#{doc.area.nombreArea}" />
+							value="#{doc.persona.cedula}" />
 					</p:column>
 					
-					<p:column headerText="Fecha Ingreso">
+					<p:column headerText="Nombre Cliente">
 						<h:outputLabel
-							value="#{doc.fechaIngreso}" />
+							value="#{doc.persona.nombre}" />
 					</p:column>
 					
-					<p:column headerText="Salario">
+					<p:column headerText="Fecha">
 						<h:outputLabel
-							value="#{doc.salario}" />
+							value="#{doc.fecha}" />
 					</p:column>
 					
 				</p:dataTable>
