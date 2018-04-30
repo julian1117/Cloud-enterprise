@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -24,7 +26,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 
 @Named(value = "gestionClienteController")
 @ViewScoped
-public class ClienteControler implements Serializable{
+public class ClienteControler implements Serializable {
 
 	@Pattern(regexp = "[A-Za-z ]*", message = "El campo nombre solo permites caracteres alfabetico")
 	@Length(min = 3, max = 20, message = "El campo nombre-longitud entre 3 y 30")
@@ -63,13 +65,13 @@ public class ClienteControler implements Serializable{
 	private List<Ciudad> listCiudad;
 
 	private Integer ciudad;
-	
+
 	@EJB
 	private RegistroNuevosEJB registroNuevosEJB;
 
 	@EJB
 	private General_EJB generalEJB;
-	
+
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
 
@@ -216,7 +218,7 @@ public class ClienteControler implements Serializable{
 	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
 		this.auditoriaEJB = auditoriaEJB;
 	}
-	
+
 	public void crearCliente() {
 		try {
 			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
@@ -232,48 +234,94 @@ public class ClienteControler implements Serializable{
 			persona.setFechaNacimiento(fechaNacimiento);
 			persona.setGenero(buscarGenero);
 			persona.setTelefono(telefono);
-			
-			if(persona == null) {
+
+			if (persona == null) {
 				registroNuevosEJB.crearPersona(persona);
 				registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 				Messages.addFlashGlobalInfo("Registro éxitoso");
 
-				
-			}else {
+			} else {
 
 				Messages.addFlashGlobalError("El cliente ya Existe");
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+		}
+	}
+
+	public void buscarCliente() {
+		try {
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
 			
+			if(per != null) {
+			 nombre = per.getCedula().toString();
+			 apellido = per.getApellido().toString();
+			fechaNacimiento = per.getFechaNacimiento();
+			telefono = per.getTelefono().toString();
+			direccion= per.getDireccion().toString();
+			email = per.getEmail().toString();
+            genero = per.getGenero();
+  //          ciudad = String.valueOf(per.getCiudad().getNombre());
+            
+            registrarAuditoria("BUSCAR", "Busco la persona con cedula: " + per.getCedula());
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	
-	public void buscarCliente() {
+	public void editarCliente() {
 		try {
 			
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad);
+			
+			if(per!=null) {
+				registroNuevosEJB.editarCliente(per);
+				Persona persona = new Persona(Integer.parseInt(cedula), nombre, apellido, direccion, telefono, email, fechaNacimiento, buscarGenero, buscarCiudad);
+				Messages.addFlashGlobalInfo("Ediccion éxitoso");
+				
+				registrarAuditoria("EDITAR", "Edito a la persona de cedula: " + per.getCedula());
+			}
+			
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
 	
+	public void eliminar() {
+		
+	}
+
 	/**
-	 * Metodo para  registrar las auditorias generales
-	 * @param accion Crear, Editar, Eliminar o Actualizar
-	 * @param nombreReg modulo que se esta trabajando
+	 * Metodo para registrar las auditorias generales
+	 * 
+	 * @param accion
+	 *            Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg
+	 *            modulo que se esta trabajando
 	 */
 	public void registrarAuditoria(String accion, String nombreReg) {
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
-			//----obtengo el usuario que esta en session
-			//String us = String.valueOf(sesion.getUse().getPersona().getCedula());
-			
-			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,"N/A","N/A");
+			// ----obtengo el usuario que esta en session
+			// String us = String.valueOf(sesion.getUse().getPersona().getCedula());
+
+			// ----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, "N/A", "N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

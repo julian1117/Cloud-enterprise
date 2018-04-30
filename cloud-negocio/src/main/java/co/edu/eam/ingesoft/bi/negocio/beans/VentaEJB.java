@@ -62,14 +62,14 @@ public class VentaEJB {
 	}
 	
 	public void crearVenta(Venta venta) {
-		Venta ven = buscarVenta(venta.getIdVenta());
+	//	Venta ven = buscarVenta(venta);
 		
-		if(ven == null) {
-			em.persist(venta);
-		}else {
-			throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
+		//if(ven == null) {
+			//em.persist(venta);
+		//}else {
+			//throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
 			
-		}
+		//}
 	}
 	
 	public Venta buscarVenta(Integer idVenta) {

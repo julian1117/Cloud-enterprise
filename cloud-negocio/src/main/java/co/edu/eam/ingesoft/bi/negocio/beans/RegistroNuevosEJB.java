@@ -80,6 +80,15 @@ public class RegistroNuevosEJB {
 		}
 	}
 	
+	public void editarCliente(Persona cedula) {
+		Persona pers = buscarPersona(cedula.getCedula());
+		if(pers!=null) {
+			em.merge(cedula);
+		}else {
+			throw new ExcepcionNegocio("La persona ingresada no existe");
+		}
+	}
+	
 	
 	/**
 	 * Crea un usuario a partir de la persona creada
