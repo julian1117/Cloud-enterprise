@@ -35,6 +35,17 @@ public class Venta implements Serializable {
 	public Venta() {
 		super();
 	}
+	
+	
+
+	public Venta(Inventario inventario, GestionVenta gestionVenta, Integer cantidad) {
+		super();
+		this.inventario = inventario;
+		this.gestionVenta = gestionVenta;
+		this.cantidad = cantidad;
+	}
+
+
 
 	public Venta(Integer idVenta, Inventario inventario, GestionVenta gestionVenta, Integer cantidad) {
 		super();

@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.GestionVenta;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @Stateless
@@ -24,6 +25,21 @@ public class GestionarVentaEJB {
 		}else {
 			throw new ExcepcionNegocio("El GestionVenta ya se encuentra registrado");
 		}
+	}
+	
+	public void crearVenta(Venta venta) {
+		Venta ven = buscarVenta(venta.getIdVenta());
+		
+		if(ven ==null) {
+			em.persist(venta);
+		}else {
+			throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
+			
+		}
+	}
+	
+	public Venta buscarVenta(Integer idVenta) {
+		return em.find(Venta.class, idVenta);
 	}
 	
 	/**
@@ -54,6 +70,7 @@ public class GestionarVentaEJB {
 
 		}
 	}
+	
 	
 	public List<GestionVenta> listaFacturas(){
 		List<GestionVenta> list = em.createNamedQuery(GestionVenta.LISTAR_FACTURA).getResultList();

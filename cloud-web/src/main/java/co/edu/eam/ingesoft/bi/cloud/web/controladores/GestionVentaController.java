@@ -17,9 +17,12 @@ import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.GestionVenta;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Inventario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.GestionarVentaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.InventarioEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RegistroNuevosEJB;
 
@@ -41,6 +44,12 @@ public class GestionVentaController implements Serializable {
 	
 	private String idFacturaLista;
 	
+	private List<Inventario> listaInventario;
+	
+	private String idInventario;
+
+	private Integer cantidad;
+	
 	@EJB
 	private GestionarVentaEJB gestionEJB;
 	
@@ -56,8 +65,33 @@ public class GestionVentaController implements Serializable {
 	@Inject
 	private SessionController sesion;	
 	
+	@EJB
+	private InventarioEJB inventarioEJB;
 	
-	
+
+	public List<Inventario> getListaInventario() {
+		return listaInventario;
+	}
+
+	public void setListaInventario(List<Inventario> listaInventario) {
+		this.listaInventario = listaInventario;
+	}
+
+	public String getIdInventario() {
+		return idInventario;
+	}
+
+	public void setIdInventario(String idInventario) {
+		this.idInventario = idInventario;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
+	}
 
 	public List<GestionVenta> getListarFacturas() {
 		return listarFacturas;
@@ -150,6 +184,7 @@ public class GestionVentaController implements Serializable {
 	@PostConstruct
 	public void inicializar() {
 		listarFacturas = gestionEJB.listaFacturas();
+		listaInventario = inventarioEJB.listarInventario();
 	}
 	
 	public void crearFactura() {
@@ -177,7 +212,25 @@ public class GestionVentaController implements Serializable {
 		
 	}
 	
-	public void crearVenta() {
+	public void crearVenta() {		
+		try {
+			
+			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFactura));
+			Inventario inventario = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+			
+			Integer can = inventario.getCantidad();
+			
+			if(can <= cantidad) {
+				Venta venta = new Venta(inventario, gestion, cantidad);
+				gestionEJB.crearVenta(venta);
+			}else {
+				Messages.addFlashGlobalInfo("Verifique que la cantidad sea menor a la cantidad del inventario exista!!");
+				
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 	}
 	
