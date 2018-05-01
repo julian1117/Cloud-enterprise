@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -219,6 +220,12 @@ public class ClienteControler implements Serializable {
 
 	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
 		this.auditoriaEJB = auditoriaEJB;
+	}
+	
+	@PostConstruct
+	public void inicializar() {
+		listGeneros = registroNuevosEJB.listaGeneros();
+		listPais = generalEJB.listaPaises();
 	}
 
 	public void crearCliente() {
