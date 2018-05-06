@@ -353,8 +353,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void eliminarTipoUs() {
 		try {
-			TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
-			gestionAdmEJB.eliminarTipoUs(tipoUs);
+			gestionAdmEJB.eliminarTipoUs(Integer.parseInt(codigoTipoUs));
 			registrarAuditoria("Eliminar", "Tipos de usuario", "N/A");
 			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
 		} catch (Exception e) {
@@ -368,8 +367,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void eliminarAreaEmpresa() {
 		try {
-			AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
-			gestionAdmEJB.eliminarAreaEmpresa(area);
+			gestionAdmEJB.eliminarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
 			registrarAuditoria("Eliminar", "Areas de la empresa", "N/A");
 			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
 		} catch (Exception e) {

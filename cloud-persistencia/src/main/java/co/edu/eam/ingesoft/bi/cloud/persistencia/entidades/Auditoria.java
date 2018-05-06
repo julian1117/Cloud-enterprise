@@ -1,7 +1,6 @@
 package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,8 +17,18 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "Auditoria")
+
+@NamedQueries({
+	@NamedQuery(name = Auditoria.AUDITORIA, query = "SELECT a FROM Auditoria a"),
+	@NamedQuery(name = Auditoria.POR_AUDITORIA, query = "SELECT a FROM Auditoria a where a.nombre=?1")
+
+})
 public class Auditoria implements Serializable {
 
+	public static final String AUDITORIA= "Auditoria.listAud";
+
+	public static final String POR_AUDITORIA = "Auditoria.listAudtoria";	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_SEQ")
 	@SequenceGenerator(sequenceName = "AUDIT_SEQ", allocationSize = 1, name = "AUDITORIA_SEQ")

@@ -83,8 +83,8 @@
 	padding: .1em .1em .1em;
 }
 
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
-   
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active
+	{
 	font-weight: normal;
 	border-radius: 0;
 	border-color: rgba(255, 255, 255, 0);
@@ -93,9 +93,8 @@
 	background: #0078d7;
 	text-shadow: 12px -2px 1px rgba(255, 255, 255, 0), 2px 2px 1px
 		rgba(255, 255, 255, 0), -2px 2px 1px rgba(255, 255, 255, 0), 2px -2px
-		1px rgba(255, 255, 255, 0);	
+		1px rgba(255, 255, 255, 0);
 }
-
 
 .ui-tabs .ui-tabs-nav {
 	margin-right: -4px;
@@ -175,9 +174,10 @@
 	padding-bottom: 4px !important;
 	/*margin-bottom: 44px;*/
 }
-.labelSelect{
-	/*margin-bottom: 44px;*/
 
+.labelSelect {
+	/*margin-bottom: 44px;*/
+	
 }
 /* botonera */
 .button {
@@ -211,7 +211,7 @@
 }
 
 .buttonIni {
-    margin-bottom: 3px;
+	margin-bottom: 3px;
 	display: inline-block !important;
 	-webkit-box-sizing: content-box !important;
 	-moz-box-sizing: content-box !important;
@@ -276,7 +276,7 @@
 	-moz-box-sizing: content-box !important;
 	box-sizing: content-box !important;
 	cursor: pointer !important;
-	padding: 2px 20px !important;
+	padding: 2px 19px !important;
 	border: 0px solid #ec1c24 !important;
 	/*-webkit-border-radius: 3px !important;
   border-radius: 1px !important;*/
@@ -295,7 +295,7 @@
 }
 
 .buttonInactivar:hover {
-	background: #b4151b!important;
+	background: #b4151b !important;
 	border: 0px solid #b4151b !important;
 }
 
@@ -366,6 +366,9 @@
 								</div>
 								<div class="col-md-6 col-xs-6 social-icons">
 									<ul class="gtco-social-top">
+										<li><h:outputLabel
+												value="Usuario en sesion: #{sessionController.usuario}"
+												rendered="#{sessionController.isSesion()}" /></li>
 										<li><a href="#"><i class="icon-facebook"></i></a></li>
 										<li><a href="#"><i class="icon-twitter"></i></a></li>
 										<li><a href="#"><i class="icon-linkedin"></i></a></li>
@@ -381,17 +384,10 @@
 							<div class="row">
 								<div class="col-xs-12 text-center menu-1">
 									<ul>
-										<li class="active"><a href="index.html">Home</a></li>
-										<li class="has-dropdown"><a href="services.html">Services</a>
-											<ul class="dropdown">
-												<li><a href="#">Branding</a></li>
-												<li><a href="#">Development</a></li>
-												<li><a href="#">Web Design</a></li>
-												<li><a href="#">Marketing</a></li>
-											</ul></li>
-										<li><a href="portfolio.html">Portfolio</a></li>
-										<li><a href="blog.html">Blog</a></li>
-										<li><a href="contact.html">Contact</a></li>
+										<li class="active"><ui:repeat var="pag"	value="#{sessionController.accesos}">
+												<li><h:commandLink action="#{pag.paginas.getLin}"
+														value="#{pag.paginas.nombre}" /></li>
+											</ui:repeat></li>
 										<li><h:commandLink
 												action="#{sessionController.cerrarSession()}" value="Salir"
 												rendered="#{sessionController.isSesion()}" /></li>

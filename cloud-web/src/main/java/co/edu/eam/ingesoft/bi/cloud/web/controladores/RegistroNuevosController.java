@@ -331,5 +331,9 @@ public class RegistroNuevosController implements Serializable {
 		}
 	}
 
-
+	public String registrar() {
+		return "/paginas/publico/login.xhtml?faces-redirect=true";
+	}
+	
+	
 }

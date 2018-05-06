@@ -142,9 +142,12 @@ public class GestionAdmEJB {
 	 * 
 	 * @param tipoUsuario
 	 */
-	public void eliminarTipoUs(TipoUsuario tipoUsuario) {
+	public void eliminarTipoUs(Integer tipoUsuario) {
 		try {
-			em.remove(tipoUsuario);
+			TipoUsuario tipo = buscarTipoUs(tipoUsuario);
+			if (tipo != null) {
+				em.remove(tipo);
+			}
 		} catch (ExcepcionNegocio e) {
 			throw new ExcepcionNegocio("No fue posible eliminar el tipo de usuario ");
 		}
@@ -155,10 +158,15 @@ public class GestionAdmEJB {
 	 * 
 	 * @param tipoUsuario
 	 */
-	public void eliminarAreaEmpresa(AreaEmpresa areaEmpresa) {
+	public void eliminarAreaEmpresa(Integer areaEmpresa) {
 		try {
-			em.remove(areaEmpresa);
-		} catch (ExcepcionNegocio e) {
+			AreaEmpresa area = buscarAreaEmpresa(areaEmpresa);
+			if (area != null) {
+				em.remove(areaEmpresa);
+			}
+		} catch (
+
+		ExcepcionNegocio e) {
 			throw new ExcepcionNegocio("No fue posible eliminar el area de la empresa ");
 		}
 	}

@@ -111,7 +111,7 @@
 								class="sizeselect form-control" />
 						</h:selectOneMenu>
 						<br />
-						
+
 						<h:outputLabel for="tftNombreUs" id="lblNombreUsuario"
 							value="Nombre de usuario " />
 						<h:inputText id="tftNombreUs"
@@ -132,6 +132,9 @@
 
 					</h:panelGrid>
 					<h:panelGrid id="panelbtnsCrear" columns="2">
+						<p:commandButton value="Registrar usuario" ajax="false"
+							action="#{gestionNuevosController.login}" class="buttonReg" />
+
 						<p:commandButton id="btnCrear" value="Crear"
 							actionListener="#{gestionNuevosController.crearUsuarioNuevo}"
 							process="@this paneldatos" class="button" />

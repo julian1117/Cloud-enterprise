@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+			<div align="center">
+				<p:panel id="paneldatosP" header="Datos de Empleado">
+					<h:panelGrid id="paneldatos" columns="2">
+
+						<h:outputLabel for="tftAud" id="lblAud" value="Modulo "
+							class="labelSelect" />
+						<h:selectOneMenu id="tftAud"
+							value="#{auditoriaControlador.nombre}"
+							class="sizeselect form-control">
+
+							<p:ajax listener="#{auditoriaControlador.listAuditoriaPor}"
+								update="panelTablas" />
+
+							<f:selectItem itemLabel="Seleccione..." itemValue=""
+								noSelectionOption="true" />
+
+							<f:selectItems value="#{auditoriaControlador.listAuditoria}"
+								var="doc" itemValue="#{doc.nombre}" itemLabel="#{doc.nombre}"
+								class="sizeselect form-control" />
+
+						</h:selectOneMenu>
+
+					</h:panelGrid>
+
+					<p:dataTable id="panelTablas"
+						value="#{auditoriaControlador.listAuditoriaPor}" var="doc"
+						border="1" class="table table-striped">
+
+						<p:column headerText="Nombre del modulo">
+							<h:outputLabel value="#{doc.nombre}" />
+						</p:column>
+						<p:column headerText="Accion">
+							<h:outputLabel value="#{doc.accion}" />
+						</p:column>
+
+						<p:column headerText="Fecha de registro">
+							<h:outputLabel value="#{doc.fecha}" />
+						</p:column>
+						
+						<p:column headerText="Tipo de navegador">
+							<h:outputLabel value="#{doc.navegador}" />
+						</p:column>
+						
+						<p:column headerText="Tipo de O.S.">
+							<h:outputLabel value="#{doc.origen}" />
+						</p:column>
+
+					</p:dataTable>
+
+				</p:panel>
+			</div>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

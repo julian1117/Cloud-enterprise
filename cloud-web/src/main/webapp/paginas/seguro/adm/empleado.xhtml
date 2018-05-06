@@ -78,10 +78,10 @@
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="Identificacion"></h:outputLabel>
 							<h:inputText id="tftCedulaBuscar"
-								value="#{recursosControlador.cedulaPer}"></h:inputText>
+								value="#{recursosControlador.cedulaPer}" class="form-control"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="BUSCAR"
-								action="#{recursosControlador.buscarEmpleado}" class="btn"
+								action="#{recursosControlador.buscarEmpleado}" class="buttonIni"
 								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
 						</h:panelGrid>
 
@@ -93,7 +93,7 @@
 								<h:outputLabel for="tftSalarioBuscar" id="lblSalarioBuscar"
 									value="Salario"></h:outputLabel>
 								<h:inputText id="tftSalarioBuscar"
-									value="#{recursosControlador.salario}"></h:inputText>
+									value="#{recursosControlador.salario}" class="form-control"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"
@@ -105,7 +105,7 @@
 
 
 								<h:outputLabel for="tftCargoBuscar" id="lblCargoBuscar"
-									value="Cargo"></h:outputLabel>
+									value="Cargo"/>
 								<h:selectOneMenu id="tftCargoBuscar"
 									value="#{recursosControlador.idCargo}"
 									class="sizeselect form-control">
@@ -136,14 +136,13 @@
 
 						<h2>Otras Opciones</h2>
 						<h:panelGrid id="panelbtns" columns="2">
-							<p:commandButton id="btnEditar" value="Editar"
-								action="#{recursosControlador.editarEmpleado}" class="btn"
-								process="@this paneldatosPBuscar" />
-
-
-							<p:commandButton id="btnEliminar" value="Eliminar"
-								action="#{recursosControlador.eliminarEmpleado}" class="btn"
+						<p:commandButton id="btnEliminar" value="Eliminar"
+								action="#{recursosControlador.eliminarEmpleado}" class="buttonInactivar"
 								process="@this tftCedulaBuscar" />
+								
+							<p:commandButton id="btnEditar" value="Editar"
+								action="#{recursosControlador.editarEmpleado}" class="buttonIni"
+								process="@this paneldatosPBuscar" />							
 						</h:panelGrid>
 
 					</div>

@@ -3,12 +3,14 @@ package co.edu.eam.ingesoft.bi.negocio.beans;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
 
 /**
@@ -82,14 +84,17 @@ public class AuditoriaEJB {
 	}
 
 	/**
-	 * @Autor JULIAN CAMILO HENAO
-	 * Creo la auditoria
-	 * @param accion tipo de accion realizada
-	 * @param nombreReg nombre del modulo empleado
-	 * @param browserDeta os y brows del que se conecta
-	 * @param usuario usuario que emplea la accion sobre los registros
+	 * @Autor JULIAN CAMILO HENAO Creo la auditoria
+	 * @param accion
+	 *            tipo de accion realizada
+	 * @param nombreReg
+	 *            nombre del modulo empleado
+	 * @param browserDeta
+	 *            os y brows del que se conecta
+	 * @param usuario
+	 *            usuario que emplea la accion sobre los registros
 	 */
-	public void crearAuditoria(String accion, String nombreReg, String browserDeta, String usuario,String usuarioAf) {
+	public void crearAuditoria(String accion, String nombreReg, String browserDeta, String usuario, String usuarioAf) {
 
 		Calendar fecha = new GregorianCalendar();
 
@@ -111,4 +116,39 @@ public class AuditoriaEJB {
 		em.persist(audi);
 
 	}
+
+	public void crearAuditoriaSession(String accion, String browserDeta, String usuario,boolean ingreso) {
+		Calendar fecha = new GregorianCalendar();
+
+		this.browserDetails = browserDeta;
+		userAgent = browserDetails;
+		user2 = userAgent.toLowerCase();
+
+		identificarNavegadorPeticion();
+
+		AUsuario usAud = new AUsuario();
+		usAud.setFecha(fecha.getTime());
+		usAud.setIngreso(ingreso);
+		usAud.setUsuario(usuario);
+		usAud.setOrigen(os);
+		usAud.setNavegador(browser);
+		
+		em.persist(usAud);
+	}
+
+	/**
+	 * Lista de auditoria
+	 * 
+	 * @return
+	 */
+	public List<Auditoria> listaAudit() {
+		return em.createNamedQuery(Auditoria.AUDITORIA).getResultList();
+	}
+
+	public List<Auditoria> listaAuditoriaPor(String nombre) {
+		return em.createNamedQuery(Auditoria.POR_AUDITORIA).setParameter(1, nombre).getResultList();
+	}
+	
+	
+
 }

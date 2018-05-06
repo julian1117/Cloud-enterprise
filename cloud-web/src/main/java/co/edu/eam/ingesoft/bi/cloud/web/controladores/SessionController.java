@@ -11,7 +11,10 @@ import javax.servlet.http.HttpSession;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
+import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.SeguridadEJB;
 
 @Named("sessionController")
@@ -20,6 +23,7 @@ public class SessionController implements Serializable {
 
 	private String usuario;
 	private String contrasena;
+	private List<Acceso> accesos;
 
 	private Usuario use;
 
@@ -46,9 +50,20 @@ public class SessionController implements Serializable {
 	public void setUse(Usuario use) {
 		this.use = use;
 	}
+	
+	public List<Acceso> getAccesos() {
+		return accesos;
+	}
+
+	public void setAccesos(List<Acceso> accesos) {
+		this.accesos = accesos;
+	}
 
 	@EJB
 	private SeguridadEJB seguridadEjb;
+
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
 
 	/**
 	 * Login de usuario
@@ -63,13 +78,18 @@ public class SessionController implements Serializable {
 				use = useBuscar;
 				if (use.isEstado() == true) {
 					Faces.setSessionAttribute("usuario", use);
+					accesos = seguridadEjb.listaAcc(usuario);
 					Messages.addGlobalInfo("Usuario existe");
-
+					registrarAuditoria("Inicio session", true, usuario);									
 					return "/paginas/seguro/gesusuarios.xhtml?faces-redirect=true";
 
-				} else {
-					Messages.addGlobalError("Usuario o contrasena incorrecta");
-				}
+				} else {					
+					Messages.addGlobalError("Usuario no activado CONTACTE AL ADMINISTRADOR");
+					registrarAuditoria("Inicio session", false, usuario);
+				}				
+			}else {
+				Messages.addGlobalError("Usuario o contrasena incorrecta");
+				registrarAuditoria("Inicio session", false, usuario);
 			}
 
 		}
@@ -100,6 +120,23 @@ public class SessionController implements Serializable {
 
 	public String registrar() {
 		return "/paginas/publico/registroNuevos.xhtml?faces-redirect=true";
+	}
+
+	/**
+	 * Metodo para registrar las auditorias generales
+	 * 
+	 * @param accion
+	 *            Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg
+	 *            modulo que se esta trabajando
+	 */
+	public void registrarAuditoria(String accion, boolean ingreso, String us) {
+		try {
+			String browserDetails = Faces.getRequest().getHeader("User-Agent");
+			auditoriaEJB.crearAuditoriaSession(accion, browserDetails, us, ingreso);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
