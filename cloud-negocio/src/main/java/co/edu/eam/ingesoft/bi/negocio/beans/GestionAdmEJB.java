@@ -4,10 +4,15 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AccesoPK;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
@@ -170,4 +175,80 @@ public class GestionAdmEJB {
 			throw new ExcepcionNegocio("No fue posible eliminar el area de la empresa ");
 		}
 	}
+
+	/**
+	 * Lista de usuarios activos en el sistema
+	 * 
+	 * @return
+	 */
+	public List<Usuario> listaUsuariosAct() {
+		return em.createNamedQuery(Usuario.USUARIOS_ACT).getResultList();
+	}
+
+	/**
+	 * Lista de paginas del sistema
+	 * 
+	 * @return
+	 */
+	public List<Paginas> listaPaginas() {
+		return em.createNamedQuery(Paginas.LIST_PAGINAS).getResultList();
+	}
+
+	/**
+	 * Buscar pagina por idpagina
+	 * 
+	 * @param idPagina
+	 */
+	public Paginas buscarPagina(Integer idPagina) {
+		return em.find(Paginas.class, idPagina);
+	}
+
+	/**
+	 * Crear accesos
+	 * @param acceso
+	 */
+	public void crearAcceso(Integer uss,Integer pagg) {
+		
+		//busco en el ejb
+		Usuario us = buscarUsuario(uss);
+		Paginas pag = buscarPagina(pagg);
+		
+		//creo el obj
+		Acceso acc = new Acceso();
+		acc.setUsuario(us);
+		acc.setPaginas(pag);
+		
+		//BUsco si la relacion ya existe
+		Acceso buscarAc = buscarAccesos(acc.getUsuario().getCodigo(), acc.getPaginas().getIdPagina());
+		if (buscarAc == null) {
+			//creo el objeto si no existe
+			em.persist(acc);
+		} else {
+			throw new ExcepcionNegocio("No fue posible realizar el registro ");
+		}
+		
+	}
+
+	/**
+	 * buscar accesos
+	 * @param us
+	 * @param pag
+	 * @return
+	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public Acceso buscarAccesos(Integer us, Integer pag) {
+
+		AccesoPK accesoPK = new AccesoPK(us, pag);
+
+		return em.find(Acceso.class, accesoPK);
+	}
+	
+	/**
+	 * lista de accesos por usuario
+	 * @return
+	 */
+	public List<Acceso> listaAcceso(Integer codUser){
+		return em.createNamedQuery(Acceso.LISTA_ACCESO_US).setParameter(1, codUser).getResultList();
+	}
+	
 }

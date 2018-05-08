@@ -19,12 +19,14 @@ import javax.persistence.Table;
 @Table(name = "Usuario")
 @NamedQueries({
 		@NamedQuery(name = Usuario.USUARIO, query = "SELECT us FROM Usuario us WHERE us.nombre=?1"),
-		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u")
+		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u"),
+		@NamedQuery(name = Usuario.USUARIOS_ACT,query ="SELECT U FROM Usuario U WHERE U.estado=TRUE")
 })
 public class Usuario implements Serializable {
 
 	public static final String USUARIO = "Usuario.listUs";
 	public static final String USUARIO_I = "Usuario.listUsI";
+	public static final String USUARIOS_ACT =  "Usuario.listAct";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")

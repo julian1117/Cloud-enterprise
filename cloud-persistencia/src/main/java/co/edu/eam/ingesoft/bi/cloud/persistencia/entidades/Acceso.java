@@ -7,28 +7,33 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @IdClass(AccesoPK.class)
 @Entity
-@Table(name="Acceso")
-@NamedQuery(name = Acceso.LISTA_ACCESO, query = "SELECT a FROM Acceso a where a.usuario.nombre=?1")
-public class Acceso implements Serializable{
-	
-	public static final String LISTA_ACCESO = "Acceso.listaAcc";
+@Table(name = "Acceso")
+@NamedQueries({ 
+	@NamedQuery(name = Acceso.LISTA_ACCESO, query = "SELECT a FROM Acceso a where a.usuario.nombre=?1"), 
+	@NamedQuery(name = Acceso.LISTA_ACCESO_US,query="SELECT a FROM Acceso a where a.usuario.codigo=?1")
+	})
+public class Acceso implements Serializable {
 
-	
+	public static final String LISTA_ACCESO = "Acceso.listaAcc";
+	public static final String LISTA_ACCESO_US = "Acceso.listaAccuS";
+
+
 	@Id
 	@ManyToOne
-	@JoinColumn(name="USUARIO")
+	@JoinColumn(name = "USUARIO")
 	private Usuario usuario;
-	
+
 	@Id
 	@ManyToOne
-	@JoinColumn(name="PAGINA")
+	@JoinColumn(name = "PAGINA")
 	private Paginas paginas;
-	
+
 	public Acceso() {
 		super();
 	}
@@ -85,8 +90,5 @@ public class Acceso implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }

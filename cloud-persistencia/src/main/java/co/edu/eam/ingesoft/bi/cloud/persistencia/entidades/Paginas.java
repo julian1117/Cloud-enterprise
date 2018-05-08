@@ -12,9 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "paginas")
+@NamedQuery(name = Paginas.LIST_PAGINAS,query ="SELECT P FROM Paginas P")
 public class Paginas implements Serializable {
 
-
+	public static final String LIST_PAGINAS = "Paginas.listUs";
+	
 	@Id
 	@Column(name = "id")
 	private Integer idPagina;

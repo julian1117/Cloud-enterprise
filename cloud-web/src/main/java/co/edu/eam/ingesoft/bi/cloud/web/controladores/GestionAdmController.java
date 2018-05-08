@@ -12,7 +12,9 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
@@ -21,6 +23,7 @@ import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.GestionAdmEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.SeguridadEJB;
 
 @Named(value = "gestionAdmController")
 @ViewScoped
@@ -29,6 +32,16 @@ public class GestionAdmController implements Serializable {
 	private List<Usuario> listUsuarioInact;
 
 	private List<Usuario> listaPersona;
+
+	private List<Usuario> listUsuariosActivos;
+
+	private List<Paginas> listPaginas;
+	
+	private List<Acceso> listaAc;
+
+	private Integer codigoUsuario;
+
+	private Integer codigoPagina;
 
 	private String nombreTipoUs;
 
@@ -166,6 +179,47 @@ public class GestionAdmController implements Serializable {
 		this.listArea = listArea;
 	}
 
+	public List<Usuario> getListUsuariosActivos() {
+		return listUsuariosActivos;
+	}
+
+	public void setListUsuariosActivos(List<Usuario> listUsuariosActivos) {
+		this.listUsuariosActivos = listUsuariosActivos;
+	}
+
+	public List<Paginas> getListPaginas() {
+		return listPaginas;
+	}
+
+	public void setListPaginas(List<Paginas> listPaginas) {
+		this.listPaginas = listPaginas;
+	}
+
+	public Integer getCodigoUsuario() {
+		return codigoUsuario;
+	}
+
+	public void setCodigoUsuario(Integer codigoUsuario) {
+		this.codigoUsuario = codigoUsuario;
+	}
+
+	public Integer getCodigoPagina() {
+		return codigoPagina;
+	}
+
+	public void setCodigoPagina(Integer codigoPagina) {
+		this.codigoPagina = codigoPagina;
+	}
+
+	public List<Acceso> getListaAc() {
+		return listaAc;
+	}
+
+	public void setListaAc(List<Acceso> listaAc) {
+		this.listaAc = listaAc;
+	}
+
+
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
 
@@ -187,6 +241,8 @@ public class GestionAdmController implements Serializable {
 		listaPersona = gestionAdmEJB.listaUsuarioI();
 		listTipoUs = gestionAdmEJB.listaTipoUs();
 		listArea = recursosEJB.listarAreas();
+		listUsuariosActivos = gestionAdmEJB.listaUsuariosAct();
+		listPaginas = gestionAdmEJB.listaPaginas();
 	}
 
 	/**
@@ -374,4 +430,32 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError("=( lo snetimos no se puedo eliminar el registro");
 		}
 	}
+
+	/**
+	 * Registro de usuarios con paginas
+	 */
+	public void registroUsuarioXPagina() {
+		try {
+	
+			gestionAdmEJB.crearAcceso(codigoUsuario,codigoPagina);
+
+			Messages.addFlashGlobalInfo("Registro Exitoso!!");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
+	
+	/**
+	 * lista de acceso por id de usuario
+	 * @param usuario
+	 */
+	public void listaAcXUs() {
+		listaAc = gestionAdmEJB.listaAcceso(codigoUsuario);
+	}
+	
+	public void eliminarPXU(Acceso acceso) {
+		
+	}
+	
 }

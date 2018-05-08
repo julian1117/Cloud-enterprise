@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<div align="center">
+				<p:panel id="paneldatosP" header="Datos de Empleado">
+					<h:panelGrid id="paneldatos" columns="2">
+
+						<h:outputLabel for="tftUsuario" id="lblUsuario" value="Usuarios "
+							class="labelSelect" />
+						<h:selectOneMenu id="tftUsuario"
+							value="#{gestionAdmController.codigoUsuario}"
+							class="sizeselect form-control">
+
+							<p:ajax listener="#{gestionAdmController.listaAcXUs}"
+								update="panelTablas" />
+
+							<f:selectItem itemLabel="Seleccione usuario" itemValue=""
+								noSelectionOption="true" />
+
+							<f:selectItems
+								value="#{gestionAdmController.listUsuariosActivos}" var="doc"
+								itemValue="#{doc.codigo}" itemLabel="#{doc.nombre}"
+								class="sizeselect form-control" />
+						</h:selectOneMenu>
+
+						<h:outputLabel for="tftPagina" id="lblPagina" value="Paginas "
+							class="labelSelect" />
+						<h:selectOneMenu id="tftPagina"
+							value="#{gestionAdmController.codigoPagina}"
+							class="sizeselect form-control">
+
+							<f:selectItem itemLabel="Seleccione pagina" itemValue=""
+								noSelectionOption="true" />
+
+							<f:selectItems value="#{gestionAdmController.listPaginas}"
+								var="doc" itemValue="#{doc.idPagina}" itemLabel="#{doc.nombre}"
+								class="sizeselect form-control" />
+						</h:selectOneMenu>
+
+					</h:panelGrid>
+					<br />
+					<h:panelGrid id="panelbtnsCrearUsXPag" columns="2">
+						<p:commandButton id="btnCrearUXp" value="Registrar"
+							actionListener="#{gestionAdmController.registroUsuarioXPagina}"
+							process="@this paneldatos" class="button" />
+					</h:panelGrid>
+
+					<br />
+
+					<p:dataTable id="panelTablas"
+						value="#{gestionAdmController.listaAc}" var="doc" border="1"
+						class="table table-striped">
+
+						<p:column headerText="Nick name">
+							<h:outputLabel value="#{doc.usuario.nombre}" />
+						</p:column>
+
+						<p:column headerText="Nombre de Usuario">
+							<h:outputLabel value="#{doc.usuario.persona.nombre} #{doc.usuario.persona.apellido}" />
+						</p:column>
+						
+						<p:column headerText="Nombre de pagina">
+							<h:outputLabel value="#{doc.paginas.nombre}" />
+						</p:column>
+
+						<p:column headerText="Opciones">
+							<p:commandButton
+								action="#{gestionAdmController.eliminarPXU(doc)}"
+								styleClass="buttonInactivar" process="@this panelTablas"
+								value="Elimnar P.X.U" update="panelTablas" />
+						</p:column>
+
+					</p:dataTable>
+
+				</p:panel>
+			</div>
+
+
+
+		</h:form>
+	</ui:define>
+</ui:composition>

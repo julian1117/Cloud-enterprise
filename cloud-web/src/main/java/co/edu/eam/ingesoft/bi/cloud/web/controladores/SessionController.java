@@ -50,7 +50,7 @@ public class SessionController implements Serializable {
 	public void setUse(Usuario use) {
 		this.use = use;
 	}
-	
+
 	public List<Acceso> getAccesos() {
 		return accesos;
 	}
@@ -79,19 +79,21 @@ public class SessionController implements Serializable {
 				if (use.isEstado() == true) {
 					Faces.setSessionAttribute("usuario", use);
 					accesos = seguridadEjb.listaAcc(usuario);
-					Messages.addGlobalInfo("Usuario existe");
-					registrarAuditoria("Inicio session", true, usuario);									
+					// Messages.addGlobalInfo("Usuario existe");
+					registrarAuditoria("Inicio session", true, usuario);
 					return "/paginas/seguro/gesusuarios.xhtml?faces-redirect=true";
 
-				} else {					
-					Messages.addGlobalError("Usuario no activado CONTACTE AL ADMINISTRADOR");
+				} else {
+					Messages.addFlashGlobalError("Usuario no activado CONTACTE AL ADMINISTRADOR");
 					registrarAuditoria("Inicio session", false, usuario);
-				}				
-			}else {
-				Messages.addGlobalError("Usuario o contrasena incorrecta");
+				}
+			} else {
+				Messages.addFlashGlobalError("Usuario o contrasena incorrecta");
 				registrarAuditoria("Inicio session", false, usuario);
 			}
 
+		} else {
+			Messages.addFlashGlobalError("El usuario no existe");
 		}
 		return null;
 
