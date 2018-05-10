@@ -7,9 +7,35 @@
 }
 /* =======================================================
 *
-* 	Template Style 
+* 	Camilo chupapijas
 *
 * ======================================================= */
+
+ul.submenu {
+    display: none;
+    position: absolute;
+    background: #000;
+    padding: 10px;
+    overflow: hidden;
+    top: 220%;
+    left: 0;
+    width: 200px;
+}
+.submenu li {
+    display: block!important;
+    width: 100%;
+    clear: both;
+    text-align: left;
+    overflow: hidden;
+}
+.pr{
+	position: relative;
+}
+
+.pr:hover > .submenu {
+    display: block;
+}
+
 body {
   font-family: "Open Sans", Arial, sans-serif;
   font-weight: 400;

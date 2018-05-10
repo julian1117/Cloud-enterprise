@@ -333,4 +333,12 @@ public class ClienteControler implements Serializable {
 		}
 	}
 
+	
+	public void cargarDep() {
+		listDepartamento = generalEJB.listaDepartamento(pais);
+	}
+
+	public void cargarCiu() {
+		listCiudad = generalEJB.listCiudad(departamento);
+	}
 }

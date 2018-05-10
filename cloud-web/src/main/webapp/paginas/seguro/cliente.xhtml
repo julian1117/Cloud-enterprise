@@ -78,7 +78,7 @@
 									value="#{gestionClienteController.pais}"
 									class="sizeselect form-control">
 
-									<p:ajax listener="#{gestionClienteController.departamento}"
+									<p:ajax listener="#{gestionClienteController.cargarDep}"
 										update="tftDep" />
 									<f:selectItem itemLabel="Seleccione el Pais" itemValue=""
 										noSelectionOption="true" />
@@ -94,7 +94,7 @@
 									value="#{gestionClienteController.departamento}"
 									class="sizeselect form-control">
 
-									<p:ajax listener="#{gestionClienteController.ciudad}"
+									<p:ajax listener="#{gestionClienteController.cargarCiu}"
 										update="tftCiudad" />
 
 									<f:selectItem itemLabel="Seleccione el Departamento"
