@@ -75,6 +75,38 @@ public class Venta implements Serializable {
 	public static String getListaVent() {
 		return LISTA_VENT;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((gestionVenta == null) ? 0 : gestionVenta.hashCode());
+		result = prime * result + ((inventario == null) ? 0 : inventario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Venta other = (Venta) obj;
+		if (gestionVenta == null) {
+			if (other.gestionVenta != null)
+				return false;
+		} else if (!gestionVenta.equals(other.gestionVenta))
+			return false;
+		if (inventario == null) {
+			if (other.inventario != null)
+				return false;
+		} else if (!inventario.equals(other.inventario))
+			return false;
+		return true;
+	}
+
 	
 	
 

@@ -18,9 +18,11 @@ import org.hibernate.annotations.CreationTimestamp;
 public class VentaPK implements Serializable {
 	
 	
-	private Integer gestionVenta;
+	
 
 	private Integer inventario;
+	
+	private Integer gestionVenta;
 	
 	
 
@@ -28,27 +30,39 @@ public class VentaPK implements Serializable {
 		super();
 	}
 
-	public VentaPK(Integer gestionVenta, Integer inventario) {
-		
-		this.gestionVenta = gestionVenta;
+
+
+	public VentaPK(Integer inventario, Integer gestionVenta) {
+		super();
 		this.inventario = inventario;
-	}
-
-	public Integer getGestionVenta() {
-		return gestionVenta;
-	}
-
-	public void setGestionVenta(Integer gestionVenta) {
 		this.gestionVenta = gestionVenta;
 	}
+
+
 
 	public Integer getInventario() {
 		return inventario;
 	}
 
+
+
 	public void setInventario(Integer inventario) {
 		this.inventario = inventario;
 	}
+
+
+
+	public Integer getGestionVenta() {
+		return gestionVenta;
+	}
+
+
+
+	public void setGestionVenta(Integer gestionVenta) {
+		this.gestionVenta = gestionVenta;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -58,6 +72,8 @@ public class VentaPK implements Serializable {
 		result = prime * result + ((inventario == null) ? 0 : inventario.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -82,8 +98,5 @@ public class VentaPK implements Serializable {
 	}
 
 
-
-	
-	
 
 }

@@ -219,50 +219,39 @@ public class GestionVentaController implements Serializable {
 	
 	public void buscarFactura() {
 		
-	}
-	
-	public void crearVenta() {		
-		try {
+		int a= Integer.parseInt(idInventario);
+		int b = Integer.parseInt(idFacturaLista);
+		int c = cantidad;
+		
+		Inventario buscaCan = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		
+		
+		
+		if(c <= buscaCan.getCantidad()) {
+			ventaEJB.prueba(a, b, c);
 			
-			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFacturaLista));
-			Inventario inventario = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+			int resta = buscaCan.getCantidad() - c;
 			
-			Integer can = inventario.getCantidad();			
-
-			if(can > cantidad) {
+			if(buscaCan != null) {
+				Inventario inventarioEditado = new Inventario(buscaCan.getIdInventario(), resta, buscaCan.getFechaIngreso(), buscaCan.getProducto(), buscaCan.getIdPersona());
 				
-			//	Integer valor = listVent.get(0).getIdVenta()+1;
-				
-				//Venta venta = new Venta();
-				//venta.setIdVenta(valor);
-				//venta.setCantidad(cantidad);
-				//venta.setInventario(inventario);
-				//venta.setGestionVenta(gestion);
-				Messages.addFlashGlobalError(cantidad+" - " +idFacturaLista +" - " +idInventario);
-
-				
-			//	ventaEJB.crearVenta(venta);
-				
-				//Inventario buscarInventari = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
-				//Integer cantidadInventario = buscarInventari.getCantidad();
-				
-				//Integer resta = cantidadInventario - cantidad;
-				
-				//in
-				
+				inventarioEJB.editarInventario(inventarioEditado);
+				registrarAuditoria("EDITAR", "Edito la cantidad del producto");
 			}else {
-				Messages.addFlashGlobalInfo("Verifique que la cantidad sea menor a la cantidad del inventario exista!!");
-				
+				Messages.addFlashGlobalInfo("error");
 			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		
+			Messages.addFlashGlobalInfo("CREADO");
+			
+		}else {
+			Messages.addFlashGlobalInfo("La cantidad de la venta es mayor a la que hay en el producto");
 		}
 		
+		
+		//Messages.addFlashGlobalInfo(ventaEJB.prueba(a, b, c));
+
 	}
+	
 	
 	/**
 	 * Metodo para  registrar las auditorias generales

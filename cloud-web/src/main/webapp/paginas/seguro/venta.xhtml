@@ -15,50 +15,56 @@
 						<p:panel id="paneldatosP" header="Datos de Empleado">
 							<h:panelGrid id="paneldatos" columns="3">
 
-							
-								<h:outputLabel for="tftCantidad" id="lblCantidad" value="Cantidad"></h:outputLabel>
-								<h:inputText id="tftCantidad"
-									value="#{gestionVentaController.cantidad}" class="form-control"></h:inputText>
+
+								<h:outputLabel for="tftCantidad" id="lblCantidad"
+									value="Cantidad"></h:outputLabel>
+								<p:spinner id="tftCantidad"
+									value="#{gestionVentaController.cantidad}" class="form-control"></p:spinner>
 								<p:message for="tftCantidad" />
 
-						
-								<h:outputLabel id="lblInventario" value="Inventario" class="labelSelect" />
+
+								<h:outputLabel id="lblInventario" value="Inventario"
+									class="labelSelect" />
 
 								<h:selectOneMenu id="tftInventario"
 									value="#{gestionVentaController.idInventario}"
 									class="sizeselect form-control">
 
-									<f:selectItems value="#{gestionVentaController.listaInventario}"
-										var="doc" itemValue="#{doc.idInventario}" itemLabel="#{doc.idInventario}" />
+									<f:selectItems
+										value="#{gestionVentaController.listaInventario}" var="doc"
+										itemValue="#{doc.idInventario}"
+										itemLabel="#{doc.producto.nombre}" />
 
 								</h:selectOneMenu>
 								<br />
 
-								<h:outputLabel for="cbGestionVenta" id="lblGestionVenta" value="GestionVenta"
-									class="labelSelect" />
+								<h:outputLabel for="cbGestionVenta" id="lblGestionVenta"
+									value="GestionVenta" class="labelSelect" />
 								<h:selectOneMenu id="cbGestionVenta"
 									value="#{gestionVentaController.idFacturaLista}"
 									class="sizeselect form-control">
 
 									<f:selectItems value="#{gestionVentaController.listarFacturas}"
-										var="GestionVentaE" itemValue="#{GestionVentaE.idFactura}" itemLabel="#{GestionVentaE.idFactura}"/>
+										var="GestionVentaE" itemValue="#{GestionVentaE.idFactura}"
+										itemLabel="#{GestionVentaE.idFactura}" />
 								</h:selectOneMenu>
 
 								<h1></h1>
 
+								<h:panelGrid id="panelbtnsCrear" columns="2">
+									<p:commandButton id="btnCrear" value="CREAR"
+										actionListener="#{gestionVentaController.buscarFactura}"
+										process="@this paneldatos" class="buttonIni" />
+								</h:panelGrid>
 
 							</h:panelGrid>
-							<h:panelGrid id="panelbtnsCrear" columns="2">
-								<p:commandButton id="btnCrear" value="CREAR"
-									actionListener="#{gestionVentaController.crearVenta}"
-									process="@this paneldatos" class="buttonIni" />
-							</h:panelGrid>
+
 						</p:panel>
 					</div>
 				</p:tab>
-				
-				
-			
+
+
+
 			</p:tabView>
 		</h:form>
 	</ui:define>
