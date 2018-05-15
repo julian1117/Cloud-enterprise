@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:panel header="Definir base de datos a usar" id="panelTab">
+				<h:selectOneMenu id="tftbd" value="#{gestionAdmController.valorbd}"
+					class="form-control">
+					<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+					<f:selectItem itemValue="1" itemLabel="Oracle" />
+					<f:selectItem itemValue="2" itemLabel="Postgres" />
+				</h:selectOneMenu>
+
+				<p:commandButton action="#{gestionAdmController.cambiarBD}"
+					styleClass="buttonIni" process="@this tftbd" value="Cambiar BD"
+					update="panelTab" />
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

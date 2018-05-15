@@ -29,15 +29,15 @@ import co.edu.eam.ingesoft.bi.negocio.beans.SeguridadEJB;
 @ViewScoped
 public class GestionAdmController implements Serializable {
 
-	private List<Usuario> listUsuarioInact;
+	private List<Object> listUsuarioInact;
 
-	private List<Usuario> listaPersona;
+	private List<Object> listaPersona;
 
-	private List<Usuario> listUsuariosActivos;
+	private List<Object> listUsuariosActivos;
 
-	private List<Paginas> listPaginas;
-	
-	private List<Acceso> listaAc;
+	private List<Object> listPaginas;
+
+	private List<Object> listaAc;
 
 	private Integer codigoUsuario;
 
@@ -63,23 +63,25 @@ public class GestionAdmController implements Serializable {
 
 	private String descripBAreaEmp;
 
-	private List<TipoUsuario> listTipoUs;
+	private List<Object> listTipoUs;
 
 	private List<AreaEmpresa> listArea;
 
-	public List<Usuario> getListUsuarioInact() {
+	private Integer valorbd;
+
+	public List<Object> getListUsuarioInact() {
 		return listUsuarioInact;
 	}
 
-	public void setListUsuarioInact(List<Usuario> listUsuarioInact) {
+	public void setListUsuarioInact(List<Object> listUsuarioInact) {
 		this.listUsuarioInact = listUsuarioInact;
 	}
 
-	public List<Usuario> getListaPersona() {
+	public List<Object> getListaPersona() {
 		return listaPersona;
 	}
 
-	public void setListaPersona(List<Usuario> listaPersona) {
+	public void setListaPersona(List<Object> listaPersona) {
 		this.listaPersona = listaPersona;
 	}
 
@@ -131,11 +133,11 @@ public class GestionAdmController implements Serializable {
 		this.codigoAreaEmp = codigoAreaEmp;
 	}
 
-	public List<TipoUsuario> getListTipoUs() {
+	public List<Object> getListTipoUs() {
 		return listTipoUs;
 	}
 
-	public void setListTipoUs(List<TipoUsuario> listTipoUs) {
+	public void setListTipoUs(List<Object> listTipoUs) {
 		this.listTipoUs = listTipoUs;
 	}
 
@@ -179,19 +181,19 @@ public class GestionAdmController implements Serializable {
 		this.listArea = listArea;
 	}
 
-	public List<Usuario> getListUsuariosActivos() {
+	public List<Object> getListUsuariosActivos() {
 		return listUsuariosActivos;
 	}
 
-	public void setListUsuariosActivos(List<Usuario> listUsuariosActivos) {
+	public void setListUsuariosActivos(List<Object> listUsuariosActivos) {
 		this.listUsuariosActivos = listUsuariosActivos;
 	}
 
-	public List<Paginas> getListPaginas() {
+	public List<Object> getListPaginas() {
 		return listPaginas;
 	}
 
-	public void setListPaginas(List<Paginas> listPaginas) {
+	public void setListPaginas(List<Object> listPaginas) {
 		this.listPaginas = listPaginas;
 	}
 
@@ -211,14 +213,21 @@ public class GestionAdmController implements Serializable {
 		this.codigoPagina = codigoPagina;
 	}
 
-	public List<Acceso> getListaAc() {
+	public List<Object> getListaAc() {
 		return listaAc;
 	}
 
-	public void setListaAc(List<Acceso> listaAc) {
+	public void setListaAc(List<Object> listaAc) {
 		this.listaAc = listaAc;
 	}
 
+	public Integer getValorbd() {
+		return valorbd;
+	}
+
+	public void setValorbd(Integer valorbd) {
+		this.valorbd = valorbd;
+	}
 
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
@@ -237,12 +246,12 @@ public class GestionAdmController implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		listUsuarioInact = gestionAdmEJB.listaUsuarioI();
-		listaPersona = gestionAdmEJB.listaUsuarioI();
-		listTipoUs = gestionAdmEJB.listaTipoUs();
+		listUsuarioInact = gestionAdmEJB.listaUsuarioI(sesion.getBd());
+		listaPersona = gestionAdmEJB.listaUsuarioI(sesion.getBd());
+		listTipoUs = gestionAdmEJB.listaTipoUs(sesion.getBd());
 		listArea = recursosEJB.listarAreas();
-		listUsuariosActivos = gestionAdmEJB.listaUsuariosAct();
-		listPaginas = gestionAdmEJB.listaPaginas();
+		listUsuariosActivos = gestionAdmEJB.listaUsuariosAct(sesion.getBd());
+		listPaginas = gestionAdmEJB.listaPaginas(sesion.getBd());
 	}
 
 	/**
@@ -253,7 +262,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public String activarUsuario(Usuario usuario) {
 		try {
-			gestionAdmEJB.ActivarUsario(usuario);
+			gestionAdmEJB.ActivarUsario(usuario, sesion.getBd());
 			registrarAuditoria("Activar usuarios", "Administrar Usuarios",
 					String.valueOf(usuario.getPersona().getCedula()));
 			Messages.addFlashGlobalInfo("Cambio de estado con éxitoso");
@@ -272,7 +281,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public String inactivarUsuario(Usuario usuario) {
 		try {
-			gestionAdmEJB.inactivarUsario(usuario);
+			gestionAdmEJB.inactivarUsario(usuario, sesion.getBd());
 			registrarAuditoria("Inactivar usuarios", "Administrar Usuarios",
 					String.valueOf(usuario.getPersona().getCedula()));
 			Messages.addFlashGlobalInfo("Cambio de estado con éxitoso");
@@ -325,7 +334,7 @@ public class GestionAdmController implements Serializable {
 			tipoUs.setNombre(nombreTipoUs);
 			tipoUs.setDescripcion(descripTipoUs);
 
-			gestionAdmEJB.crearTipoUs(tipoUs);
+			gestionAdmEJB.crearTipoUs(tipoUs, sesion.getBd());
 			registrarAuditoria("Crear", "Tipos de usuario", "N/A");
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 
@@ -344,7 +353,7 @@ public class GestionAdmController implements Serializable {
 			areaEmp.setNombreArea(nombreAreaEmp);
 			areaEmp.setDescripcion(descripAreaEmp);
 
-			gestionAdmEJB.crearAreaEmpresa(areaEmp);
+			gestionAdmEJB.crearAreaEmpresa(areaEmp, sesion.getBd());
 			registrarAuditoria("Crear", "Areas de la empresa", "N/A");
 
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
@@ -360,7 +369,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void buscarPorTipoUs() {
 
-		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
+		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs), sesion.getBd());
 		nombreBTipoUs = tipoUs.getNombre();
 		descripBTipoUs = tipoUs.getDescripcion();
 		registrarAuditoria("Buscar", "Tipos de usuario", "N/A");
@@ -371,7 +380,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void buscarAreaEmpresa() {
 
-		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp), sesion.getBd());
 		nombreBAreaEmp = area.getNombreArea();
 		descripBAreaEmp = area.getDescripcion();
 		registrarAuditoria("Buscar", "Areas de la empresa", "N/A");
@@ -381,10 +390,10 @@ public class GestionAdmController implements Serializable {
 	 * Editar tipo de usuario
 	 */
 	public void editarTipoUs() {
-		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs));
+		TipoUsuario tipoUs = gestionAdmEJB.buscarTipoUs(Integer.valueOf(codigoTipoUs), sesion.getBd());
 		tipoUs.setNombre(nombreBTipoUs);
 		tipoUs.setDescripcion(descripBTipoUs);
-		gestionAdmEJB.editarTipoUs(tipoUs);
+		gestionAdmEJB.editarTipoUs(tipoUs, sesion.getBd());
 		registrarAuditoria("Editar", "Tipos de usuario", "N/A");
 		Messages.addFlashGlobalInfo("Registro Editado Con Exito!!");
 
@@ -395,10 +404,10 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void editarAreaEmpresa() {
 
-		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+		AreaEmpresa area = gestionAdmEJB.buscarAreaEmpresa(Integer.parseInt(codigoAreaEmp), sesion.getBd());
 		area.setNombreArea(nombreBAreaEmp);
 		area.setDescripcion(descripBAreaEmp);
-		gestionAdmEJB.editarAreaEmpresa(area);
+		gestionAdmEJB.editarAreaEmpresa(area, sesion.getBd());
 		registrarAuditoria("Editar", "Areas de la empresa", "N/A");
 		Messages.addFlashGlobalInfo("Registro Editado Con Exito!!");
 
@@ -409,7 +418,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void eliminarTipoUs() {
 		try {
-			gestionAdmEJB.eliminarTipoUs(Integer.parseInt(codigoTipoUs));
+			gestionAdmEJB.eliminarTipoUs(Integer.parseInt(codigoTipoUs), sesion.getBd());
 			registrarAuditoria("Eliminar", "Tipos de usuario", "N/A");
 			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
 		} catch (Exception e) {
@@ -423,7 +432,7 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void eliminarAreaEmpresa() {
 		try {
-			gestionAdmEJB.eliminarAreaEmpresa(Integer.parseInt(codigoAreaEmp));
+			gestionAdmEJB.eliminarAreaEmpresa(Integer.parseInt(codigoAreaEmp), sesion.getBd());
 			registrarAuditoria("Eliminar", "Areas de la empresa", "N/A");
 			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
 		} catch (Exception e) {
@@ -436,8 +445,8 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void registroUsuarioXPagina() {
 		try {
-	
-			gestionAdmEJB.crearAcceso(codigoUsuario,codigoPagina);
+
+			gestionAdmEJB.crearAcceso(codigoUsuario, codigoPagina, sesion.getBd());
 
 			Messages.addFlashGlobalInfo("Registro Exitoso!!");
 		} catch (Exception e) {
@@ -445,17 +454,27 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * lista de acceso por id de usuario
+	 * 
 	 * @param usuario
 	 */
 	public void listaAcXUs() {
-		listaAc = gestionAdmEJB.listaAcceso(codigoUsuario);
+		listaAc = gestionAdmEJB.listaAcceso(codigoUsuario, sesion.getBd());
 	}
-	
+
 	public void eliminarPXU(Acceso acceso) {
-		
+
 	}
-	
+
+	public void cambiarBD() {
+		try {
+			gestionAdmEJB.cambiarValorBD(valorbd);
+			Messages.addFlashGlobalInfo("Cambio de base de datos con exito");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
+
 }

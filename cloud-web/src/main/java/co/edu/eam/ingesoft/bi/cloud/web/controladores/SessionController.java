@@ -14,6 +14,7 @@ import org.omnifaces.util.Messages;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empresa;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.SeguridadEJB;
 
@@ -23,8 +24,8 @@ public class SessionController implements Serializable {
 
 	private String usuario;
 	private String contrasena;
-	private List<Acceso> accesos;
-
+	private List<Object> accesos;
+	private int bd;
 	private Usuario use;
 
 	public String getUsuario() {
@@ -51,13 +52,23 @@ public class SessionController implements Serializable {
 		this.use = use;
 	}
 
-	public List<Acceso> getAccesos() {
+	public List<Object> getAccesos() {
 		return accesos;
 	}
 
-	public void setAccesos(List<Acceso> accesos) {
+	public void setAccesos(List<Object> accesos) {
 		this.accesos = accesos;
 	}
+	
+	public int getBd() {
+		return bd;
+	}
+
+	public void setBd(int bd) {
+		this.bd = bd;
+	}
+
+
 
 	@EJB
 	private SeguridadEJB seguridadEjb;
@@ -70,7 +81,7 @@ public class SessionController implements Serializable {
 	 */
 	public String login() {
 
-		Usuario useBuscar = seguridadEjb.buscar(usuario);
+		Usuario useBuscar = seguridadEjb.buscar(usuario,1);
 
 		if (useBuscar != null) {
 
@@ -79,6 +90,8 @@ public class SessionController implements Serializable {
 				if (use.isEstado() == true) {
 					Faces.setSessionAttribute("usuario", use);
 					accesos = seguridadEjb.listaAcc(usuario);
+					bd = seguridadEjb.buscarEmpresa().getBd();
+					Faces.setSessionAttribute("bd", bd);//Le asigno el valor de la bd que este configurada
 					// Messages.addGlobalInfo("Usuario existe");
 					registrarAuditoria("Inicio session", true, usuario);
 					return "/paginas/seguro/gesusuarios.xhtml?faces-redirect=true";
