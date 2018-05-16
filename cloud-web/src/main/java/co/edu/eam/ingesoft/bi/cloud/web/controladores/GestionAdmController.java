@@ -20,6 +20,7 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
+import co.edu.eam.ingesoft.bi.negocio.beans.DWGeneral;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.GestionAdmEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
@@ -238,6 +239,9 @@ public class GestionAdmController implements Serializable {
 	@EJB
 	private RecursosHumanosEJB recursosEJB;
 
+	@EJB
+	private DWGeneral dwGeneral;
+
 	@Inject
 	private RecursosHumanosController recursosH;
 
@@ -447,7 +451,7 @@ public class GestionAdmController implements Serializable {
 		try {
 
 			gestionAdmEJB.crearAcceso(codigoUsuario, codigoPagina, sesion.getBd());
-
+			registrarAuditoria("Crear", "Registro de usuarios * pagina", "N/A");
 			Messages.addFlashGlobalInfo("Registro Exitoso!!");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -462,16 +466,30 @@ public class GestionAdmController implements Serializable {
 	 */
 	public void listaAcXUs() {
 		listaAc = gestionAdmEJB.listaAcceso(codigoUsuario, sesion.getBd());
+
 	}
 
-	public void eliminarPXU(Acceso acceso) {
-
+	public void eliminarPXU(Acceso acceso) {	
+		registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
 	}
 
 	public void cambiarBD() {
 		try {
 			gestionAdmEJB.cambiarValorBD(valorbd);
+			registrarAuditoria("CAMBIO", "Cambio de base de datos", "N/A");
+
 			Messages.addFlashGlobalInfo("Cambio de base de datos con exito");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
+
+	public void trasladarAudDW() {
+		try {
+			dwGeneral.cargarDWAuditoria();
+			registrarAuditoria("Trasladar", "Trasladar auditorias a DW", "N/A");
+			Messages.addFlashGlobalInfo("Traslado exitoso");
+
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}

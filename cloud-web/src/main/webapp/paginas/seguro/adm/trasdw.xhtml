@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:panel header="Definir base de datos a usar" id="panelTab">
+			
+			<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
+					styleClass="buttonIni" process="@this" value="Trasladar Auditorias a DW"
+					update="panelTab" />
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

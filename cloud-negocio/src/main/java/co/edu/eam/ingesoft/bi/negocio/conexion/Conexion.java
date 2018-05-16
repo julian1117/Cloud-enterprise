@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -27,6 +28,12 @@ public class Conexion implements Serializable {
 	 */
 	@PersistenceContext(unitName = "postgres")
 	private EntityManager emP;
+	
+	/**
+	 * Instancia a mysql (3)
+	 */
+	@PersistenceContext(unitName = "mysql")
+	private EntityManager emM;
 	
 	
 	/**
@@ -137,6 +144,7 @@ public class Conexion implements Serializable {
 	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @return lista de los objetos encontrados
 	 */
+	//@TransactionAttribute
 	public List<Object> listar(String sql){
 		switch (this.bd) {
 		case 1:
@@ -228,9 +236,12 @@ public class Conexion implements Serializable {
 	/**
 	 * Guarda en la base de datos
 	 */
-	public void crearEnDos(Object objeto){		
-			emO.merge(objeto);				
-			emP.merge(objeto);			
+	public void editarDW(Object objeto){
+		
+		//if(this.bd==3) {
+			emM.merge(objeto);
+		//}
+					
 	}
 	
 }

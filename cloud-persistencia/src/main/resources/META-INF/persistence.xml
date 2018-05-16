@@ -10,7 +10,7 @@
 		<jta-data-source>java:jboss/datasources/CloudOracleDS</jta-data-source>
 		<properties>
 			<!-- Properties for Hibernate -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			<property name="wildfly.jpa.default-unit" value="true"/>
@@ -23,7 +23,18 @@
 		<jta-data-source>java:jboss/datasources/CloudPostgresDS</jta-data-source>
 		<properties>
 			<!-- Properties for Hibernate -->
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="mysql">		
+		<jta-data-source>java:jboss/datasources/CloudMySqlDS</jta-data-source>
+		<properties>
+			<!-- Properties for Hibernate -->
+			<property name="hibernate.hbm2ddl.auto" value="none" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
 			
