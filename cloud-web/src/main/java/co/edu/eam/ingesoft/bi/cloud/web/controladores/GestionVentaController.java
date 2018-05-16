@@ -43,11 +43,13 @@ public class GestionVentaController implements Serializable {
 	
 	private String persona;
 	
-	private List<GestionVenta> listarFacturas;
+	private List<Object> listarFacturas;
 	
 	private String idFacturaLista;
 	
-	private List<Inventario> listaInventario;
+	private List<Object> listaInventario;
+	
+	private List<Object> listVent;
 	
 	private String idInventario;
 
@@ -75,11 +77,21 @@ public class GestionVentaController implements Serializable {
 	private VentaEJB ventaEJB;
 	
 
-	public List<Inventario> getListaInventario() {
+	
+
+	public List<Object> getListarFacturas() {
+		return listarFacturas;
+	}
+
+	public void setListarFacturas(List<Object> listarFacturas) {
+		this.listarFacturas = listarFacturas;
+	}
+
+	public List<Object> getListaInventario() {
 		return listaInventario;
 	}
 
-	public void setListaInventario(List<Inventario> listaInventario) {
+	public void setListaInventario(List<Object> listaInventario) {
 		this.listaInventario = listaInventario;
 	}
 
@@ -99,13 +111,6 @@ public class GestionVentaController implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-	public List<GestionVenta> getListarFacturas() {
-		return listarFacturas;
-	}
-
-	public void setListarFacturas(List<GestionVenta> listarFacturas) {
-		this.listarFacturas = listarFacturas;
-	}
 
 	public String getIdFacturaLista() {
 		return idFacturaLista;
@@ -187,24 +192,30 @@ public class GestionVentaController implements Serializable {
 		this.registroEJB = registroEJB;
 	}
 	
-	List<Venta> listVent;
-	
+	public List<Object> getListVent() {
+		return listVent;
+	}
+
+	public void setListVent(List<Object> listVent) {
+		this.listVent = listVent;
+	}
+
 	@PostConstruct
 	public void inicializar() {
-		listarFacturas = gestionEJB.listaFacturas();
-		listaInventario = inventarioEJB.listarInventario();
-		listVent = gestionEJB.listaVent();
+		listarFacturas = gestionEJB.listaFacturas(sesion.getBd());
+		listaInventario = inventarioEJB.listarInventario(sesion.getBd());
+		listVent = gestionEJB.listaVent(sesion.getBd());
 	}
 	
 	public void crearFactura() {
 		try {
 			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
-			Empleado em = recursosEJB.buscarEmp(Integer.parseInt(us));
+			Empleado em = recursosEJB.buscarEmp(Integer.parseInt(us),sesion.getBd());
 			Persona per = registroEJB.buscarPersona(Integer.parseInt(persona));
 			
 			if(us != null && per !=null) {
 				GestionVenta gestionFactura = new GestionVenta(Integer.parseInt(idFactura), fecha, em , per);
-				gestionEJB.crearGestionVenta(gestionFactura);
+				gestionEJB.crearGestionVenta(gestionFactura,sesion.getBd());
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 				
 			}
@@ -219,50 +230,39 @@ public class GestionVentaController implements Serializable {
 	
 	public void buscarFactura() {
 		
-	}
-	
-	public void crearVenta() {		
-		try {
+		int a= Integer.parseInt(idInventario);
+		int b = Integer.parseInt(idFacturaLista);
+		int c = cantidad;
+		
+		Inventario buscaCan = inventarioEJB.buscarInventario(Integer.parseInt(idInventario),sesion.getBd());
+		
+		
+		
+		if(c <= buscaCan.getCantidad()) {
+			ventaEJB.prueba(a, b, c);
 			
-			GestionVenta gestion =  gestionEJB.buscarGestionVenta(Integer.parseInt(idFacturaLista));
-			Inventario inventario = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+			int resta = buscaCan.getCantidad() - c;
 			
-			Integer can = inventario.getCantidad();			
-
-			if(can > cantidad) {
+			if(buscaCan != null) {
+				Inventario inventarioEditado = new Inventario(buscaCan.getIdInventario(), resta, buscaCan.getFechaIngreso(), buscaCan.getProducto(), buscaCan.getIdPersona());
 				
-			//	Integer valor = listVent.get(0).getIdVenta()+1;
-				
-				//Venta venta = new Venta();
-				//venta.setIdVenta(valor);
-				//venta.setCantidad(cantidad);
-				//venta.setInventario(inventario);
-				//venta.setGestionVenta(gestion);
-				Messages.addFlashGlobalError(cantidad+" - " +idFacturaLista +" - " +idInventario);
-
-				
-			//	ventaEJB.crearVenta(venta);
-				
-				//Inventario buscarInventari = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
-				//Integer cantidadInventario = buscarInventari.getCantidad();
-				
-				//Integer resta = cantidadInventario - cantidad;
-				
-				//in
-				
+				inventarioEJB.editarInventario(inventarioEditado,sesion.getBd());
+				registrarAuditoria("EDITAR", "Edito la cantidad del producto");
 			}else {
-				Messages.addFlashGlobalInfo("Verifique que la cantidad sea menor a la cantidad del inventario exista!!");
-				
+				Messages.addFlashGlobalInfo("error");
 			}
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
-		
+			Messages.addFlashGlobalInfo("CREADO");
+			
+		}else {
+			Messages.addFlashGlobalInfo("La cantidad de la venta es mayor a la que hay en el producto");
 		}
 		
+		
+		//Messages.addFlashGlobalInfo(ventaEJB.prueba(a, b, c));
+
 	}
+	
 	
 	/**
 	 * Metodo para  registrar las auditorias generales

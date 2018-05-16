@@ -4,13 +4,17 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.GestionVenta;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Inventario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.VentaPK;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @Stateless
@@ -61,20 +65,43 @@ public class VentaEJB {
 		return list;
 	}
 	
-	public void crearVenta(Venta venta) {
-	//	Venta ven = buscarVenta(venta);
-		
-		//if(ven == null) {
-			//em.persist(venta);
-		//}else {
-			//throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
-			
-		//}
-	}
 	
-	public Venta buscarVenta(Integer idVenta) {
-		return em.find(Venta.class, idVenta);
-	}
 	
+	public void crearVenta(int gv, int iv,int cantidad) {
+	System.out.println(gv + "-11111111111111111111----------------------" + iv +"------------------" +cantidad);
 
+		
+		
+	}
+	
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public Venta buscarVenta(Integer idInventario,Integer idGestion) {
+		VentaPK ventaPK = new VentaPK(idInventario, idGestion);
+		return em.find(Venta.class, ventaPK);
+	}
+	
+	public Inventario buscarInventario(Integer idInventario) {
+		return em.find(Inventario.class, idInventario);
+	}
+	
+	public GestionVenta buscarIdGestionVenta(Integer idGestionVenta) {
+		return em.find(GestionVenta.class, idGestionVenta);
+	}
+
+	
+	public void prueba(Integer a, Integer b, Integer c) {
+		Inventario inve = buscarInventario(a);
+		GestionVenta gestion =  buscarIdGestionVenta(b);
+
+		Venta busVenta = buscarVenta(inve.getIdInventario(), gestion.getIdFactura());
+		//System.out.println(busVenta.getGestionVenta() + "22222222222222222-----------------------"  );
+
+		if(busVenta ==null) {
+			Venta venta = new Venta(inve, gestion, c);
+			em.persist(venta);
+		}else {
+			throw new ExcepcionNegocio("El Venta ya se encuentra registrado");
+			
+		}
+	}
 }

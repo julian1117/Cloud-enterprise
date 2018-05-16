@@ -66,7 +66,7 @@ public class GestionAdmController implements Serializable {
 
 	private List<Object> listTipoUs;
 
-	private List<AreaEmpresa> listArea;
+	private List<Object> listArea;
 
 	private Integer valorbd;
 
@@ -174,11 +174,13 @@ public class GestionAdmController implements Serializable {
 		this.descripBAreaEmp = descripBAreaEmp;
 	}
 
-	public List<AreaEmpresa> getListArea() {
+
+
+	public List<Object> getListArea() {
 		return listArea;
 	}
 
-	public void setListArea(List<AreaEmpresa> listArea) {
+	public void setListArea(List<Object> listArea) {
 		this.listArea = listArea;
 	}
 
@@ -253,7 +255,7 @@ public class GestionAdmController implements Serializable {
 		listUsuarioInact = gestionAdmEJB.listaUsuarioI(sesion.getBd());
 		listaPersona = gestionAdmEJB.listaUsuarioI(sesion.getBd());
 		listTipoUs = gestionAdmEJB.listaTipoUs(sesion.getBd());
-		listArea = recursosEJB.listarAreas();
+		listArea = recursosEJB.listarAreas(sesion.getBd());
 		listUsuariosActivos = gestionAdmEJB.listaUsuariosAct(sesion.getBd());
 		listPaginas = gestionAdmEJB.listaPaginas(sesion.getBd());
 	}

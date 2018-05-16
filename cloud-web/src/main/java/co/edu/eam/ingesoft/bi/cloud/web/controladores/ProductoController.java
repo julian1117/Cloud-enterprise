@@ -48,21 +48,9 @@ public class ProductoController implements Serializable {
 
 	private double valor;
 
-	private List<Producto> listaProducto;
-
-	@EJB
-	private ProductoEJB productoEJB;
-
-	@EJB
-	private AuditoriaEJB auditoriaEJB;
+	private Integer valorbd;
 	
-	@EJB
-	private InventarioEJB inventarioEJB;
-	
-	@Inject
-	private SessionController sesion;	
-	
-	
+	private List<Object> listaProducto;
 
 	public String getId() {
 		return id;
@@ -136,31 +124,47 @@ public class ProductoController implements Serializable {
 		this.valor = valor;
 	}
 
-	public List<Producto> getListaProducto() {
+	public Integer getValorbd() {
+		return valorbd;
+	}
+
+	public void setValorbd(Integer valorbd) {
+		this.valorbd = valorbd;
+	}
+
+	
+	
+	public List<Object> getListaProducto() {
 		return listaProducto;
 	}
 
-	public void setListaProducto(List<Producto> listaProducto) {
+	public void setListaProducto(List<Object> listaProducto) {
 		this.listaProducto = listaProducto;
 	}
 
-	public ProductoEJB getProductoEJB() {
-		return productoEJB;
-	}
 
-	public void setProductoEJB(ProductoEJB productoEJB) {
-		this.productoEJB = productoEJB;
-	}
+
+	@EJB
+	private ProductoEJB productoEJB;
+
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
 	
+	@EJB
+	private InventarioEJB inventarioEJB;
+	
+	@Inject
+	private SessionController sesion;	
+
 	@PostConstruct
 	public void inicializar() {
-	listaProducto = inventarioEJB.listarProductos();
+	listaProducto = inventarioEJB.listarProductos(sesion.getBd());
 	}
 
 	public void crearProducto() {
 		try {
 			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
-			productoEJB.crearProducto(producto);
+			productoEJB.crearProducto(producto, sesion.getBd());
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 			registrarAuditoria("CREAR", "Registro Nuevo producto");
 
@@ -173,7 +177,7 @@ public class ProductoController implements Serializable {
 	}
 
 	public void buscarProducto() {
-		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id));
+		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id), sesion.getBd());
 		if (pro != null) {
 			nombre = pro.getNombre();
 			descirpcion = pro.getDescirpcion();	
@@ -190,10 +194,10 @@ public class ProductoController implements Serializable {
 	}
 	
 	public void editarProducto() {
-		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id));
+		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id), sesion.getBd());
 		if (pro != null) {
 			Producto producto = new Producto(Integer.parseInt(id), nombre, descirpcion, codigoLote, peso, dimensiones, valor);
-			productoEJB.editar(producto);
+			productoEJB.editar(producto, sesion.getBd());;
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
 			registrarAuditoria("EDITAR", "El producto " + pro + " fue editado");
 
@@ -201,12 +205,13 @@ public class ProductoController implements Serializable {
 	}
 	
 	public void eliminarProdducto() {
-		Producto pro = productoEJB.buscarProducto(Integer.parseInt(id));
-		if (pro != null) {
-			productoEJB.eliminarProducto(pro);
-			Messages.addFlashGlobalInfo("Producto eliminado Con Exito!!");
-		}else {
-			Messages.addFlashGlobalInfo("El producto no se encuentra registardo");
+		try {
+			productoEJB.eliminarProducto(Integer.parseInt(id), sesion.getBd());
+			registrarAuditoria("ELIMINAR", "Elimino el producto ");
+			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
+			
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("lo sentimos no se puedo eliminar el producto");
 
 		}
 	}

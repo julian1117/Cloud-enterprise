@@ -101,6 +101,31 @@ public class Inventario implements Serializable{
 		this.idPersona = idPersona;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idInventario == null) ? 0 : idInventario.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Inventario other = (Inventario) obj;
+		if (idInventario == null) {
+			if (other.idInventario != null)
+				return false;
+		} else if (!idInventario.equals(other.idInventario))
+			return false;
+		return true;
+	}
+
 
 
 	

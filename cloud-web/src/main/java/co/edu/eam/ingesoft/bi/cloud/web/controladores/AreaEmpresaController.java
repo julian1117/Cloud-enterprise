@@ -73,7 +73,7 @@ public class AreaEmpresaController implements Serializable{
 	public void crearArea() {
 		try {
 			AreaEmpresa areaEmpresa = new AreaEmpresa(Integer.parseInt(id), nombre, descripcion);
-			areaEJB.crearArea(areaEmpresa);
+			areaEJB.crearArea(areaEmpresa,sesion.getBd());
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 			registrarAuditoria("CREAR", "Creo una nueva area de la empresa");
 
@@ -87,7 +87,7 @@ public class AreaEmpresaController implements Serializable{
 	
 	public void buscarAreaEmpresa() {
 		try {
-			AreaEmpresa areaEmpresa = areaEJB.buscarArea(Integer.parseInt(id));
+			AreaEmpresa areaEmpresa = areaEJB.buscarArea(Integer.parseInt(id),sesion.getBd());
 			
 			if(areaEmpresa != null) {
 				descripcion = areaEmpresa.getDescripcion();
@@ -106,7 +106,7 @@ public class AreaEmpresaController implements Serializable{
 	
 	public void editarAreaEmpresa() {
 		try {
-			AreaEmpresa areaEmpresa = areaEJB.buscarArea(Integer.parseInt(id));
+			AreaEmpresa areaEmpresa = areaEJB.buscarArea(Integer.parseInt(id),sesion.getBd());
 			if(areaEmpresa != null) {
 				AreaEmpresa area = new AreaEmpresa(Integer.parseInt(id), nombre, descripcion);
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
