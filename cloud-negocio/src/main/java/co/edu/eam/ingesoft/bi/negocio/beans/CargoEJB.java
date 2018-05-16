@@ -2,10 +2,13 @@ package co.edu.eam.ingesoft.bi.negocio.beans;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import co.edu.eam.ingesoft.bi.negocio.conexion.Conexion;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
@@ -15,38 +18,42 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 @LocalBean
 public class CargoEJB {
 
-	@PersistenceContext
-	private EntityManager em;
+	@EJB
+	private Conexion em;
 	
-	public void crearCargo(Cargo cargo) {
-		Cargo ca = buscarCargo(cargo.getIdCar());
+	public void crearCargo(Cargo cargo,int bd) {
+		Cargo ca = buscarCargo(cargo.getIdCar(),bd);
 		
 		if(ca == null ) {
-			em.persist(cargo);
+			em.crear(cargo);
 		}else {
 		throw new ExcepcionNegocio("El cargo ya se encuentra registrado");
 			
 		}
 	}
 	
-	public Cargo buscarCargo(Integer idCargo) {
-		return em.find(Cargo.class, idCargo);
+	public Cargo buscarCargo(Integer idCargo, int bd) {
+		em.setBd(bd);
+		return (Cargo) em.buscar(Cargo.class, idCargo);
 	}
 	
-	public void editarCargo(Cargo cargo) {
-		Cargo ca = buscarCargo(cargo.getIdCar());
+	public void editarCargo(Cargo cargo,int bd) {
+		Cargo ca = buscarCargo(cargo.getIdCar(), bd);
 		
 		if(ca != null ) {
-			em.merge(cargo);
+			em.editar(cargo);
 		}else {
 			throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
 			
 		}
 	}
 	
-	public List<Cargo> listarCargo(){		
-		return em.createNamedQuery(Cargo.LISTA_CARGOS).getResultList();		
+	public List<Object> listarCargo(int bd){
+		em.setBd(bd);
+		return  em.listar(Cargo.LISTA_CARGOS);		
 	}
+	
+	
 
 	
 

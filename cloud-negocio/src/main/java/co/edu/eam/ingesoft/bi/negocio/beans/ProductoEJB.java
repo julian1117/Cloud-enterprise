@@ -1,54 +1,78 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
+import co.edu.eam.ingesoft.bi.negocio.conexion.Conexion;
+import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @Stateless
 @LocalBean
 public class ProductoEJB {
-
-	@PersistenceContext
-	private EntityManager em;
 	
-	public void crearProducto (Producto producto) {
-		Producto pr = buscarProducto(producto.getIdProducto());
-		
-		if(pr== null ) {
-			em.persist(producto);
-		}else {
-		//	throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
-		}
+	@EJB
+	private Conexion em;
+
+	/**
+	 * crea un producto
+	 * @param producto
+	 * @param bd
+	 */
+	public void crearProducto(Producto producto, int bd) {
+		em.setBd(bd);
+		em.crear(producto);
 	}
+	
+	//public void crearProducto (Producto producto, int bd) {
+		//Producto pr = buscarProducto(producto.getIdProducto());
+		
+		//if(pr== null ) {
+			//em.persist(producto);
+		//}else {
+		//	throw new ExcepcionNegocio("El Producto ya se encuentra registrado");
+		//}
+	//}
 	
 	/**
 	 * permite la busqueda de un producto en el sistema
 	 * @param id que representa el parametro de busqueda del productp
 	 * @return el producto encontrado 
 	 */
-	public Producto buscarProducto(Integer id) {
-		return em.find(Producto.class, id);
+	public Producto buscarProducto(Integer id, int bd) {
+		em.setBd(bd);
+		return (Producto) em.buscar(Producto.class, id);
 	}
 	
-	public void editar(Producto producto) {
-		Producto pro = buscarProducto(producto.getIdProducto());
-		if(pro != null) {
-			em.merge(producto);
-		}else {
-		//	throw new Exception("El Producto no se encuentra en el sistema");
-
-		}
+	/**
+	 * editar un producto
+	 * @param producto
+	 * @param bd
+	 */
+	public void editar(Producto producto, int bd) {
+		em.setBd(bd);
+		em.editar(producto);
 	}
 	
-	public void eliminarProducto(Producto producto) {
-		Producto pro = buscarProducto(producto.getIdProducto());
-		if(pro != null) {
-			em.remove(producto);
-		}else {
-		//	throw new Exception("El Producto no se encuentra en el sistema");
-
+	/**
+	 * eliminar un producto
+	 * @param producto
+	 * @param bd
+	 */
+	public void eliminarProducto(Integer producto, int bd) {
+		try {
+			
+			Producto pro = buscarProducto(producto, bd);
+			if(pro != null) {
+				em.setBd(bd);
+				em.eliminar(pro);
+			}
+			
+		} catch (Exception e) {
+			throw new ExcepcionNegocio("No fue posible eliminar el producto ");
+			
 		}
 	}
 }

@@ -2,10 +2,13 @@ package co.edu.eam.ingesoft.bi.negocio.beans;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import co.edu.eam.ingesoft.bi.negocio.conexion.Conexion;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
@@ -16,53 +19,50 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Producto;
 @LocalBean
 public class InventarioEJB {
 	
-	@PersistenceContext
-	private EntityManager em;
+	@EJB
+	private Conexion em;
 	
-	public void crearInventario(Inventario inventario) {		
-		Inventario inv = buscarInventario(inventario.getIdInventario());		
-		if(inv == null) {
-			em.persist(inventario);
-		}else {
-			throw new ExcepcionNegocio("El Inventario con ese ID ya se encuentra registrado");
-		}
-				
+	public void crearInventario(Inventario inventario, int bd) {		
+		em.setBd(bd);
+		em.crear(inventario);				
 	}
 	
-	public Inventario buscarInventario(Integer idInventario) {
-		return em.find(Inventario.class, idInventario);
+	public Inventario buscarInventario(Integer idInventario,int bd) {
+		em.setBd(bd);
+		return (Inventario) em.buscar(Inventario.class, idInventario);
 	}
 	
-	public void editarInventario(Inventario inventario) {
-		Inventario inv = buscarInventario(inventario.getIdInventario());	
-		if(inv != null) {
-			em.merge(inventario);
-		}else {
-			throw new ExcepcionNegocio("El Inventario ya se encuentra registrado");
-		}
+	public void editarInventario(Inventario inventario,int bd) {
+		em.setBd(bd);
+		em.editar(inventario);
+		
 	}
 	
-	public void eliminarInventario(Inventario inventario) {
-		Inventario inv = buscarInventario(inventario.getIdInventario());	
-		if(inv != null) {
-			em.remove(inventario);
-		}else {
-			throw new ExcepcionNegocio("El Inventario no se encuentra registrado");
-		}
+	public void eliminarInventario(Integer inventario, int bd) {
+		try {
+			Inventario inv = buscarInventario(inventario, bd);
+			if(inv != null) {
+				em.setBd(bd);
+				em.eliminar(inv);
+			}
+		} catch (Exception e) {
+			throw new ExcepcionNegocio("No fue posible eliminar el inventario ");
+			}
 	}
 	
-	public Empleado buscarEmpleado(Integer empleado) {
-		return em.find(Empleado.class, empleado);
+	public Empleado buscarEmpleado(Integer empleado, int bd) {
+		em.setBd(bd);
+		return (Empleado) em.buscar(Empleado.class, empleado);
 	}
 	
-	public List<Producto> listarProductos() {
-		List<Producto> list= em.createNamedQuery(Producto.LISTA_PRODUCTO).getResultList();
-		return list;
+	public List<Object> listarProductos(int bd) {
+		em.setBd(bd);
+		return em.listar(Producto.LISTA_PRODUCTO);
 	}
 	
-	public List<Inventario> listarInventario(){
-		List<Inventario> list = em.createNamedQuery(Inventario.LISTA_InventarioS).getResultList();
-		return list;
+	public List<Object> listarInventario(int bd){
+		em.setBd(bd);
+		return em.listar(Inventario.LISTA_InventarioS);
 	}
 	
 

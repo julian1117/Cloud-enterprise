@@ -56,7 +56,7 @@ public class RecursosHumanosController implements Serializable {
 	
 	private String direccion;
 	
-	private List<Empleado> listarEmpleado;
+	private List<Object> listarEmpleado;
 	
 	private String idEmpleado;
 	
@@ -64,11 +64,11 @@ public class RecursosHumanosController implements Serializable {
 	
 	private String email;
 		
-	private List<Cargo> listaCargo;
+	private List<Object> listaCargo;
 	
 	private String idCargo;
 	
-	private List<AreaEmpresa> listaAreaEmpresa;
+	private List<Object> listaAreaEmpresa;
 	
 	private String idAreaEmpresa;
 	
@@ -78,35 +78,8 @@ public class RecursosHumanosController implements Serializable {
 	//@Pattern(regexp="[0-9]*",message="El campo fecha de ingreso solo puede llevar caracteres numericos")
 	private Date fechaIngreso;
 	
-	@EJB
-	private RecursosHumanosEJB recursosEJB;
-	
-	@EJB
-	private General_EJB generalEJB;
-	
-	@EJB
-	private CargoEJB cargoEJB;
-	
-	@EJB
-	private AreaEmpresaEJB areaEJB;
-	
-	@EJB
-	private AuditoriaEJB auditoriaEJB;
-
-	@Inject
-	private SessionController sesion;	
 	
 	
-	public String getCedulaPer() {
-		return cedulaPer;
-	}
-
-
-	public void setCedulaPer(String cedulaPer) {
-		this.cedulaPer = cedulaPer;
-	}
-
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -136,6 +109,7 @@ public class RecursosHumanosController implements Serializable {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
+
 	public static String getCedula() {
 		return cedula;
 	}
@@ -143,6 +117,16 @@ public class RecursosHumanosController implements Serializable {
 
 	public static void setCedula(String cedula) {
 		RecursosHumanosController.cedula = cedula;
+	}
+
+
+	public String getCedulaPer() {
+		return cedulaPer;
+	}
+
+
+	public void setCedulaPer(String cedulaPer) {
+		this.cedulaPer = cedulaPer;
 	}
 
 
@@ -166,6 +150,26 @@ public class RecursosHumanosController implements Serializable {
 	}
 
 
+	public List<Object> getListarEmpleado() {
+		return listarEmpleado;
+	}
+
+
+	public void setListarEmpleado(List<Object> listarEmpleado) {
+		this.listarEmpleado = listarEmpleado;
+	}
+
+
+	public String getIdEmpleado() {
+		return idEmpleado;
+	}
+
+
+	public void setIdEmpleado(String idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+
 	public String getEmail() {
 		return email;
 	}
@@ -176,27 +180,15 @@ public class RecursosHumanosController implements Serializable {
 	}
 
 
-
-	public List<Cargo> getListaCargo() {
+	public List<Object> getListaCargo() {
 		return listaCargo;
 	}
 
 
-	public void setListaCargo(List<Cargo> listaCargo) {
+	public void setListaCargo(List<Object> listaCargo) {
 		this.listaCargo = listaCargo;
 	}
 
-
-	public List<AreaEmpresa> getListaAreaEmpresa() {
-		return listaAreaEmpresa;
-	}
-
-
-	public void setListaAreaEmpresa(List<AreaEmpresa> listaAreaEmpresa) {
-		this.listaAreaEmpresa = listaAreaEmpresa;
-	}
-
-	
 
 	public String getIdCargo() {
 		return idCargo;
@@ -205,6 +197,16 @@ public class RecursosHumanosController implements Serializable {
 
 	public void setIdCargo(String idCargo) {
 		this.idCargo = idCargo;
+	}
+
+
+	public List<Object> getListaAreaEmpresa() {
+		return listaAreaEmpresa;
+	}
+
+
+	public void setListaAreaEmpresa(List<Object> listaAreaEmpresa) {
+		this.listaAreaEmpresa = listaAreaEmpresa;
 	}
 
 
@@ -237,43 +239,50 @@ public class RecursosHumanosController implements Serializable {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public List<Empleado> getListarEmpleado() {
-		return listarEmpleado;
+
+	public SessionController getSesion() {
+		return sesion;
 	}
 
 
-	public void setListarEmpleado(List<Empleado> listarEmpleado) {
-		this.listarEmpleado = listarEmpleado;
+	public void setSesion(SessionController sesion) {
+		this.sesion = sesion;
 	}
 
-
-	public String getIdEmpleado() {
-		return idEmpleado;
-	}
-
-
-	public void setIdEmpleado(String idEmpleado) {
-		this.idEmpleado = idEmpleado;
-	}
-
+	@EJB
+	private RecursosHumanosEJB recursosEJB;
 	
+	@EJB
+	private General_EJB generalEJB;
+	
+	@EJB
+	private CargoEJB cargoEJB;
+	
+	@EJB
+	private AreaEmpresaEJB areaEJB;
+	
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
+	@Inject
+	private SessionController sesion;	
 
 
 	@PostConstruct
 	public void inicializar() {
-		listaCargo = recursosEJB.listarCargos();
-		listaAreaEmpresa = recursosEJB.listarAreas();
-		listarEmpleado = recursosEJB.listarEmpleado();
+		listaCargo = recursosEJB.listarCargos(sesion.getBd());
+		listaAreaEmpresa = recursosEJB.listarAreas(sesion.getBd());
+		listarEmpleado = recursosEJB.listarEmpleado(sesion.getBd());
 	}
 
 
 	public void crearEmpleado() {
 		try {
-			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
-			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa));
+			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo),sesion.getBd());
+			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa),sesion.getBd());
 			//Messages.addFlashGlobalInfo("hola" + area);
 			
-			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
+			Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula),sesion.getBd());
 			
 			if(persona != null) {
 				Empleado empleado = new Empleado();
@@ -283,7 +292,7 @@ public class RecursosHumanosController implements Serializable {
 				empleado.setIdPersona(persona);
 				empleado.setSalario(salario);
 				
-				recursosEJB.crearEmpleado(empleado);
+				recursosEJB.crearEmpleado(empleado,sesion.getBd());
 				
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 				
@@ -303,7 +312,7 @@ public class RecursosHumanosController implements Serializable {
 	}
 	
 	public void buscarEmpleado() {
-		Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
+		Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula),sesion.getBd());
 		
 		if(emp != null) {
 			salario= emp.getSalario();
@@ -319,16 +328,16 @@ public class RecursosHumanosController implements Serializable {
 	}
 	
 	public void editarEmpleado() {
-Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula));
+Empleado emp = recursosEJB.buscarEmp(Integer.parseInt(cedula),sesion.getBd());
 		
 		if(emp != null) {
-			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
+			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo),sesion.getBd());
 			
-			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa));
+			AreaEmpresa area = areaEJB.buscarArea(Integer.parseInt(idAreaEmpresa),sesion.getBd());
 			//Persona persona = recursosEJB.buscarEmpleado(Integer.parseInt(cedula));
 			
 			Empleado empleado = new Empleado(salario, fechaIngreso, area, cargo, emp.getIdPersona());
-			recursosEJB.editarEmpleado(empleado);
+			recursosEJB.editarEmpleado(empleado,sesion.getBd());
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
 			registrarAuditoria("EDITAR", "Edito al empleado con cedula: " + emp.getIdPersona().getCedula());
 

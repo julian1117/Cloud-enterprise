@@ -81,7 +81,7 @@ public class CargoController implements Serializable{
 	public void crearCargo() {
 		try {
 			Cargo cargo = new Cargo(Integer.parseInt(idCargo), nombre, descripcion);
-			cargoEJB.crearCargo(cargo);
+			cargoEJB.crearCargo(cargo,sesion.getBd());
 			Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 			
 			registrarAuditoria("CREAR", "Crea cargo nuevo");
@@ -96,7 +96,7 @@ public class CargoController implements Serializable{
 
 	public void buscarCarga() {
 		try {
-			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
+			Cargo cargo = cargoEJB.buscarCargo(Integer.parseInt(idCargo),sesion.getBd());
 			if (cargo != null) {
 				descripcion = cargo.getDescripcion();
 				nombre = cargo.getNombre();
@@ -115,12 +115,12 @@ public class CargoController implements Serializable{
 
 	public void editarCargo() {
 		try {
-			Cargo car = cargoEJB.buscarCargo(Integer.parseInt(idCargo));
+			Cargo car = cargoEJB.buscarCargo(Integer.parseInt(idCargo),sesion.getBd());
 
 			if (car != null) {
 				Cargo cargo = new Cargo(Integer.parseInt(idCargo), nombre, descripcion);
 
-				cargoEJB.editarCargo(cargo);
+				cargoEJB.editarCargo(cargo,sesion.getBd());
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 				registrarAuditoria("EDITO", "Edito el cargo: " + cargo.getNombre());
 				

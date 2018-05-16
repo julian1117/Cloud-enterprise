@@ -36,65 +36,25 @@ public class InventarioControlador implements Serializable {
 	@Length(min = 4, max = 10, message = "Id Inventario - longitud entre 5 y 10")
 	private String idInventario;
 
-//	@Pattern(regexp = "[0-9]*", message = "El campo numero de  identificacion solo puede llevar caracteres numericos")
-	//@Length(min = 4, max = 10, message = "Cedula - longitud entre 5 y 10")
-	private String cedula ;
+	// @Pattern(regexp = "[0-9]*", message = "El campo numero de identificacion solo
+	// puede llevar caracteres numericos")
+	// @Length(min = 4, max = 10, message = "Cedula - longitud entre 5 y 10")
+	private String cedula;
 
 	@Pattern(regexp = "[0-9]*", message = "El campo cantidad solo puede llevar caracteres numericos")
 	private String cantidad;
 
-	//@Pattern(regexp = "(?=-)*", message = "El campo fecha de ingreso solo puede llevar caracteres numericos")
+	// @Pattern(regexp = "(?=-)*", message = "El campo fecha de ingreso solo puede
+	// llevar caracteres numericos")
 	private Date fechaIngreso;
 
 	private String productoId;
 
-	private List<Producto> listarProducto;
-	
-	private List<Inventario> listaInventario;
-	
+	private List<Object> listarProducto;
+
+	private List<Object> listaInventario;
+
 	private String idInventariolista;
-
-	@EJB
-	private InventarioEJB inventarioEJB;
-
-	@EJB
-	private ProductoEJB productoEJB;
-
-	@EJB
-	private RecursosHumanosEJB recursosEJB;
-	
-	@EJB
-	private AuditoriaEJB auditoriaEJB;
-	
-	@Inject
-	private SessionController sesion;	
-
-
-
-
-	public List<Inventario> getListaInventario() {
-		return listaInventario;
-	}
-
-	public void setListaInventario(List<Inventario> listaInventario) {
-		this.listaInventario = listaInventario;
-	}
-
-	public String getIdInventariolista() {
-		return idInventariolista;
-	}
-
-	public void setIdInventariolista(String idInventariolista) {
-		this.idInventariolista = idInventariolista;
-	}
-
-	public AuditoriaEJB getAuditoriaEJB() {
-		return auditoriaEJB;
-	}
-
-	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
-		this.auditoriaEJB = auditoriaEJB;
-	}
 
 	public String getIdInventario() {
 		return idInventario;
@@ -128,7 +88,6 @@ public class InventarioControlador implements Serializable {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	
 	public String getProductoId() {
 		return productoId;
 	}
@@ -137,67 +96,62 @@ public class InventarioControlador implements Serializable {
 		this.productoId = productoId;
 	}
 
-	public RecursosHumanosEJB getRecursosEJB() {
-		return recursosEJB;
-	}
-
-	public void setRecursosEJB(RecursosHumanosEJB recursosEJB) {
-		this.recursosEJB = recursosEJB;
-	}
-
-	public List<Producto> getListarProducto() {
+	public List<Object> getListarProducto() {
 		return listarProducto;
 	}
 
-	public void setListarProducto(List<Producto> listarProducto) {
+	public void setListarProducto(List<Object> listarProducto) {
 		this.listarProducto = listarProducto;
 	}
 
-	public InventarioEJB getInventarioEJB() {
-		return inventarioEJB;
+	public List<Object> getListaInventario() {
+		return listaInventario;
 	}
 
-	public void setInventarioEJB(InventarioEJB inventarioEJB) {
-		this.inventarioEJB = inventarioEJB;
+	public void setListaInventario(List<Object> listaInventario) {
+		this.listaInventario = listaInventario;
 	}
 
-	public ProductoEJB getProductoEJB() {
-		return productoEJB;
+	public String getIdInventariolista() {
+		return idInventariolista;
 	}
 
-	public void setProductoEJB(ProductoEJB productoEJB) {
-		this.productoEJB = productoEJB;
-	}
-	
-	
-	
-	
-
-	public SessionController getSesion() {
-		return sesion;
+	public void setIdInventariolista(String idInventariolista) {
+		this.idInventariolista = idInventariolista;
 	}
 
-	public void setSesion(SessionController sesion) {
-		this.sesion = sesion;
-	}
+	@EJB
+	private InventarioEJB inventarioEJB;
+
+	@EJB
+	private ProductoEJB productoEJB;
+
+	@EJB
+	private RecursosHumanosEJB recursosEJB;
+
+	@EJB
+	private AuditoriaEJB auditoriaEJB;
+
+	@Inject
+	private SessionController sesion;
 
 	@PostConstruct
 	public void inicializar() {
-		listarProducto = inventarioEJB.listarProductos();
-		listaInventario = inventarioEJB.listarInventario();
+		listarProducto = inventarioEJB.listarProductos(sesion.getBd());
+		listaInventario = inventarioEJB.listarInventario(sesion.getBd());
 	}
-	
+
 	public void crearInventario() {
 		try {
 			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
-			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(us));
-			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId));
+			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(us), sesion.getBd());
+			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId), sesion.getBd());
 
 			if (persona != null) {
 				Inventario Inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad),
 						fechaIngreso, producto, persona);
 
-				inventarioEJB.crearInventario(Inventario);
+				inventarioEJB.crearInventario(Inventario, sesion.getBd());
 				Messages.addFlashGlobalInfo("Registro Creado Con Exito!!");
 				registrarAuditoria("CREAR", "NUEVO INVENTARIO");
 			} else {
@@ -213,29 +167,30 @@ public class InventarioControlador implements Serializable {
 	}
 
 	public void buscarInventario() {
-		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
-		
-		if(inv != null) {
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario), sesion.getBd());
+
+		if (inv != null) {
 			cedula = inv.getIdPersona().getIdPersona().getCedula().toString();
-			cantidad= inv.getCantidad().toString();
-			fechaIngreso= inv.getFechaIngreso();
+			cantidad = inv.getCantidad().toString();
+			fechaIngreso = inv.getFechaIngreso();
 			productoId = inv.getProducto().getIdProducto().toString();
-			
+
 			registrarAuditoria("BUSCAR", "fue buscado el inventario numero: " + inv.getIdInventario());
-		}else {
+		} else {
 			Messages.addFlashGlobalInfo("El Inventario no se encuentra registardo");
 
 		}
 	}
 
 	public void editarInventario() {
-		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario));
+		Inventario inv = inventarioEJB.buscarInventario(Integer.parseInt(idInventario), sesion.getBd());
 		if (inv != null) {
-			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(cedula));
-			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId));
+			Empleado persona = inventarioEJB.buscarEmpleado(Integer.parseInt(cedula), sesion.getBd());
+			Producto producto = productoEJB.buscarProducto(Integer.parseInt(productoId), sesion.getBd());
 
-			Inventario inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad), fechaIngreso, producto, persona);
-			inventarioEJB.editarInventario(inventario);
+			Inventario inventario = new Inventario(Integer.parseInt(idInventario), Integer.parseInt(cantidad),
+					fechaIngreso, producto, persona);
+			inventarioEJB.editarInventario(inventario, sesion.getBd());
 			Messages.addFlashGlobalInfo("Registro editado Con Exito!!");
 			registrarAuditoria("EDITAR", "fue editado el inventario numero: " + inv.getIdInventario());
 
@@ -243,22 +198,32 @@ public class InventarioControlador implements Serializable {
 	}
 
 	public void eliminarInventario() {
+		try {
+			inventarioEJB.eliminarInventario(Integer.parseInt(idInventario), sesion.getBd());
+			registrarAuditoria("ELIMINAR", "Elomino producto");
+			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");
 
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("lo sentimos no se puedo eliminar el registro");
+		}
 	}
-	
+
 	/**
-	 * Metodo para  registrar las auditorias generales
-	 * @param accion Crear, Editar, Eliminar o Actualizar
-	 * @param nombreReg modulo que se esta trabajando
+	 * Metodo para registrar las auditorias generales
+	 * 
+	 * @param accion
+	 *            Crear, Editar, Eliminar o Actualizar
+	 * @param nombreReg
+	 *            modulo que se esta trabajando
 	 */
 	public void registrarAuditoria(String accion, String nombreReg) {
 		try {
 			String browserDetails = Faces.getRequest().getHeader("User-Agent");
-			//----obtengo el usuario que esta en session
+			// ----obtengo el usuario que esta en session
 			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
-			
-			//----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg , browserDetails,us,"N/A");
+
+			// ----Mando usuario null por que aqui no hay session de usuario
+			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, us, "N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
