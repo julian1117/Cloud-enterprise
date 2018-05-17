@@ -18,14 +18,18 @@ public class DWGeneral {
 	@EJB
 	private Conexion em;
 
-	public void cargarDWAuditoria() {
+	/**
+	 * Lista d elos objetos a tratar
+	 * @return
+	 */
+	public List<Auditoria> cargarDWAuditoria() {
 		em.setBd(1);
-		List<Auditoria> listAuditoria = (List<Auditoria>)(Object)em.listar(Auditoria.AUDITORIA);
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println(listAuditoria.size()+" ---------------"+listAuditoria.get(0).getAccion());
+		return (List<Auditoria>)(Object)em.listar(Auditoria.AUDITORIA);
+		
 		/**for (int i = 0; i < listAuditoria.size(); i++) {
 			
-			
+			System.out.println("-------------------------------------------------------------------");
+		System.out.println(listAuditoria.size()+" ---------------"+listAuditoria.get(0).getAccion());
 			DWauditoria dWauditoria = new DWauditoria();
 			dWauditoria.setNombre(listAuditoria.get(i).getNombre());
 			dWauditoria.setFecha(listAuditoria.get(i).getFecha());

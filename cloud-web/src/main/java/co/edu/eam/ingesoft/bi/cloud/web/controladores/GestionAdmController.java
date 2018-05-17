@@ -14,6 +14,7 @@ import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
@@ -69,6 +70,8 @@ public class GestionAdmController implements Serializable {
 	private List<Object> listArea;
 
 	private Integer valorbd;
+	
+	private List<Auditoria> listaAuDW;
 
 	public List<Object> getListUsuarioInact() {
 		return listUsuarioInact;
@@ -174,8 +177,6 @@ public class GestionAdmController implements Serializable {
 		this.descripBAreaEmp = descripBAreaEmp;
 	}
 
-
-
 	public List<Object> getListArea() {
 		return listArea;
 	}
@@ -230,6 +231,14 @@ public class GestionAdmController implements Serializable {
 
 	public void setValorbd(Integer valorbd) {
 		this.valorbd = valorbd;
+	}	
+	
+	public List<Auditoria> getListaAuDW() {
+		return listaAuDW;
+	}
+
+	public void setListaAuDW(List<Auditoria> listaAuDW) {
+		this.listaAuDW = listaAuDW;
 	}
 
 	@EJB
@@ -486,10 +495,12 @@ public class GestionAdmController implements Serializable {
 		}
 	}
 
+	
+
 	public void trasladarAudDW() {
 		try {
-			dwGeneral.cargarDWAuditoria();
-			registrarAuditoria("Trasladar", "Trasladar auditorias a DW", "N/A");
+			listaAuDW = dwGeneral.cargarDWAuditoria();
+			registrarAuditoria("Trasladar DW", "Cargar datos", "N/A");
 			Messages.addFlashGlobalInfo("Traslado exitoso");
 
 		} catch (Exception e) {

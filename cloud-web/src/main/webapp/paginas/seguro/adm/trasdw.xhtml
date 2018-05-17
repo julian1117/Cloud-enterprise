@@ -12,8 +12,34 @@
 			<p:panel header="Definir base de datos a usar" id="panelTab">
 			
 			<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
-					styleClass="buttonIni" process="@this" value="Trasladar Auditorias a DW"
-					update="panelTab" />
+					styleClass="buttonIni" process="@this" value="Cargar datos"
+					update="panelTab panelTablas" />					
+					
+					
+			<p:dataTable id="panelTablas"
+						value="#{gestionAdmController.listaAuDW}" var="doc"
+						border="1" class="table table-striped">
+
+						<p:column headerText="Nombre del modulo">
+							<h:outputLabel value="#{doc.nombre}" />
+						</p:column>
+						<p:column headerText="Accion">
+							<h:outputLabel value="#{doc.accion}" />
+						</p:column>
+
+						<p:column headerText="Fecha de registro">
+							<h:outputLabel value="#{doc.fecha}" />
+						</p:column>
+						
+						<p:column headerText="Tipo de navegador">
+							<h:outputLabel value="#{doc.navegador}" />
+						</p:column>
+						
+						<p:column headerText="Tipo de O.S.">
+							<h:outputLabel value="#{doc.origen}" />
+						</p:column>
+
+					</p:dataTable>					
 
 			</p:panel>
 		</h:form>
