@@ -2,22 +2,22 @@ package co.edu.eam.ingesoft.bi.negocio.beans;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
+import co.edu.eam.ingesoft.bi.negocio.conexion.Conexion;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @Stateless
 @LocalBean
 public class RegistroNuevosEJB {
 
-	@PersistenceContext
-	private EntityManager em;
+	@EJB
+	private Conexion em;
 
 	/**
 	 * Permite buscar un genero por su id de identificacion
@@ -26,8 +26,9 @@ public class RegistroNuevosEJB {
 	 *            del genero a buscar
 	 * @return objeto genero buscado
 	 */
-	public Genero buscarGenro(Integer id) {
-		return em.find(Genero.class, id);
+	public Genero buscarGenro(Integer id,int bd) {
+		em.setBd(bd);
+		return (Genero) em.buscar(Genero.class, id);
 	}
 
 	/**
@@ -36,9 +37,10 @@ public class RegistroNuevosEJB {
 	 * @param ninguno
 	 * @return lista de todos los generos
 	 */
-	public List<Genero> listaGeneros() {
-		List<Genero> list = em.createNamedQuery(Genero.LISTA_GENEROS).getResultList();
-		return list;
+	public List<Object> listaGeneros(int bd) {
+		em.setBd(bd);
+		return em.listar(Genero.LISTA_GENEROS);
+		
 	}
 
 	/**
@@ -46,10 +48,11 @@ public class RegistroNuevosEJB {
 	 * 
 	 * @param persona
 	 */
-	public void crearPersona(Persona persona) {
-		Persona pers = buscarPersona(persona.getCedula());
+	public void crearPersona(Persona persona,int bd) {
+		Persona pers = buscarPersona(persona.getCedula(),bd);
 		if (pers == null) {
-			em.persist(persona);
+			em.setBd(bd);
+			em.crear(persona);
 		} else {
 			throw new ExcepcionNegocio("La persona ingresada ya existe");
 		}
@@ -61,8 +64,9 @@ public class RegistroNuevosEJB {
 	 * @param cedula
 	 * @return objeto persona
 	 */
-	public Persona buscarPersona(Integer cedula) {
-		return em.find(Persona.class, cedula);
+	public Persona buscarPersona(Integer cedula,int bd) {
+		em.setBd(bd);
+		return (Persona)em.buscar(Persona.class, cedula);
 	}
 
 	/**
@@ -70,9 +74,9 @@ public class RegistroNuevosEJB {
 	 * @param us
 	 * @return
 	 */
-	public boolean buscarUsuarios(String us) {
-
-		List<Usuario> use = em.createNamedQuery(Usuario.USUARIO).setParameter(1, us).getResultList();
+	public boolean buscarUsuarios(String us,int bd) {
+		em.setBd(bd);
+		List<Object> use = em.listarConParametroString(Usuario.USUARIO, us);
 		if (use.isEmpty()) {
 			return true;
 		} else {
@@ -80,10 +84,11 @@ public class RegistroNuevosEJB {
 		}
 	}
 	
-	public void editarCliente(Persona cedula) {
-		Persona pers = buscarPersona(cedula.getCedula());
+	public void editarCliente(Persona cedula,int bd) {
+		Persona pers = buscarPersona(cedula.getCedula(),bd);
 		if(pers!=null) {
-			em.merge(cedula);
+			em.setBd(bd);
+			em.editar(cedula);
 		}else {
 			throw new ExcepcionNegocio("La persona ingresada no existe");
 		}
@@ -94,8 +99,8 @@ public class RegistroNuevosEJB {
 	 * Crea un usuario a partir de la persona creada
 	 * @param usuario
 	 */
-	public void crearUsuario(Usuario usuario) {
-		em.persist(usuario);
+	public void crearUsuario(Usuario usuario,int bd) {
+		em.setBd(bd);
+		em.crear(usuario);
 	}
-
 }

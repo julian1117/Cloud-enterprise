@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.Pattern;
 
@@ -51,19 +52,19 @@ public class ClienteControler implements Serializable {
 
 	private String email;
 
-	private List<Genero> listGeneros;
+	private List<Object> listGeneros;
 
 	private Genero genero;
 
-	private List<Pais> listPais;
+	private List<Object> listPais;
 
 	private String pais;
 
-	private List<Departamento> listDepartamento;
+	private List<Object> listDepartamento;
 
 	private String departamento;
 
-	private List<Ciudad> listCiudad;
+	private List<Object> listCiudad;
 
 	private Integer ciudad;
 
@@ -75,6 +76,9 @@ public class ClienteControler implements Serializable {
 
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
+	
+	@Inject
+	private SessionController sesion;	
 
 	
 
@@ -133,13 +137,31 @@ public class ClienteControler implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	
 
-	public List<Genero> getListGeneros() {
+	public List<Object> getListGeneros() {
 		return listGeneros;
 	}
 
-	public void setListGeneros(List<Genero> listGeneros) {
+	public void setListGeneros(List<Object> listGeneros) {
 		this.listGeneros = listGeneros;
+	}
+
+	public List<Object> getListPais() {
+		return listPais;
+	}
+
+	public void setListPais(List<Object> listPais) {
+		this.listPais = listPais;
+	}
+
+	public SessionController getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(SessionController sesion) {
+		this.sesion = sesion;
 	}
 
 	public Genero getGenero() {
@@ -150,28 +172,12 @@ public class ClienteControler implements Serializable {
 		this.genero = genero;
 	}
 
-	public List<Pais> getListPais() {
-		return listPais;
-	}
-
-	public void setListPais(List<Pais> listPais) {
-		this.listPais = listPais;
-	}
-
 	public String getPais() {
 		return pais;
 	}
 
 	public void setPais(String pais) {
 		this.pais = pais;
-	}
-
-	public List<Departamento> getListDepartamento() {
-		return listDepartamento;
-	}
-
-	public void setListDepartamento(List<Departamento> listDepartamento) {
-		this.listDepartamento = listDepartamento;
 	}
 
 	public String getDepartamento() {
@@ -181,12 +187,22 @@ public class ClienteControler implements Serializable {
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
+	
+	
 
-	public List<Ciudad> getListCiudad() {
+	public List<Object> getListDepartamento() {
+		return listDepartamento;
+	}
+
+	public void setListDepartamento(List<Object> listDepartamento) {
+		this.listDepartamento = listDepartamento;
+	}
+
+	public List<Object> getListCiudad() {
 		return listCiudad;
 	}
 
-	public void setListCiudad(List<Ciudad> listCiudad) {
+	public void setListCiudad(List<Object> listCiudad) {
 		this.listCiudad = listCiudad;
 	}
 
@@ -224,15 +240,17 @@ public class ClienteControler implements Serializable {
 	
 	@PostConstruct
 	public void inicializar() {
-		listGeneros = registroNuevosEJB.listaGeneros();
-		listPais = generalEJB.listaPaises();
+		listGeneros = registroNuevosEJB.listaGeneros(sesion.getBd());
+		listPais = generalEJB.listaPaises(sesion.getBd());
 	}
 
 	public void crearCliente() {
 		try {
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad);
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
 
+			Messages.addFlashGlobalInfo(buscarGenero.getGenero() + "");
+			
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
 			persona.setApellido(apellido);
@@ -245,7 +263,7 @@ public class ClienteControler implements Serializable {
 			persona.setTelefono(telefono);
 
 			if (persona == null) {
-				registroNuevosEJB.crearPersona(persona);
+				registroNuevosEJB.crearPersona(persona,sesion.getBd());
 				registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 				Messages.addFlashGlobalInfo("Registro éxitoso");
 
@@ -264,7 +282,7 @@ public class ClienteControler implements Serializable {
 
 	public void buscarCliente() {
 		try {
-			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
 			
 			if(per != null) {
 			 nombre = per.getCedula().toString();
@@ -289,12 +307,12 @@ public class ClienteControler implements Serializable {
 	public void editarCliente() {
 		try {
 			
-			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad);
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
 			
 			if(per!=null) {
-				registroNuevosEJB.editarCliente(per);
+				registroNuevosEJB.editarCliente(per,sesion.getBd());
 				Persona persona = new Persona(Integer.parseInt(cedula), nombre, apellido, direccion, telefono, email, fechaNacimiento, buscarGenero, buscarCiudad);
 				Messages.addFlashGlobalInfo("Ediccion éxitoso");
 				
@@ -335,10 +353,10 @@ public class ClienteControler implements Serializable {
 
 	
 	public void cargarDep() {
-		listDepartamento = generalEJB.listaDepartamento(pais);
+		listDepartamento = generalEJB.listaDepartamento(pais,sesion.getBd());
 	}
 
 	public void cargarCiu() {
-		listCiudad = generalEJB.listCiudad(departamento);
+		listCiudad = generalEJB.listCiudad(departamento,sesion.getBd());
 	}
 }

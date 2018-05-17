@@ -59,19 +59,19 @@ public class RegistroNuevosController implements Serializable {
 
 	private String email;
 
-	private List<Genero> listGeneros;
+	private List<Object> listGeneros;
 
 	private Genero genero;
 
-	private List<Pais> listPais;
+	private List<Object> listPais;
 
 	private String pais;
 
-	private List<Departamento> listDepartamento;
+	private List<Object> listDepartamento;
 
 	private String departamento;
 
-	private List<Ciudad> listCiudad;
+	private List<Object> listCiudad;
 
 	private Integer ciudad;
 
@@ -152,11 +152,13 @@ public class RegistroNuevosController implements Serializable {
 		this.email = email;
 	}
 
-	public List<Genero> getListGeneros() {
+	
+
+	public List<Object> getListGeneros() {
 		return listGeneros;
 	}
 
-	public void setListGeneros(List<Genero> listGeneros) {
+	public void setListGeneros(List<Object> listGeneros) {
 		this.listGeneros = listGeneros;
 	}
 
@@ -168,28 +170,54 @@ public class RegistroNuevosController implements Serializable {
 		this.genero = genero;
 	}
 
-	public List<Pais> getListPais() {
+	
+
+	public List<Object> getListPais() {
 		return listPais;
 	}
 
-	public void setListPais(List<Pais> listPais) {
+	public void setListPais(List<Object> listPais) {
 		this.listPais = listPais;
 	}
 
-	public List<Departamento> getListDepartamento() {
+	public List<Object> getListDepartamento() {
 		return listDepartamento;
 	}
 
-	public void setListDepartamento(List<Departamento> listDepartamento) {
+	public void setListDepartamento(List<Object> listDepartamento) {
 		this.listDepartamento = listDepartamento;
 	}
 
-	public List<Ciudad> getListCiudad() {
+	public List<Object> getListCiudad() {
 		return listCiudad;
 	}
 
-	public void setListCiudad(List<Ciudad> listCiudad) {
+	public void setListCiudad(List<Object> listCiudad) {
 		this.listCiudad = listCiudad;
+	}
+
+	public String getContrasenaA() {
+		return contrasenaA;
+	}
+
+	public void setContrasenaA(String contrasenaA) {
+		this.contrasenaA = contrasenaA;
+	}
+
+	public String getContrasenaB() {
+		return contrasenaB;
+	}
+
+	public void setContrasenaB(String contrasenaB) {
+		this.contrasenaB = contrasenaB;
+	}
+
+	public SessionController getSesion() {
+		return sesion;
+	}
+
+	public void setSesion(SessionController sesion) {
+		this.sesion = sesion;
 	}
 
 	public String getPais() {
@@ -242,16 +270,16 @@ public class RegistroNuevosController implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		listGeneros = registroNuevosEJB.listaGeneros();
-		listPais = generalEJB.listaPaises();
+		listGeneros = registroNuevosEJB.listaGeneros(sesion.getBd());
+		listPais = generalEJB.listaPaises(sesion.getBd());
 	}
 
 	public void cargarDep() {
-		listDepartamento = generalEJB.listaDepartamento(pais);
+		listDepartamento = generalEJB.listaDepartamento(pais,sesion.getBd());
 	}
 
 	public void cargarCiu() {
-		listCiudad = generalEJB.listCiudad(departamento);
+		listCiudad = generalEJB.listCiudad(departamento,sesion.getBd());
 	}
 
 	/**
@@ -260,8 +288,8 @@ public class RegistroNuevosController implements Serializable {
 	public void crearUsuarioNuevo() {
 
 		try {
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad);
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
 
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
@@ -275,14 +303,14 @@ public class RegistroNuevosController implements Serializable {
 			persona.setTelefono(telefono);
 
 			// valido que el usuario no este registrado antes
-			if (registroNuevosEJB.buscarUsuarios(nombreUsuario)) {
+			if (registroNuevosEJB.buscarUsuarios(nombreUsuario,sesion.getBd())) {
 				// valido que las contraseñas ingresadas sean las mismas
 				if (contrasenaA.equals(contrasenaB)) {
 					
 					// creo la persona
-					registroNuevosEJB.crearPersona(persona);
+					registroNuevosEJB.crearPersona(persona,sesion.getBd());
 					
-					Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula));
+					Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
 					
 					Usuario usuario = new Usuario();
 					usuario.setNombre(nombreUsuario);
@@ -292,7 +320,7 @@ public class RegistroNuevosController implements Serializable {
 					
 					
 					// creo el usuario
-					registroNuevosEJB.crearUsuario(usuario);
+					registroNuevosEJB.crearUsuario(usuario,sesion.getBd());
 					registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 					Messages.addFlashGlobalInfo("Registro éxitoso");
 

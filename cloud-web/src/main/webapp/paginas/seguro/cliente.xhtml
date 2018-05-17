@@ -63,11 +63,11 @@
 								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
 									class="labelSelect" />
 								<h:selectOneMenu id="tftSexo"
-									value="#{gestionClienteController.genero}"
+									value="#{gestionClienteController.genero}" converter="sexoConverter"
 									 class="sizeselect form-control">
 
 									<f:selectItems value="#{gestionClienteController.listGeneros}"
-										var="doc" itemValue="#{doc}" itemLabel="#{doc.id}"
+										var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
 								<p:message for="tftSexo" />

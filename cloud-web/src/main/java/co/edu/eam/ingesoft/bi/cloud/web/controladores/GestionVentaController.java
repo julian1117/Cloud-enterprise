@@ -211,7 +211,7 @@ public class GestionVentaController implements Serializable {
 		try {
 			String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 			Empleado em = recursosEJB.buscarEmp(Integer.parseInt(us),sesion.getBd());
-			Persona per = registroEJB.buscarPersona(Integer.parseInt(persona));
+			Persona per = registroEJB.buscarPersona(Integer.parseInt(persona),sesion.getBd());
 			
 			if(us != null && per !=null) {
 				GestionVenta gestionFactura = new GestionVenta(Integer.parseInt(idFactura), fecha, em , per);
@@ -239,7 +239,7 @@ public class GestionVentaController implements Serializable {
 		
 		
 		if(c <= buscaCan.getCantidad()) {
-			ventaEJB.prueba(a, b, c);
+			ventaEJB.prueba(a, b, c,sesion.getBd());
 			
 			int resta = buscaCan.getCantidad() - c;
 			
