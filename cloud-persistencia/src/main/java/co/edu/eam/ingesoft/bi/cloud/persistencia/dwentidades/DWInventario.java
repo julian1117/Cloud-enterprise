@@ -1,4 +1,4 @@
-package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
+package co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -18,14 +18,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="Inventario")
+@Table(name="DWInventario")
 @NamedQueries({
-	@NamedQuery(name=Inventario.LISTA_InventarioS,query="SELECT m FROM Inventario m"),
+	@NamedQuery(name=DWInventario.LISTA_InventarioS,query="SELECT m FROM Inventario m"),
 	//@NamedQuery(name=Inventario.LISTA_PRODUCTO_INVENTARIO,query="SELECT p.nombre FROM Inventario m INNER JOIN Producto p")
 })
-public class Inventario implements Serializable{
+public class DWInventario implements Serializable{
 	
-	public static final String LISTA_InventarioS = "Inventario.listaInventarioo";
+	public static final String LISTA_InventarioS = "Inventario.listaInventario";
 	public static final String LISTA_PRODUCTO_INVENTARIO ="Inventario.listaInv";
 	
 	@Id@Column(name="id")
@@ -40,19 +40,19 @@ public class Inventario implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name="producto")
-	private Producto producto;
+	private DWProducto producto;
 	
 	
 	@ManyToOne
 	@JoinColumn(name="persona_Id")
-	private Empleado idPersona;	
+	private DWempleado idPersona;	
 
-	public Inventario() {
+	public DWInventario() {
 		super();
 	}
 
-	public Inventario(Integer idInventario, Integer cantidad, Date fechaIngreso, Producto producto,
-			Empleado idPersona) {
+	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngreso, DWProducto producto,
+			DWempleado idPersona) {
 		super();
 		this.idInventario = idInventario;
 		this.cantidad = cantidad;
@@ -85,19 +85,19 @@ public class Inventario implements Serializable{
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public Producto getProducto() {
+	public DWProducto getProducto() {
 		return producto;
 	}
 
-	public void setProducto(Producto producto) {
+	public void setProducto(DWProducto producto) {
 		this.producto = producto;
 	}
 
-	public Empleado getIdPersona() {
+	public DWempleado getIdPersona() {
 		return idPersona;
 	}
 
-	public void setIdPersona(Empleado idPersona) {
+	public void setIdPersona(DWempleado idPersona) {
 		this.idPersona = idPersona;
 	}
 
@@ -117,7 +117,7 @@ public class Inventario implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Inventario other = (Inventario) obj;
+		DWInventario other = (DWInventario) obj;
 		if (idInventario == null) {
 			if (other.idInventario != null)
 				return false;
