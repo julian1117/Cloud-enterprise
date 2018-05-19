@@ -15,7 +15,7 @@
 					<div align="center">
 						<p:panel id="paneldatosP" header="Datos de Cliente">
 							<h:panelGrid id="paneldatos" columns="3">
-							
+
 								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
 								<h:inputText id="tftNombre"
 									value="#{gestionClienteController.nombre}" class="form-control"></h:inputText>
@@ -60,14 +60,17 @@
 									value="#{gestionClienteController.email}" class=" form-control"></h:inputText>
 								<p:message for="tftEmail" />
 
+
 								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
 									class="labelSelect" />
 								<h:selectOneMenu id="tftSexo"
-									value="#{gestionClienteController.genero}" converter="sexoConverter"
-									 class="sizeselect form-control">
+									value="#{gestionNuevosController.genero}"
+									class="sizeselect form-control">
 
-									<f:selectItems value="#{gestionClienteController.listGeneros}"
-										var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+									<f:selectItem itemLabel="Seleccione el genero" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{gestionNuevosController.listGeneros}"
+										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
 								<p:message for="tftSexo" />

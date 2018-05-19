@@ -56,11 +56,14 @@
 							class="labelSelect" />
 						<h:selectOneMenu id="tftSexo"
 							value="#{gestionNuevosController.genero}"
-							converter="sexoConverter" class="sizeselect form-control">
+							class="sizeselect form-control">
 
+							<f:selectItem itemLabel="Seleccione el genero" itemValue=""
+								noSelectionOption="true" />
 							<f:selectItems value="#{gestionNuevosController.listGeneros}"
-								var="doc" itemValue="#{doc}" itemLabel="#{doc.genero}"
+								var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
 								class="sizeselect form-control" />
+								
 						</h:selectOneMenu>
 						<p:message for="tftSexo" />
 

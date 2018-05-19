@@ -270,16 +270,16 @@ public class RegistroNuevosController implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		listGeneros = registroNuevosEJB.listaGeneros(sesion.getBd());
-		listPais = generalEJB.listaPaises(sesion.getBd());
+		listGeneros = registroNuevosEJB.listaGeneros(1);
+		listPais = generalEJB.listaPaises(1);
 	}
 
 	public void cargarDep() {
-		listDepartamento = generalEJB.listaDepartamento(pais,sesion.getBd());
+		listDepartamento = generalEJB.listaDepartamento(pais,1);
 	}
 
 	public void cargarCiu() {
-		listCiudad = generalEJB.listCiudad(departamento,sesion.getBd());
+		listCiudad = generalEJB.listCiudad(departamento,1);
 	}
 
 	/**
@@ -288,8 +288,8 @@ public class RegistroNuevosController implements Serializable {
 	public void crearUsuarioNuevo() {
 
 		try {
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),1);
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,1);
 
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
@@ -303,14 +303,14 @@ public class RegistroNuevosController implements Serializable {
 			persona.setTelefono(telefono);
 
 			// valido que el usuario no este registrado antes
-			if (registroNuevosEJB.buscarUsuarios(nombreUsuario,sesion.getBd())) {
+			if (registroNuevosEJB.buscarUsuarios(nombreUsuario,1)) {
 				// valido que las contraseñas ingresadas sean las mismas
 				if (contrasenaA.equals(contrasenaB)) {
 					
 					// creo la persona
-					registroNuevosEJB.crearPersona(persona,sesion.getBd());
+					registroNuevosEJB.crearPersona(persona,1);
 					
-					Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
+					Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),1);
 					
 					Usuario usuario = new Usuario();
 					usuario.setNombre(nombreUsuario);
@@ -320,7 +320,7 @@ public class RegistroNuevosController implements Serializable {
 					
 					
 					// creo el usuario
-					registroNuevosEJB.crearUsuario(usuario,sesion.getBd());
+					registroNuevosEJB.crearUsuario(usuario,1);
 					registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 					Messages.addFlashGlobalInfo("Registro éxitoso");
 
