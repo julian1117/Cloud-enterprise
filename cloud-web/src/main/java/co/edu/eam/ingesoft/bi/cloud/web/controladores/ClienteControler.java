@@ -262,21 +262,20 @@ public class ClienteControler implements Serializable {
 			persona.setGenero(buscarGenero);
 			persona.setTelefono(telefono);
 
-			if (persona == null) {
+		//	if (persona == null) {
 				registroNuevosEJB.crearPersona(persona,sesion.getBd());
 				registrarAuditoria("CREAR", "REGISTRO NUEVOS");
 				Messages.addFlashGlobalInfo("Registro éxitoso");
 
-			} else {
+			//} else {
 
-				Messages.addFlashGlobalError("El cliente ya Existe");
+			//	Messages.addFlashGlobalError("El cliente ya Existe");
 
-			}
+			//}
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
 

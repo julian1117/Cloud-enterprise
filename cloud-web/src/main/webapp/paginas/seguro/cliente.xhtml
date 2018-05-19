@@ -64,12 +64,12 @@
 								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
 									class="labelSelect" />
 								<h:selectOneMenu id="tftSexo"
-									value="#{gestionNuevosController.genero}"
+									value="#{gestionClienteController.genero}"
 									class="sizeselect form-control">
 
 									<f:selectItem itemLabel="Seleccione el genero" itemValue=""
 										noSelectionOption="true" />
-									<f:selectItems value="#{gestionNuevosController.listGeneros}"
+									<f:selectItems value="#{gestionClienteController.listGeneros}"
 										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
@@ -190,14 +190,19 @@
 								<h:inputText id="tftEmailBuscar"
 									value="#{gestionClienteController.email}"></h:inputText>
 
-								<h:outputLabel for="tftSexoBuscar" id="lblSexoBuscar"
-									value="#{msj['persona.sexo']}:"></h:outputLabel>
+								<h:outputLabel for="tftSexoB" id="lblSexoB" value="Tipo de sexo"
+									class="labelSelect" />
+								<h:selectOneMenu id="tftSexoB"
+									value="#{gestionClienteController.genero}"
+									class="sizeselect form-control">
 
-								<h:selectOneMenu id="tftSexoBuscar"
-									value="#{gestionClienteController.genero}" class="form-control">
-									<f:selectItem itemValue="F" itemLabel="Femenino" />
-									<f:selectItem itemValue="M" itemLabel="Masculino" />
+									<f:selectItem itemLabel="Seleccione el genero" itemValue=""
+										noSelectionOption="true" />
+									<f:selectItems value="#{gestionClienteController.listGeneros}"
+										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
+										class="sizeselect form-control" />
 								</h:selectOneMenu>
+								<p:message for="tftSexoB" />
 
 
 
