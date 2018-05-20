@@ -15,6 +15,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWauditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
@@ -79,7 +80,7 @@ public class GestionAdmController implements Serializable {
 
 	private List<Auditoria> listaAuDW;
 
-	private List<Auditoria> listaTransformacion;
+	private List<DWauditoria> listaTransformacion;
 	
 	private List<Venta> listaVentaDW;
 	
@@ -103,11 +104,11 @@ public class GestionAdmController implements Serializable {
 		this.listaTransVenta = listaTransVenta;
 	}
 
-	public void setListaTransformacion(List<Auditoria> listaTransformacion) {
+	public void setListaTransformacion(List<DWauditoria> listaTransformacion) {
 		this.listaTransformacion = listaTransformacion;
 	}
 
-	public List<Auditoria> getListaTransformacion() {
+	public List<DWauditoria> getListaTransformacion() {
 		return listaTransformacion;
 	}
 

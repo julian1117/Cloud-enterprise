@@ -34,9 +34,8 @@ public class DWauditoria implements Serializable{
 	@Column(name = "navegador",nullable = false)
 	private String navegador;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "fecha",nullable = false)
-	private Date fecha;
+	private String fecha;
 
 	@Column(name = "usuarioSe",nullable = false)
 	private String usuarioSe;
@@ -48,7 +47,7 @@ public class DWauditoria implements Serializable{
 		super();
 	}
 	
-	public DWauditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, Date fecha,
+	public DWauditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, String fecha,
 			String usuarioSe, String usuarioAfectado) {
 		super();
 		this.idAuditoria = idAuditoria;
@@ -101,11 +100,11 @@ public class DWauditoria implements Serializable{
 		this.navegador = navegador;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
