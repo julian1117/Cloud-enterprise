@@ -31,6 +31,8 @@ public class DWventa implements Serializable {
 	@JoinColumn(name = "GestionVenta_id")
 	private DWgestionVenta gestionVenta;
 	
+	
+	
 	@Column(name = "CANTIDAD")
 	private Integer cantidad;
 

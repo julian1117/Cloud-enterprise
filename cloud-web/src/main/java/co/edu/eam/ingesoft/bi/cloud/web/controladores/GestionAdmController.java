@@ -15,6 +15,7 @@ import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Acceso;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
@@ -22,9 +23,11 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Paginas;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.TipoUsuario;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Usuario;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.DWGeneral;
+import co.edu.eam.ingesoft.bi.negocio.beans.DWVentaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.GestionAdmEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.RecursosHumanosEJB;
@@ -43,7 +46,7 @@ public class GestionAdmController implements Serializable {
 	private List<Object> listPaginas;
 
 	private List<Object> listaAc;
-
+	
 	private Integer codigoUsuario;
 
 	private Integer codigoPagina;
@@ -77,6 +80,32 @@ public class GestionAdmController implements Serializable {
 	private List<Auditoria> listaAuDW;
 
 	private List<Auditoria> listaTransformacion;
+	
+	private List<Venta> listaVentaDW;
+	
+	private List<Venta> listaTransVenta;
+	
+	
+
+	public List<Venta> getListaVentaDW() {
+		return listaVentaDW;
+	}
+
+	public void setListaVentaDW(List<Venta> listaVentaDW) {
+		this.listaVentaDW = listaVentaDW;
+	}
+
+	public List<Venta> getListaTransVenta() {
+		return listaTransVenta;
+	}
+
+	public void setListaTransVenta(List<Venta> listaTransVenta) {
+		this.listaTransVenta = listaTransVenta;
+	}
+
+	public void setListaTransformacion(List<Auditoria> listaTransformacion) {
+		this.listaTransformacion = listaTransformacion;
+	}
 
 	public List<Auditoria> getListaTransformacion() {
 		return listaTransformacion;
@@ -261,6 +290,9 @@ public class GestionAdmController implements Serializable {
 
 	@EJB
 	private DWGeneral dwGeneral;
+	
+	@EJB
+	private DWVentaEJB dwVenta;
 
 	@Inject
 	private RecursosHumanosController recursosH;
@@ -524,6 +556,17 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 
+	}
+	
+	public void extraccionVentaDW() {
+		try {
+			listaVentaDW = dwVenta.cargarDWventa();
+			registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
+			Messages.addFlashGlobalInfo("Carga exitosa");
+			
+		}catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
 	}
 
 }
