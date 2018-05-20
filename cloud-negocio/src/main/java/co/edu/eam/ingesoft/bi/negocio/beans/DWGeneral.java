@@ -53,11 +53,12 @@ public class DWGeneral {
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yyyy");
 			
 			
-			int dia = list.get(i).getFecha().get; int mes =
-			list.get(i).getFecha().getMonth(); int an =
-			list.get(i).getFecha().getYear()+1900;
+			int dia = list.get(i).getFecha().getDate(); 
+			int mes = list.get(i).getFecha().getMonth(); 
+			int an = list.get(i).getFecha().getYear()+1900;
 			
-			String fecha = dia + "-" + mes + "-" + an;			 
+			String fecha = dia + "-" + mes + "-" + an;
+			 
 			Date fech = formatter.parse(fecha);
 			 
 			nav = list.get(i).getNavegador().split(".0");
