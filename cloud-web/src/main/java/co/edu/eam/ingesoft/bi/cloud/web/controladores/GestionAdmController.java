@@ -89,6 +89,8 @@ public class GestionAdmController implements Serializable {
 	private Date fechaIni;
 	
 	private Date fechaFin;
+	
+	private int selecionDW;
 
 	public List<Venta> getListaVentaDW() {
 		return listaVentaDW;
@@ -297,6 +299,16 @@ public class GestionAdmController implements Serializable {
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
+	
+	public int getSelecionDW() {
+		return selecionDW;
+	}
+
+	public void setSelecionDW(int selecionDW) {
+		this.selecionDW = selecionDW;
+	}
+
+
 
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;

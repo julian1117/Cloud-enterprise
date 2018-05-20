@@ -14,6 +14,14 @@
 					<p:tab title="Cargar auditoria para DW">
 						<h:panelGrid id="paneldatos" columns="8">
 
+							<h:selectOneMenu id="tftDW"
+								value="#{gestionAdmController.selecionDW}" class="form-control">
+								<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+								<f:selectItem itemValue="1" itemLabel="Acumulacion" />
+								<f:selectItem itemValue="2" itemLabel="Rolling" />
+								<p:ajax update="tftFechaIni tftFechaFinn" />
+							</h:selectOneMenu>
+
 							<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
 								styleClass="buttonIni" process="@this" value="Cargar datos"
 								update="panelTab panelTablas" />
@@ -21,7 +29,7 @@
 							<p:outputLabel for="tftFechaIni" value="Fecha inicio" />
 							<h:inputText id="tftFechaIni" class="form-control"
 								value="#{gestionAdmController.fechaIni}" mode="inline"
-								a:placeholder="dia-mes-anio">
+								a:placeholder="dia-mes-anio" disabled="#{gestionAdmController.selecionDW == '1'}" >
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:inputText>
 							<p:message for="tftFechaIni" />
@@ -29,7 +37,7 @@
 							<p:outputLabel for="tftFechaFinn" value="Fecha inicio" />
 							<h:inputText id="tftFechaFinn" class="form-control"
 								value="#{gestionAdmController.fechaFin}" mode="inline"
-								a:placeholder="dia-mes-anio">
+								a:placeholder="dia-mes-anio" disabled="#{gestionAdmController.selecionDW == '1'}" >
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:inputText>
 							<p:message for="tftFechaFinn" />
