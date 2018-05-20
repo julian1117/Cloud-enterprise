@@ -20,7 +20,8 @@ import javax.persistence.TemporalType;
 
 @NamedQueries({
 	@NamedQuery(name = Auditoria.AUDITORIA, query = "SELECT a FROM Auditoria a"),
-	@NamedQuery(name = Auditoria.POR_AUDITORIA, query = "SELECT a FROM Auditoria a where a.nombre=?1")
+	@NamedQuery(name = Auditoria.POR_AUDITORIA, query = "SELECT a FROM Auditoria a where a.nombre=?1"),
+	@NamedQuery(name = Auditoria.POR_AUDITORIA_FECHA, query = "SELECT a FROM Auditoria a where a.fecha BETWEEN ?1 AND ?2")
 
 })
 public class Auditoria implements Serializable {
@@ -28,6 +29,8 @@ public class Auditoria implements Serializable {
 	public static final String AUDITORIA= "Auditoria.listAud";
 
 	public static final String POR_AUDITORIA = "Auditoria.listAudtoria";	
+	
+	public static final String POR_AUDITORIA_FECHA = "Auditoria.listAudtoriaFecha";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_SEQ")
