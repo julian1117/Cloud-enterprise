@@ -10,37 +10,74 @@
 		<h:form prependId="false">
 
 			<p:panel header="Definir base de datos a usar" id="panelTab">
-			
-			<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
-					styleClass="buttonIni" process="@this" value="Cargar datos"
-					update="panelTab panelTablas" />					
+				<p:accordionPanel>
+					<p:tab title="Cargar auditoria para DW">
 					
+					<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
+						styleClass="buttonIni" process="@this" value="Cargar datos"
+						update="panelTab panelTablas" />
+						<p:dataTable id="panelTablas"
+							value="#{gestionAdmController.listaAuDW}" var="doc" border="1"
+							class="table table-striped">
+
+							<p:column headerText="Nombre del modulo">
+								<h:outputLabel value="#{doc.nombre}" />
+							</p:column>
+							<p:column headerText="Accion">
+								<h:outputLabel value="#{doc.accion}" />
+							</p:column>
+
+							<p:column headerText="Fecha de registro">
+								<h:outputLabel value="#{doc.fecha}" />
+							</p:column>
+
+							<p:column headerText="Tipo de navegador">
+								<h:outputLabel value="#{doc.navegador}" />
+							</p:column>
+
+							<p:column headerText="Tipo de O.S.">
+								<h:outputLabel value="#{doc.origen}" />
+							</p:column>
+
+						</p:dataTable>
+						
+						<p:commandButton action="#{gestionAdmController.tranformarDatos}"
+						styleClass="buttonIni" process="@this" value="Transformar Datos"
+						update="panelTablasTransormado" />
+						
+					</p:tab>
+
+					<p:tab title="Transformacion de datos para DW">
+						<p:dataTable id="panelTablasTransormado"
+							value="#{gestionAdmController.listaTransformacion}" var="doc"
+							border="1" class="table table-striped">
+
+							<p:column headerText="Nombre del modulo">
+								<h:outputLabel value="#{doc.nombre}" />
+							</p:column>
+							<p:column headerText="Accion">
+								<h:outputLabel value="#{doc.accion}" />
+							</p:column>
+
+							<p:column headerText="Fecha de registro">
+								<h:outputLabel value="#{doc.fecha}" />
+							</p:column>
+
+							<p:column headerText="Tipo de navegador">
+								<h:outputLabel value="#{doc.navegador}" />
+							</p:column>
+
+							<p:column headerText="Tipo de O.S.">
+								<h:outputLabel value="#{doc.origen}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:tab>
+					<p:tab title="Enviar datos a DW">
+					</p:tab>
 					
-			<p:dataTable id="panelTablas"
-						value="#{gestionAdmController.listaAuDW}" var="doc"
-						border="1" class="table table-striped">
-
-						<p:column headerText="Nombre del modulo">
-							<h:outputLabel value="#{doc.nombre}" />
-						</p:column>
-						<p:column headerText="Accion">
-							<h:outputLabel value="#{doc.accion}" />
-						</p:column>
-
-						<p:column headerText="Fecha de registro">
-							<h:outputLabel value="#{doc.fecha}" />
-						</p:column>
-						
-						<p:column headerText="Tipo de navegador">
-							<h:outputLabel value="#{doc.navegador}" />
-						</p:column>
-						
-						<p:column headerText="Tipo de O.S.">
-							<h:outputLabel value="#{doc.origen}" />
-						</p:column>
-
-					</p:dataTable>					
-
+				</p:accordionPanel>
 			</p:panel>
 		</h:form>
 	</ui:define>

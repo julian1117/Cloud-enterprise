@@ -1,6 +1,9 @@
 package co.edu.eam.ingesoft.bi.cloud.web.controladores;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -70,8 +73,14 @@ public class GestionAdmController implements Serializable {
 	private List<Object> listArea;
 
 	private Integer valorbd;
-	
+
 	private List<Auditoria> listaAuDW;
+
+	private List<Auditoria> listaTransformacion;
+
+	public List<Auditoria> getListaTransformacion() {
+		return listaTransformacion;
+	}
 
 	public List<Object> getListUsuarioInact() {
 		return listUsuarioInact;
@@ -231,8 +240,8 @@ public class GestionAdmController implements Serializable {
 
 	public void setValorbd(Integer valorbd) {
 		this.valorbd = valorbd;
-	}	
-	
+	}
+
 	public List<Auditoria> getListaAuDW() {
 		return listaAuDW;
 	}
@@ -480,7 +489,7 @@ public class GestionAdmController implements Serializable {
 
 	}
 
-	public void eliminarPXU(Acceso acceso) {	
+	public void eliminarPXU(Acceso acceso) {
 		registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
 	}
 
@@ -495,17 +504,26 @@ public class GestionAdmController implements Serializable {
 		}
 	}
 
-	
-
 	public void trasladarAudDW() {
 		try {
 			listaAuDW = dwGeneral.cargarDWAuditoria();
-			registrarAuditoria("Trasladar DW", "Cargar datos", "N/A");
-			Messages.addFlashGlobalInfo("Traslado exitoso");
+			registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
+			Messages.addFlashGlobalInfo("Carga exitosa");
 
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
+	}
+
+	public void tranformarDatos() {
+		try {
+			listaTransformacion = dwGeneral.transformacionAuditoria(sesion.getBd());
+			registrarAuditoria("Transformar DW", "Transformar datos", "N/A");
+			Messages.addFlashGlobalInfo("Transformacion exitosa");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+
 	}
 
 }
