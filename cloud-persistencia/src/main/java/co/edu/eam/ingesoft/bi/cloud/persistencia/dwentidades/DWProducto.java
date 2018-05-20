@@ -25,9 +25,6 @@ public class DWProducto implements Serializable{
 	@Column(name="descripcion")
 	private String descirpcion;	
 	
-	@Column(name="codigoLote")
-	private Integer codigoLote;
-	
 	@Column(name="valor")
 	private double valor;
 
@@ -35,13 +32,12 @@ public class DWProducto implements Serializable{
 		super();
 	}
 
-	public DWProducto(Integer id, String nombre, String descirpcion, Integer codigoLote, 
+	public DWProducto(Integer id, String nombre, String descirpcion, 
 			double valor) {
 		super();
 		this.idProducto = id;
 		this.nombre = nombre;
 		this.descirpcion = descirpcion;
-		this.codigoLote = codigoLote;
 		this.valor = valor;
 	}
 
@@ -71,14 +67,6 @@ public class DWProducto implements Serializable{
 
 	public void setDescirpcion(String descirpcion) {
 		this.descirpcion = descirpcion;
-	}
-
-	public Integer getCodigoLote() {
-		return codigoLote;
-	}
-
-	public void setCodigoLote(Integer codigoLote) {
-		this.codigoLote = codigoLote;
 	}
 
 

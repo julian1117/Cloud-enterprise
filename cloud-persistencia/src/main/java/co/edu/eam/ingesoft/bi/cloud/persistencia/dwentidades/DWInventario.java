@@ -35,11 +35,6 @@ public class DWInventario implements Serializable{
 	@ManyToOne
 	@JoinColumn(name="producto")
 	private DWProducto producto;
-	
-	
-	@ManyToOne
-	@JoinColumn(name="persona_Id")
-	private DWempleado idPersona;	
 
 	public DWInventario() {
 		super();
@@ -52,7 +47,6 @@ public class DWInventario implements Serializable{
 		this.cantidad = cantidad;
 		this.fechaIngreso = fechaIngreso;
 		this.producto = producto;
-		this.idPersona = idPersona;
 	}
 
 	public Integer getIdInventario() {
@@ -85,14 +79,6 @@ public class DWInventario implements Serializable{
 
 	public void setProducto(DWProducto producto) {
 		this.producto = producto;
-	}
-
-	public DWempleado getIdPersona() {
-		return idPersona;
-	}
-
-	public void setIdPersona(DWempleado idPersona) {
-		this.idPersona = idPersona;
 	}
 
 	@Override

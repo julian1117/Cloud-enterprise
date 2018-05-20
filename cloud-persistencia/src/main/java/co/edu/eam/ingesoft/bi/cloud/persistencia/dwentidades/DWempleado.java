@@ -34,25 +34,16 @@ public class DWempleado implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	
-	@ManyToOne
-	@JoinColumn(name="AreaEmpresa_id")
-	private DWareaEmpresa area;
-	
-	@ManyToOne
-	@JoinColumn(name="Cargo_id")
-	private DWcargo cargo;
 
 	public DWempleado() {
 		super();
 	}
 
-	public DWempleado(DWpersona idPersona, double salario, Date fechaIngreso, DWareaEmpresa area, DWcargo cargo) {
+	public DWempleado(DWpersona idPersona, double salario, Date fechaIngreso) {
 		super();
 		this.idPersona = idPersona;
 		this.salario = salario;
 		this.fechaIngreso = fechaIngreso;
-		this.area = area;
-		this.cargo = cargo;
 	}
 
 	
@@ -79,22 +70,6 @@ public class DWempleado implements Serializable {
 
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
-	}
-
-	public DWareaEmpresa getArea() {
-		return area;
-	}
-
-	public void setArea(DWareaEmpresa area) {
-		this.area = area;
-	}
-
-	public DWcargo getCargo() {
-		return cargo;
-	}
-
-	public void setCargo(DWcargo cargo) {
-		this.cargo = cargo;
 	}
 
 	@Override

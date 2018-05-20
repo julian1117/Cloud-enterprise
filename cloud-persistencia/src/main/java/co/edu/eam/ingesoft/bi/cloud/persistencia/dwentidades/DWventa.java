@@ -31,7 +31,13 @@ public class DWventa implements Serializable {
 	@JoinColumn(name = "GestionVenta_id")
 	private DWgestionVenta gestionVenta;
 	
+	@ManyToOne
+	@JoinColumn(name = "empleado_id")
+	private DWempleado empleado;
 	
+	@ManyToOne
+	@JoinColumn(name = "persona_id")
+	private DWpersona persona;
 	
 	@Column(name = "CANTIDAD")
 	private Integer cantidad;

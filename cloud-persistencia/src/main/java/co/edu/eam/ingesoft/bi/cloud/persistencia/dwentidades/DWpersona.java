@@ -32,21 +32,17 @@ public class DWpersona  implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
-	@ManyToOne
-	@JoinColumn(name="Genero_id",nullable=false)
-	private DWgenero genero;
 
 	public DWpersona() {
 		super();
 	}
 
-	public DWpersona(Integer cedula, String nombre, String apellido, Date fechaNacimiento, DWgenero genero) {
+	public DWpersona(Integer cedula, String nombre, String apellido, Date fechaNacimiento) {
 		super();
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.fechaNacimiento = fechaNacimiento;
-		this.genero = genero;
 	}
 
 	public Integer getCedula() {
@@ -79,14 +75,6 @@ public class DWpersona  implements Serializable{
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public DWgenero getGenero() {
-		return genero;
-	}
-
-	public void setGenero(DWgenero genero) {
-		this.genero = genero;
 	}
 
 	@Override

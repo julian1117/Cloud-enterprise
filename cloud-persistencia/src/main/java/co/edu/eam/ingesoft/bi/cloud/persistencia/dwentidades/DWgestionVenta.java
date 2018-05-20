@@ -25,25 +25,15 @@ public class DWgestionVenta implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha")
 	private Date fecha;
-	
-	@ManyToOne
-	@JoinColumn(name="Empleado_cedula")
-	private DWempleado empleado;
-	
-	@ManyToOne
-	@JoinColumn(name="Persona_cedula")
-	private DWpersona persona;
 
 	public DWgestionVenta() {
 		super();
 	}
 
-	public DWgestionVenta(Integer idFactura, Date fecha, DWempleado empleado, DWpersona persona) {
+	public DWgestionVenta(Integer idFactura, Date fecha) {
 		super();
 		this.idFactura = idFactura;
 		this.fecha = fecha;
-		this.empleado = empleado;
-		this.persona = persona;
 	}
 
 	public Integer getIdFactura() {
@@ -62,22 +52,7 @@ public class DWgestionVenta implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public DWempleado getEmpleado() {
-		return empleado;
-	}
-
-	public void setEmpleado(DWempleado empleado) {
-		this.empleado = empleado;
-	}
-
-	public DWpersona getPersona() {
-		return persona;
-	}
-
-	public void setPersona(DWpersona persona) {
-		this.persona = persona;
-	}
-
+	
 	
 
 	@Override
