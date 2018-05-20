@@ -56,6 +56,44 @@
 
 						</p:dataTable>
 						
+						<p:commandButton action="#{gestionAdmController.tranformarDatosVenta}"
+						styleClass="buttonIni" process="@this" value="Transformar Datos"
+						update="panelTablasTransormado" />
+						
+						
+					</p:tab>
+					
+					<p:tab title="Transformacion de datos para DW">
+						
+						<p:dataTable id="panelTablasTransormado"
+							value="#{gestionAdmController.listaTransVenta}" var="doc" border="1"
+							class="table table-striped">
+
+							<p:column headerText="Nombre completo del empleado">
+								<h:outputLabel value="#{doc.empleado.idPersona.nombreCompleto}" />
+							</p:column>					
+							
+							<p:column headerText="Nombre completo del cliente">
+								<h:outputLabel value="#{doc.persona.nombreCompleto} " />
+							</p:column>
+							 
+							<p:column headerText="Numero de factura">
+								<h:outputLabel value="#{doc.gestionVenta.idFactura}" />
+							</p:column>
+
+							<p:column headerText="Fecha de venta">
+								<h:outputLabel value="#{doc.gestionVenta.fecha}" />
+							</p:column>
+
+							<p:column headerText="Producto">
+								<h:outputLabel value="#{doc.inventario.producto.nombre}" />
+							</p:column>
+
+							<p:column headerText="Cantidad vendida">
+								<h:outputLabel value="#{doc.cantidad}" />
+							</p:column> 
+
+						</p:dataTable>
 						
 						
 					</p:tab>

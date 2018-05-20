@@ -39,9 +39,6 @@ public class DWventa implements Serializable {
 	@JoinColumn(name = "persona_id")
 	private DWpersona persona;
 	
-	@ManyToOne
-	@JoinColumn(name = "producto_id")
-	private DWProducto producto;
 	
 	@Column(name = "CANTIDAD")
 	private Integer cantidad;
@@ -53,13 +50,12 @@ public class DWventa implements Serializable {
 	
 
 	public DWventa(DWInventario inventario, DWgestionVenta gestionVenta, DWempleado empleado, DWpersona persona,
-			DWProducto producto, Integer cantidad) {
+			Integer cantidad) {
 		super();
 		this.inventario = inventario;
 		this.gestionVenta = gestionVenta;
 		this.empleado = empleado;
 		this.persona = persona;
-		this.producto = producto;
 		this.cantidad = cantidad;
 	}
 
@@ -112,20 +108,6 @@ public class DWventa implements Serializable {
 	public void setPersona(DWpersona persona) {
 		this.persona = persona;
 	}
-
-
-
-	public DWProducto getProducto() {
-		return producto;
-	}
-
-
-
-	public void setProducto(DWProducto producto) {
-		this.producto = producto;
-	}
-
-
 
 	@Override
 	public int hashCode() {

@@ -84,7 +84,7 @@ public class GestionAdmController implements Serializable {
 
 	private List<Venta> listaVentaDW;
 
-	private List<Venta> listaTransVenta;
+	private List<DWventa> listaTransVenta;
 	
 	private Date fechaIni;
 	
@@ -100,11 +100,11 @@ public class GestionAdmController implements Serializable {
 		this.listaVentaDW = listaVentaDW;
 	}
 
-	public List<Venta> getListaTransVenta() {
+	public List<DWventa> getListaTransVenta() {
 		return listaTransVenta;
 	}
 
-	public void setListaTransVenta(List<Venta> listaTransVenta) {
+	public void setListaTransVenta(List<DWventa> listaTransVenta) {
 		this.listaTransVenta = listaTransVenta;
 	}
 
@@ -599,6 +599,19 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
+	
+	public void tranformarDatosVenta() {
+		try {
+			listaTransVenta = dwVenta.tranformacionVenta(sesion.getBd());
+			registrarAuditoria("Transformar venta DW", "Transformar datos", "N/A");
+			Messages.addFlashGlobalInfo("Transformacion exitosa");
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+
+	}
+	
+	
 
 	public void enviarDW() {
 		try {

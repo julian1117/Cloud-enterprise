@@ -34,15 +34,15 @@ public class DWInventario implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	
-	
-	@Column(name="producto")
-	private String producto;
+	@ManyToOne
+	@JoinColumn(name="producto")
+	private DWProducto producto;
 
 	public DWInventario() {
 		super();
 	}
 
-	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngreso, String producto,
+	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngreso, DWProducto producto,
 			DWempleado idPersona) {
 		super();
 		this.idInventario = idInventario;
@@ -75,11 +75,11 @@ public class DWInventario implements Serializable{
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public String getProducto() {
+	public DWProducto getProducto() {
 		return producto;
 	}
 
-	public void setProducto(String producto) {
+	public void setProducto(DWProducto producto) {
 		this.producto = producto;
 	}
 

@@ -37,6 +37,7 @@ public class DWpersona  implements Serializable{
 		super();
 	}
 
+
 	public DWpersona(Integer cedula, String nombreCompleto, Date fechaNacimiento, String genero) {
 		super();
 		this.cedula = cedula;
@@ -45,49 +46,46 @@ public class DWpersona  implements Serializable{
 		this.genero = genero;
 	}
 
+
 	public Integer getCedula() {
 		return cedula;
 	}
+
 
 	public void setCedula(Integer cedula) {
 		this.cedula = cedula;
 	}
 
-	public String getNombre() {
-		return nombreCompleto;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombreCompleto = nombre;
-	}
-
-	
-
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
-	
-	
 
 	public String getNombreCompleto() {
 		return nombreCompleto;
 	}
 
+
 	public void setNombreCompleto(String nombreCompleto) {
 		this.nombreCompleto = nombreCompleto;
 	}
+
+
+	public Date getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
 
 	public String getGenero() {
 		return genero;
 	}
 
+
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -96,6 +94,7 @@ public class DWpersona  implements Serializable{
 		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -113,6 +112,8 @@ public class DWpersona  implements Serializable{
 			return false;
 		return true;
 	}
+
+	
 
 	
 
