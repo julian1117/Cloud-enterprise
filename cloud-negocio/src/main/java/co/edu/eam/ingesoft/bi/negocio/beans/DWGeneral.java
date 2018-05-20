@@ -69,6 +69,8 @@ public class DWGeneral {
 			au.setOrigen(list.get(i).getOrigen());
 			au.setAccion(list.get(i).getAccion());
 			au.setNombre(list.get(i).getNombre());
+			au.setUsuarioSe(list.get(i).getUsuarioSe());
+			au.setUsuarioAfectado(list.get(i).getUsuarioAfectado());
 
 			listaTransformacion.add(au);
 
@@ -76,6 +78,10 @@ public class DWGeneral {
 		return listaTransformacion;
 	}
 	
+	/**
+	 * Enviar datos transformados al dw
+	 * @throws ParseException
+	 */
 	public void enviarTransformacionDatos() throws ParseException{
 		for(int i=0;i<listaTransformacion.size();i++) {
 			em.editarDW(listaTransformacion.get(i));
