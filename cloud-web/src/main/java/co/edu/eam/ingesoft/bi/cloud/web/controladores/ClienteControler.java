@@ -245,11 +245,13 @@ public class ClienteControler implements Serializable {
 	}
 
 	public void crearCliente() {
+		
+		Messages.addFlashGlobalInfo("hola");
 		try {
 			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
 			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
 
-			Messages.addFlashGlobalInfo(buscarGenero.getGenero() + "");
+			Messages.addFlashGlobalInfo(buscarCiudad + "hola");
 			
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
