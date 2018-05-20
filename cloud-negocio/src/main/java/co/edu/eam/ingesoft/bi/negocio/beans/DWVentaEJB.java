@@ -26,10 +26,13 @@ public class DWVentaEJB {
 	private Conexion em;
 
 	public static List<DWventa> listaVenta;
+	
+	public static List<Venta> list;
 
 	public List<Venta> cargarDWventa() {
 		em.setBd(1);
-		return (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
+		list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
+		return list; 
 	}
 
 	public List<DWventa> tranformacionVenta(int bd) {
@@ -37,18 +40,20 @@ public class DWVentaEJB {
 		listaVenta = new ArrayList<DWventa>();
 		em.setBd(bd);
 
-		List<Venta> list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
+		list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
 
 		for (int i = 0; i < list.size(); i++) {
 
 			DWgestionVenta gestion = new DWgestionVenta();
 			gestion.setIdFactura(list.get(i).getGestionVenta().getIdFactura());
 			gestion.setFecha(list.get(i).getGestionVenta().getFecha());
+			
 
 			DWProducto producto = new DWProducto();
 			producto.setNombre(list.get(i).getInventario().getProducto().getNombre());
 			producto.setDescirpcion(list.get(i).getInventario().getProducto().getDescirpcion());
 			producto.setValor(list.get(i).getInventario().getProducto().getValor());
+			
 
 			
 			DWInventario inv = new DWInventario();
@@ -62,8 +67,9 @@ public class DWVentaEJB {
 					+" " + list.get(i).getGestionVenta().getPersona().getApellido());
 			
 			Date fechaActual = new Date();
-			String fecha = list.get(i).getGestionVenta().getPersona().getFechaNacimiento().toString();			
-			int edad = Integer.parseInt(fechaActual.toString()) - Integer.parseInt(fecha); 
+			int fecha = list.get(i).getGestionVenta().getPersona().getFechaNacimiento().getYear();			
+			int edad = fechaActual.getYear() - fecha; 
+			
 			
 			persona.setFechaNacimiento(String.valueOf(edad));
 			persona.setGenero(list.get(i).getGestionVenta().getPersona().getGenero().getGenero());
@@ -73,8 +79,9 @@ public class DWVentaEJB {
 					+ " " + list.get(i).getInventario().getIdPersona().getIdPersona().getApellido());
 			
 			Date fechaActualEm = new Date();
-			String fechaEm = list.get(i).getInventario().getIdPersona().getIdPersona().getFechaNacimiento().toString();			
-			int edadEm = Integer.parseInt(fechaActualEm.toString()) - Integer.parseInt(fechaEm); 
+			int fechaEm = list.get(i).getInventario().getIdPersona().getIdPersona().getFechaNacimiento().getYear();			
+			int edadEm = fechaActualEm.getYear() - fechaEm; 
+			
 			
 			perEmp.setFechaNacimiento(String.valueOf(edadEm));
 			perEmp.setGenero(list.get(i).getInventario().getIdPersona().getIdPersona().getGenero().getGenero());
@@ -85,6 +92,7 @@ public class DWVentaEJB {
 			empleado.setIdPersona(perEmp);
 			empleado.setFechaIngreso(list.get(i).getGestionVenta().getEmpleado().getFechaIngreso());
 			empleado.setSalario(list.get(i).getGestionVenta().getEmpleado().getSalario());
+			
 
 			
 			DWventa ve = new DWventa();
