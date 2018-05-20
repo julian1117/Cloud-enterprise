@@ -8,18 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.AreaEmpresa;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Cargo;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Empleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 
 @Entity
 @Table(name="DW_EMPLEADO")
 public class DWempleado implements Serializable {
-	
+		
 	@Id
 	@ManyToOne
 	@JoinColumn(name="persona_Id")

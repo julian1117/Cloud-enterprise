@@ -19,15 +19,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="DWInventario")
-@NamedQueries({
-	@NamedQuery(name=DWInventario.LISTA_InventarioS,query="SELECT m FROM Inventario m"),
-	//@NamedQuery(name=Inventario.LISTA_PRODUCTO_INVENTARIO,query="SELECT p.nombre FROM Inventario m INNER JOIN Producto p")
-})
 public class DWInventario implements Serializable{
 	
-	public static final String LISTA_InventarioS = "Inventario.listaInventario";
-	public static final String LISTA_PRODUCTO_INVENTARIO ="Inventario.listaInv";
-	
+
 	@Id@Column(name="id")
 	private Integer idInventario;
 	
