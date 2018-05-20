@@ -1,6 +1,8 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -53,15 +55,31 @@ public class DWVentaEJB {
 			inv.setCantidad(list.get(i).getInventario().getCantidad());
 			inv.setFechaIngreso(list.get(i).getInventario().getFechaIngreso());
 			inv.setProducto(producto);
-
+			
 			DWpersona persona = new DWpersona();
 			persona.setCedula(list.get(i).getGestionVenta().getPersona().getCedula());
 			persona.setNombreCompleto(list.get(i).getGestionVenta().getPersona().getNombre()
 					+" " + list.get(i).getGestionVenta().getPersona().getApellido());
 			
+			Date fechaActual = new Date();
+			String fecha = list.get(i).getGestionVenta().getPersona().getFechaNacimiento().toString();			
+			int edad = Integer.parseInt(fechaActual.toString()) - Integer.parseInt(fecha); 
+			
+			persona.setFechaNacimiento(String.valueOf(edad));
+			persona.setGenero(list.get(i).getGestionVenta().getPersona().getGenero().getGenero());
+			
 			DWpersona perEmp = new DWpersona();
 			perEmp.setNombreCompleto(list.get(i).getInventario().getIdPersona().getIdPersona().getNombre()
 					+ " " + list.get(i).getInventario().getIdPersona().getIdPersona().getApellido());
+			
+			Date fechaActualEm = new Date();
+			String fechaEm = list.get(i).getInventario().getIdPersona().getIdPersona().getFechaNacimiento().toString();			
+			int edadEm = Integer.parseInt(fechaActualEm.toString()) - Integer.parseInt(fechaEm); 
+			
+			perEmp.setFechaNacimiento(String.valueOf(edadEm));
+			perEmp.setGenero(list.get(i).getInventario().getIdPersona().getIdPersona().getGenero().getGenero());
+			perEmp.setCedula(list.get(i).getInventario().getIdPersona().getIdPersona().getCedula());
+			
 			
 			DWempleado empleado = new DWempleado();
 			empleado.setIdPersona(perEmp);

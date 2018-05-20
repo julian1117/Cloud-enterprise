@@ -26,8 +26,7 @@ public class DWpersona  implements Serializable{
 	private String nombreCompleto;
 	
 	@Column(name="fechaNacimiento",nullable=false)
-	@Temporal(TemporalType.DATE)
-	private Date fechaNacimiento;
+	private String fechaNacimiento;
 	
 	@Column(name="genero",nullable=false)
 	private String genero;
@@ -38,7 +37,7 @@ public class DWpersona  implements Serializable{
 	}
 
 
-	public DWpersona(Integer cedula, String nombreCompleto, Date fechaNacimiento, String genero) {
+	public DWpersona(Integer cedula, String nombreCompleto, String fechaNacimiento, String genero) {
 		super();
 		this.cedula = cedula;
 		this.nombreCompleto = nombreCompleto;
@@ -67,12 +66,12 @@ public class DWpersona  implements Serializable{
 	}
 
 
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
