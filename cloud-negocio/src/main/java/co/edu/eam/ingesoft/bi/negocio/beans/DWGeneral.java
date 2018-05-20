@@ -47,10 +47,12 @@ public class DWGeneral {
 	 * @return
 	 */
 	public List<Auditoria> cargarDWAuditoriaAcumulacion(Date fechaIni, Date fechaFin) {
-		System.out.println(fechaIni + " " +fechaFin +"------------------------------------------------------------------");
+		System.out.println(
+				fechaIni + " " + fechaFin + "------------------------------------------------------------------");
 		if (fechaIni.getDate() <= fechaFin.getDate()) {
 			em.setBd(1);
-			list = (List<Auditoria>) (Object) em.listarConDosParametros(Auditoria.POR_AUDITORIA_FECHA, fechaIni,fechaFin);
+			list = (List<Auditoria>) (Object) em.listarConDosParametros(Auditoria.POR_AUDITORIA_FECHA, fechaIni,
+					fechaFin);
 			return list;
 		}
 		return null;
@@ -67,7 +69,7 @@ public class DWGeneral {
 
 		listaTransformacion = new ArrayList<DWauditoria>();
 
-		list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
+		// list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
 
 		String[] nav = new String[5];
 		String[] dat = new String[2];
@@ -101,9 +103,15 @@ public class DWGeneral {
 	 * 
 	 * @throws ParseException
 	 */
-	public void enviarTransformacionDatos() throws ParseException {
-		for (int i = 0; i < listaTransformacion.size(); i++) {
-			em.editarDW(listaTransformacion.get(i));
+	public void enviarTransformacionDatos(int dw) throws ParseException {
+		if (dw == 1) {
+			for (int i = 0; i < listaTransformacion.size(); i++) {
+				em.editarDW(listaTransformacion.get(i));
+			}
+		} else if (dw == 2) {
+			for (int i = 0; i < listaTransformacion.size(); i++) {
+				em.editarDW(listaTransformacion.get(i));
+			}
 		}
 	}
 
