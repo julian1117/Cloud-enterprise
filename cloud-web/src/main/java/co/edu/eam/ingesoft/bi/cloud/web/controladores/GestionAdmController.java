@@ -619,6 +619,17 @@ public class GestionAdmController implements Serializable {
 		}
 
 	}
+	
+	public void enviarDatosVenta() {
+		try {
+			dwVenta.enviarTransformacionDatosVenta();
+			registrarAuditoria("Envio ventas DW", "Crear auditoria DW", "N/A");
+			Messages.addFlashGlobalInfo("Envio con éxito");
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 	public void enviarDW() {
 		try {
