@@ -1,6 +1,7 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,6 +109,12 @@ public class DWVentaEJB {
 		}
 		return listaVenta;
 
+	}
+	
+	public void enviarTransformacionDatosVenta() throws ParseException {
+		for (int i = 0; i < listaVenta.size(); i++) {
+			em.editarDWVenta(listaVenta.get(i));
+		}
 	}
 
 }

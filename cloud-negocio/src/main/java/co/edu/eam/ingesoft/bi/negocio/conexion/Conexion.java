@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWauditoria;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @LocalBean
@@ -268,5 +269,14 @@ public class Conexion implements Serializable {
 		//}
 					
 	}
+	
+public void editarDWVenta(DWventa objeto){
+		
+		//if(this.bd==3) {
+			emM.persist(objeto);
+		//}
+					
+	}
+	
 	
 }
