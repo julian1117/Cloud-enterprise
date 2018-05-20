@@ -13,10 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="DWProducto")
-@NamedQuery(name=DWProducto.LISTA_PRODUCTO, query="SELECT p FROM Producto p ")
 public class DWProducto implements Serializable{
-	
-	public static final  String LISTA_PRODUCTO = "Producto.listaProductoo";
 	
 	@Id
 	@Column(name="id")
@@ -58,9 +55,7 @@ public class DWProducto implements Serializable{
 		this.idProducto = idProducto;
 	}
 
-	public static String getListaProducto() {
-		return LISTA_PRODUCTO;
-	}
+	
 
 	public String getNombre() {
 		return nombre;

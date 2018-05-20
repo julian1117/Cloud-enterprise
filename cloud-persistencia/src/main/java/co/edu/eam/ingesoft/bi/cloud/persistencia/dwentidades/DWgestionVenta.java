@@ -15,10 +15,8 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="DWGestionVenta")
-@NamedQuery(name=DWgestionVenta.LISTAR_FACTURA, query="SELECT g from GestionVenta g")
 public class DWgestionVenta implements Serializable {
 	
-	public static final  String LISTAR_FACTURA = "GestionVenta.listaFacturaa";
 
 	@Id
 	@Column(name="id")
@@ -80,9 +78,7 @@ public class DWgestionVenta implements Serializable {
 		this.persona = persona;
 	}
 
-	public static String getListarFactura() {
-		return LISTAR_FACTURA;
-	}
+	
 
 	@Override
 	public int hashCode() {

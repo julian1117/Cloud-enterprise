@@ -19,11 +19,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @IdClass(DWVentaPK.class)
 @Table(name="DWVenta")
-@NamedQuery(name=DWventa.LISTA_VENT,query="select V from Venta V")
 public class DWventa implements Serializable {
 	
-	public static final  String LISTA_VENT = "Venta:listVenta";
-
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "Inventario_id")
@@ -72,9 +69,6 @@ public class DWventa implements Serializable {
 		this.cantidad = cantidad;
 	}
 
-	public static String getListaVent() {
-		return LISTA_VENT;
-	}
 
 	@Override
 	public int hashCode() {
