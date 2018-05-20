@@ -47,7 +47,7 @@ public class GestionAdmController implements Serializable {
 	private List<Object> listPaginas;
 
 	private List<Object> listaAc;
-	
+
 	private Integer codigoUsuario;
 
 	private Integer codigoPagina;
@@ -81,12 +81,14 @@ public class GestionAdmController implements Serializable {
 	private List<Auditoria> listaAuDW;
 
 	private List<DWauditoria> listaTransformacion;
-	
+
 	private List<Venta> listaVentaDW;
-	
+
 	private List<Venta> listaTransVenta;
 	
+	private Date fechaIni;
 	
+	private Date fechaFin;
 
 	public List<Venta> getListaVentaDW() {
 		return listaVentaDW;
@@ -280,6 +282,22 @@ public class GestionAdmController implements Serializable {
 		this.listaAuDW = listaAuDW;
 	}
 
+	public Date getFechaIni() {
+		return fechaIni;
+	}
+
+	public void setFechaIni(Date fechaIni) {
+		this.fechaIni = fechaIni;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
 
@@ -291,7 +309,7 @@ public class GestionAdmController implements Serializable {
 
 	@EJB
 	private DWGeneral dwGeneral;
-	
+
 	@EJB
 	private DWVentaEJB dwVenta;
 
@@ -558,14 +576,25 @@ public class GestionAdmController implements Serializable {
 		}
 
 	}
-	
+
 	public void extraccionVentaDW() {
 		try {
 			listaVentaDW = dwVenta.cargarDWventa();
 			registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
 			Messages.addFlashGlobalInfo("Carga exitosa");
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
+
+	public void enviarDW() {
+		try {
+			dwGeneral.enviarTransformacionDatos();
+			registrarAuditoria("Envio auditoria DW", "Crear auditoria DW", "N/A");
+			Messages.addFlashGlobalInfo("Envio con éxito");
+
+		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}

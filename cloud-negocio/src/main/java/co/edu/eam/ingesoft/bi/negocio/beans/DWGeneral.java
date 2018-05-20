@@ -38,6 +38,12 @@ public class DWGeneral {
 		return (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
 	}
 
+	/**
+	 * Transformacion de datos
+	 * @param bd
+	 * @return
+	 * @throws ParseException
+	 */
 	public List<DWauditoria> transformacionAuditoria(int bd) throws ParseException {
 
 		listaTransformacion = new ArrayList<DWauditoria>();
@@ -48,9 +54,7 @@ public class DWGeneral {
 		String[] nav = new String[5];
 		String[] dat = new String[2];
 
-
 		for (int i = 0; i < list.size(); i++) {
-
 			
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			//paso date a String
@@ -58,9 +62,7 @@ public class DWGeneral {
 			
 			nav = list.get(i).getNavegador().split(".0");
 			dat = fecha.split(" ");
-			
-			System.out.println(dat[0]+"-------------------------------------------------------");	    
-			
+						
 			DWauditoria au = new DWauditoria();
 			au.setNavegador(nav[0]);
 			au.setFecha(dat[0]);
@@ -71,9 +73,13 @@ public class DWGeneral {
 			listaTransformacion.add(au);
 
 		}
-
 		return listaTransformacion;
-
+	}
+	
+	public void enviarTransformacionDatos() throws ParseException{
+		for(int i=0;i<listaTransformacion.size();i++) {
+			em.editarDW(listaTransformacion.get(i));
+		}
 	}
 
 }

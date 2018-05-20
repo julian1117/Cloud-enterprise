@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWauditoria;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
 
 @LocalBean
@@ -236,10 +237,10 @@ public class Conexion implements Serializable {
 	/**
 	 * Guarda en la base de datos
 	 */
-	public void editarDW(Object objeto){
+	public void editarDW(DWauditoria objeto){
 		
 		//if(this.bd==3) {
-			emM.merge(objeto);
+			emM.persist(objeto);
 		//}
 					
 	}
