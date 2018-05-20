@@ -632,7 +632,7 @@ public class GestionAdmController implements Serializable {
 
 	public void enviarDW() {
 		try {
-			dwGeneral.enviarTransformacionDatos();
+			dwGeneral.enviarTransformacionDatos(selecionDW);
 			registrarAuditoria("Envio auditoria DW", "Crear auditoria DW", "N/A");
 			Messages.addFlashGlobalInfo("Envio con éxito");
 
