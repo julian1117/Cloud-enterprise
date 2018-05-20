@@ -23,26 +23,26 @@ public class DWpersona  implements Serializable{
 	private Integer cedula;
 	
 	@Column(name="nombre",nullable=false,length=30)
-	private String nombre;
-	
-	@Column(name="apellido",nullable=false,length=30)
-	private String apellido;
+	private String nombreCompleto;
 	
 	@Column(name="fechaNacimiento",nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
+	
+	@Column(name="genero",nullable=false)
+	private String genero;
 	
 
 	public DWpersona() {
 		super();
 	}
 
-	public DWpersona(Integer cedula, String nombre, String apellido, Date fechaNacimiento) {
+	public DWpersona(Integer cedula, String nombreCompleto, Date fechaNacimiento, String genero) {
 		super();
 		this.cedula = cedula;
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.nombreCompleto = nombreCompleto;
 		this.fechaNacimiento = fechaNacimiento;
+		this.genero = genero;
 	}
 
 	public Integer getCedula() {
@@ -54,20 +54,14 @@ public class DWpersona  implements Serializable{
 	}
 
 	public String getNombre() {
-		return nombre;
+		return nombreCompleto;
 	}
 
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		this.nombreCompleto = nombre;
 	}
 
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+	
 
 	public Date getFechaNacimiento() {
 		return fechaNacimiento;
@@ -75,6 +69,24 @@ public class DWpersona  implements Serializable{
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+	
+	
+
+	public String getNombreCompleto() {
+		return nombreCompleto;
+	}
+
+	public void setNombreCompleto(String nombreCompleto) {
+		this.nombreCompleto = nombreCompleto;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
 	}
 
 	@Override

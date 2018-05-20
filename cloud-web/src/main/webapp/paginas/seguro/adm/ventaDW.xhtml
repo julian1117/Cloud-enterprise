@@ -26,8 +26,20 @@
 								<h:outputLabel value="#{doc.inventario.idPersona.idPersona.nombre}" />
 							</p:column>
 							
+							<p:column headerText="Apellido del empleado">
+								<h:outputLabel value="#{doc.inventario.idPersona.idPersona.apellido}" />
+							</p:column>
+							
 							<p:column headerText="Nombre del cliente">
 								<h:outputLabel value="#{doc.gestionVenta.persona.nombre}" />
+							</p:column>
+							
+							<p:column headerText="Apellido del cliente">
+								<h:outputLabel value="#{doc.gestionVenta.persona.apellido}" />
+							</p:column>
+							
+							<p:column headerText="Numero de factura">
+								<h:outputLabel value="#{doc.gestionVenta.idFactura}" />
 							</p:column>
 
 							<p:column headerText="Fecha de venta">

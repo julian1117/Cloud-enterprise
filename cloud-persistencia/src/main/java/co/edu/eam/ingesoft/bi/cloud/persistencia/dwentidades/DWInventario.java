@@ -22,7 +22,9 @@ import javax.persistence.TemporalType;
 public class DWInventario implements Serializable{
 	
 
-	@Id@Column(name="id")
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private Integer idInventario;
 	
 	@Column(name="cantidad")
@@ -32,15 +34,15 @@ public class DWInventario implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	
-	@ManyToOne
-	@JoinColumn(name="producto")
-	private DWProducto producto;
+	
+	@Column(name="producto")
+	private String producto;
 
 	public DWInventario() {
 		super();
 	}
 
-	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngreso, DWProducto producto,
+	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngreso, String producto,
 			DWempleado idPersona) {
 		super();
 		this.idInventario = idInventario;
@@ -73,11 +75,11 @@ public class DWInventario implements Serializable{
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public DWProducto getProducto() {
+	public String getProducto() {
 		return producto;
 	}
 
-	public void setProducto(DWProducto producto) {
+	public void setProducto(String producto) {
 		this.producto = producto;
 	}
 
