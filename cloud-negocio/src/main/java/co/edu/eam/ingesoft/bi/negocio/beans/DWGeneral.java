@@ -26,20 +26,38 @@ public class DWGeneral {
 	@EJB
 	private Conexion em;
 
+	public static List<Auditoria> list;
+
 	public static List<DWauditoria> listaTransformacion;
 
 	/**
-	 * Lista d elos objetos a tratar
+	 * Lista delos objetos a tratar
 	 * 
 	 * @return
 	 */
 	public List<Auditoria> cargarDWAuditoria() {
 		em.setBd(1);
-		return (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
+		list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
+		return list;
+	}
+
+	/**
+	 * Lista delos objetos a tratar para acumulacion
+	 * 
+	 * @return
+	 */
+	public List<Auditoria> cargarDWAuditoriaAcumulacion(Date fechaIni, Date fechaFin) {
+		if (fechaIni.getDate() <= fechaFin.getDate()) {
+			em.setBd(1);
+			list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
+			return list;
+		}
+		return null;
 	}
 
 	/**
 	 * Transformacion de datos
+	 * 
 	 * @param bd
 	 * @return
 	 * @throws ParseException
@@ -47,22 +65,21 @@ public class DWGeneral {
 	public List<DWauditoria> transformacionAuditoria(int bd) throws ParseException {
 
 		listaTransformacion = new ArrayList<DWauditoria>();
-		
-		em.setBd(bd);
-		List<Auditoria> list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
+
+		list = (List<Auditoria>) (Object) em.listar(Auditoria.AUDITORIA);
 
 		String[] nav = new String[5];
 		String[] dat = new String[2];
 
 		for (int i = 0; i < list.size(); i++) {
-			
+
 			SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			//paso date a String
-			String fecha = formatter.format(list.get(i).getFecha());			 
-			
+			// paso date a String
+			String fecha = formatter.format(list.get(i).getFecha());
+
 			nav = list.get(i).getNavegador().split(".0");
 			dat = fecha.split(" ");
-						
+
 			DWauditoria au = new DWauditoria();
 			au.setNavegador(nav[0]);
 			au.setFecha(dat[0]);
@@ -77,13 +94,14 @@ public class DWGeneral {
 		}
 		return listaTransformacion;
 	}
-	
+
 	/**
 	 * Enviar datos transformados al dw
+	 * 
 	 * @throws ParseException
 	 */
-	public void enviarTransformacionDatos() throws ParseException{
-		for(int i=0;i<listaTransformacion.size();i++) {
+	public void enviarTransformacionDatos() throws ParseException {
+		for (int i = 0; i < listaTransformacion.size(); i++) {
 			em.editarDW(listaTransformacion.get(i));
 		}
 	}
