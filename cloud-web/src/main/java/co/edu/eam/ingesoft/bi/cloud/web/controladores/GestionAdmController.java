@@ -569,9 +569,11 @@ public class GestionAdmController implements Serializable {
 		try {
 
 			if (selecionDW == 1) {
+				//Messages.addFlashGlobalInfo(fechaIni+"");
+
 				listaAuDW = dwGeneral.cargarDWAuditoriaAcumulacion(fechaIni, fechaFin);
 				registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
-				Messages.addFlashGlobalInfo("Carga exitosa");
+				Messages.addFlashGlobalInfo("Carga exitosa fechaIni");
 			} else if (selecionDW == 2) {
 				listaAuDW = dwGeneral.cargarDWAuditoria();
 				registrarAuditoria("Cargar DW", "Cargar datos", "N/A");

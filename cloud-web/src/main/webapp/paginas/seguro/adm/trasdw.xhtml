@@ -15,7 +15,8 @@
 						<h:panelGrid id="paneldatos" columns="8">
 
 							<h:selectOneMenu id="tftDW"
-								value="#{gestionAdmController.selecionDW}" class="sizeselect form-control">
+								value="#{gestionAdmController.selecionDW}"
+								class="sizeselect form-control">
 								<f:selectItem itemValue="0" itemLabel="Seleccione..." />
 								<f:selectItem itemValue="1" itemLabel="Acumulacion" />
 								<f:selectItem itemValue="2" itemLabel="Rolling" />
@@ -23,13 +24,14 @@
 							</h:selectOneMenu>
 
 							<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
-								styleClass="buttonIni" process="@this" value="Cargar datos"
-								update="paneldatos panelTablas" />
-
+								styleClass="buttonIni" process="@this tftFechaIni tftFechaFinn"
+								value="Cargar datos" update="paneldatos panelTablas" />
+								
 							<p:outputLabel for="tftFechaIni" value="Fecha inicio" />
 							<h:inputText id="tftFechaIni" class="form-control"
 								value="#{gestionAdmController.fechaIni}" mode="inline"
-								a:placeholder="dia-mes-anio" disabled="#{gestionAdmController.selecionDW != '1'}" >
+								a:placeholder="dia-mes-anio"
+								disabled="#{gestionAdmController.selecionDW != '1'}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:inputText>
 							<p:message for="tftFechaIni" />
@@ -37,10 +39,13 @@
 							<p:outputLabel for="tftFechaFinn" value="Fecha fin" />
 							<h:inputText id="tftFechaFinn" class="form-control"
 								value="#{gestionAdmController.fechaFin}" mode="inline"
-								a:placeholder="dia-mes-anio" disabled="#{gestionAdmController.selecionDW != '1'}" >
+								a:placeholder="dia-mes-anio"
+								disabled="#{gestionAdmController.selecionDW != '1'}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:inputText>
 							<p:message for="tftFechaFinn" />
+
+
 
 						</h:panelGrid>
 
