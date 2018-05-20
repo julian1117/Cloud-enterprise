@@ -85,11 +85,11 @@ public class GestionAdmController implements Serializable {
 	private List<Venta> listaVentaDW;
 
 	private List<DWventa> listaTransVenta;
-	
+
 	private Date fechaIni;
-	
+
 	private Date fechaFin;
-	
+
 	private int selecionDW;
 
 	public List<Venta> getListaVentaDW() {
@@ -299,7 +299,7 @@ public class GestionAdmController implements Serializable {
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	
+
 	public int getSelecionDW() {
 		return selecionDW;
 	}
@@ -307,8 +307,6 @@ public class GestionAdmController implements Serializable {
 	public void setSelecionDW(int selecionDW) {
 		this.selecionDW = selecionDW;
 	}
-
-
 
 	@EJB
 	private GestionAdmEJB gestionAdmEJB;
@@ -569,9 +567,18 @@ public class GestionAdmController implements Serializable {
 
 	public void trasladarAudDW() {
 		try {
-			listaAuDW = dwGeneral.cargarDWAuditoria();
-			registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
-			Messages.addFlashGlobalInfo("Carga exitosa");
+
+			if (selecionDW == 1) {
+				listaAuDW = dwGeneral.cargarDWAuditoriaAcumulacion(fechaIni, fechaFin);
+				registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
+				Messages.addFlashGlobalInfo("Carga exitosa");
+			} else if (selecionDW == 2) {
+				listaAuDW = dwGeneral.cargarDWAuditoria();
+				registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
+				Messages.addFlashGlobalInfo("Carga exitosa");
+			} else {
+				Messages.addFlashGlobalInfo("Seleccione una opcion valida");
+			}
 
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
@@ -599,7 +606,7 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
-	
+
 	public void tranformarDatosVenta() {
 		try {
 			listaTransVenta = dwVenta.tranformacionVenta(sesion.getBd());
@@ -610,8 +617,6 @@ public class GestionAdmController implements Serializable {
 		}
 
 	}
-	
-	
 
 	public void enviarDW() {
 		try {
