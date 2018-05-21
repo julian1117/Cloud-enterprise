@@ -13,7 +13,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWProducto;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWauditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
@@ -278,9 +277,8 @@ public class Conexion implements Serializable {
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void consultaNativa(String Consulta) {
-		String slq = ("INSERT INTO dwproducto (descripcion,nombre,valor) VALUES ( 'a', 'a', '1');");
-		emM.createNativeQuery(slq);
 		
+		Query q = emM.createNativeQuery(Consulta);
 	}
 	
 

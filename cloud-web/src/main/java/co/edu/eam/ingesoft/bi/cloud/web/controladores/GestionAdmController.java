@@ -590,7 +590,7 @@ public class GestionAdmController implements Serializable {
 		try {
 			listaTransformacion = dwGeneral.transformacionAuditoria(sesion.getBd());
 			registrarAuditoria("Transformar DW", "Transformar datos", "N/A");
-			Messages.addFlashGlobalInfo("Transformacion exitosa");			
+			Messages.addFlashGlobalInfo("Transformacion exitosa");
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
@@ -618,7 +618,7 @@ public class GestionAdmController implements Serializable {
 		}
 
 	}
-	
+
 	public void enviarDatosVenta() {
 		try {
 			dwVenta.enviarTransformacionDatosVenta();
@@ -632,9 +632,15 @@ public class GestionAdmController implements Serializable {
 
 	public void enviarDW() {
 		try {
-			dwGeneral.enviarTransformacionDatos(selecionDW);
-			registrarAuditoria("Envio auditoria DW", "Crear auditoria DW", "N/A");
-			Messages.addFlashGlobalInfo("Envio con éxito");
+			if (selecionDW == 1) {
+				dwGeneral.enviarTransformacionDatos();
+				registrarAuditoria("Envio auditoria DW Acumulacion", "Crear auditoria DW", "N/A");
+				Messages.addFlashGlobalInfo("Envio con éxito");
+			} else if (selecionDW == 2) {
+				dwGeneral.enviarTransformacionDatosRolling();
+				registrarAuditoria("Envio auditoria DW Rolling", "Crear auditoria DW", "N/A");
+				Messages.addFlashGlobalInfo("Envio con éxito Rolling");
+			}
 
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
