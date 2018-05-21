@@ -16,29 +16,29 @@
 						<p:panel id="paneldatosP" header="Datos de Cliente">
 							<h:panelGrid id="paneldatos" columns="3">
 
-								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre"></h:outputLabel>
+								<h:outputLabel for="tftNombre" id="lblNombre" value="Nombre" />
 								<h:inputText id="tftNombre"
-									value="#{gestionClienteController.nombre}" class="form-control"></h:inputText>
+									value="#{gestionClienteController.nombre}" class="form-control" />
 								<p:message for="tftNombre" />
 
 								<h:outputLabel for="tftApellido" id="lblApellido"
-									value="Apellido"></h:outputLabel>
+									value="Apellido" />
 								<h:inputText id="tftApellido"
 									value="#{gestionClienteController.apellido}"
-									class="form-control"></h:inputText>
+									class="form-control" />
 								<p:message for="tftApellido" />
 
 								<p:outputLabel for="tftFecha" value="Fecha" />
 								<h:inputText id="tftFecha" class="form-control"
-									value="#{gestionClienteController.fechaNacimiento}"
+									value="#{gestionNuevosController.fechaNacimiento}"
 									mode="inline" a:placeholder="dia-mes-anio">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 								<p:message for="tftFecha" />
 
-								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula"></h:outputLabel>
+								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula" />
 								<h:inputText id="tftCedula"
-									value="#{gestionClienteController.cedula}" class="form-control"></h:inputText>
+									value="#{gestionClienteController.cedula}" class="form-control" />
 								<p:message for="tftCedula" />
 
 								<h:outputLabel for="tftTelefono" id="lblTelefono"
@@ -49,15 +49,15 @@
 								<p:message for="tftTelefono" />
 
 								<h:outputLabel for="tftDireccion" id="lblDireccion"
-									value="Direccion"></h:outputLabel>
+									value="Direccion" />
 								<h:inputText id="tftDireccion"
 									value="#{gestionClienteController.direccion}"
 									class="form-control" />
 								<p:message for="tftDireccion" />
 
-								<h:outputLabel for="tftEmail" id="lblEmail" value="Email"></h:outputLabel>
+								<h:outputLabel for="tftEmail" id="lblEmail" value="Email" />
 								<h:inputText id="tftEmail"
-									value="#{gestionClienteController.email}" class=" form-control"></h:inputText>
+									value="#{gestionClienteController.email}" class=" form-control" />
 								<p:message for="tftEmail" />
 
 

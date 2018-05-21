@@ -76,11 +76,9 @@ public class ClienteControler implements Serializable {
 
 	@EJB
 	private AuditoriaEJB auditoriaEJB;
-	
-	@Inject
-	private SessionController sesion;	
 
-	
+	@Inject
+	private SessionController sesion;
 
 	public String getNombre() {
 		return nombre;
@@ -137,8 +135,6 @@ public class ClienteControler implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 	public List<Object> getListGeneros() {
 		return listGeneros;
@@ -187,8 +183,6 @@ public class ClienteControler implements Serializable {
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
-	
-	
 
 	public List<Object> getListDepartamento() {
 		return listDepartamento;
@@ -237,7 +231,7 @@ public class ClienteControler implements Serializable {
 	public void setAuditoriaEJB(AuditoriaEJB auditoriaEJB) {
 		this.auditoriaEJB = auditoriaEJB;
 	}
-	
+
 	@PostConstruct
 	public void inicializar() {
 		listGeneros = registroNuevosEJB.listaGeneros(sesion.getBd());
@@ -245,14 +239,12 @@ public class ClienteControler implements Serializable {
 	}
 
 	public void crearCliente() {
-		
-		Messages.addFlashGlobalInfo("hola");
-		try {
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
 
-			Messages.addFlashGlobalInfo(buscarCiudad + "hola");
-			
+		try {
+
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(), 1);
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad, 1);
+
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
 			persona.setApellido(apellido);
@@ -264,16 +256,9 @@ public class ClienteControler implements Serializable {
 			persona.setGenero(buscarGenero);
 			persona.setTelefono(telefono);
 
-		//	if (persona == null) {
-				registroNuevosEJB.crearPersona(persona,sesion.getBd());
-				registrarAuditoria("CREAR", "REGISTRO NUEVOS");
-				Messages.addFlashGlobalInfo("Registro éxitoso");
-
-			//} else {
-
-			//	Messages.addFlashGlobalError("El cliente ya Existe");
-
-			//}
+			registroNuevosEJB.crearPersona(persona, sesion.getBd());
+			registrarAuditoria("CREAR", "REGISTRO NUEVOS");
+			Messages.addFlashGlobalInfo("Registro éxitoso");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -283,52 +268,53 @@ public class ClienteControler implements Serializable {
 
 	public void buscarCliente() {
 		try {
-			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
-			
-			if(per != null) {
-			 nombre = per.getCedula().toString();
-			 apellido = per.getApellido().toString();
-			fechaNacimiento = per.getFechaNacimiento();
-			telefono = per.getTelefono().toString();
-			direccion= per.getDireccion().toString();
-			email = per.getEmail().toString();
-            genero = per.getGenero();
-  //          ciudad = String.valueOf(per.getCiudad().getNombre());
-            
-            registrarAuditoria("BUSCAR", "Busco la persona con cedula: " + per.getCedula());
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula), sesion.getBd());
+
+			if (per != null) {
+				nombre = per.getCedula().toString();
+				apellido = per.getApellido().toString();
+				fechaNacimiento = per.getFechaNacimiento();
+				telefono = per.getTelefono().toString();
+				direccion = per.getDireccion().toString();
+				email = per.getEmail().toString();
+				genero = per.getGenero();
+				// ciudad = String.valueOf(per.getCiudad().getNombre());
+
+				registrarAuditoria("BUSCAR", "Busco la persona con cedula: " + per.getCedula());
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
-	
+
 	public void editarCliente() {
 		try {
-			
-			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula),sesion.getBd());
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),sesion.getBd());
-			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,sesion.getBd());
-			
-			if(per!=null) {
-				registroNuevosEJB.editarCliente(per,sesion.getBd());
-				Persona persona = new Persona(Integer.parseInt(cedula), nombre, apellido, direccion, telefono, email, fechaNacimiento, buscarGenero, buscarCiudad);
+
+			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula), sesion.getBd());
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(), sesion.getBd());
+			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad, sesion.getBd());
+
+			if (per != null) {
+				registroNuevosEJB.editarCliente(per, sesion.getBd());
+				Persona persona = new Persona(Integer.parseInt(cedula), nombre, apellido, direccion, telefono, email,
+						fechaNacimiento, buscarGenero, buscarCiudad);
 				Messages.addFlashGlobalInfo("Ediccion éxitoso");
-				
+
 				registrarAuditoria("EDITAR", "Edito a la persona de cedula: " + per.getCedula());
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
 		}
 	}
-	
+
 	public void eliminar() {
-		
+
 	}
 
 	/**
@@ -352,12 +338,11 @@ public class ClienteControler implements Serializable {
 		}
 	}
 
-	
 	public void cargarDep() {
-		listDepartamento = generalEJB.listaDepartamento(pais,sesion.getBd());
+		listDepartamento = generalEJB.listaDepartamento(pais, sesion.getBd());
 	}
 
 	public void cargarCiu() {
-		listCiudad = generalEJB.listCiudad(departamento,sesion.getBd());
+		listCiudad = generalEJB.listCiudad(departamento, sesion.getBd());
 	}
 }

@@ -111,15 +111,15 @@ public class DWVentaEJB {
 
 	}
 	
-	public void enviarTransformacionDatosVenta() throws ParseException {
+	public void enviarTransformacionDatosVenta() throws ParseException {		
 		
-		
-	//	em.consultaNativa("INSERT INTO dwproducto (descripcion,nombre,valor) VALUES ( 'a', 'a', '1');");
 
 
 		for (int i = 0; i < listaVenta.size(); i++) {
 			
-			em.editarDWVenta(listaVenta.get(i));
+			em.consultaNativa("INSERT INTO cloud.dwproducto (descripcion,nombre,valor) VALUES ('" 
+			+listaVenta.get(i).getInventario().getProducto().getDescirpcion()
+					+"', 'a', '1');");
 		}
 		
 	}

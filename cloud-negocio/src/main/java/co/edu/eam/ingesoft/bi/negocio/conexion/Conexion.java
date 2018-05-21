@@ -279,6 +279,7 @@ public class Conexion implements Serializable {
 	public void consultaNativa(String Consulta) {
 		
 		Query q = emM.createNativeQuery(Consulta);
+		q.executeUpdate();
 	}
 	
 
