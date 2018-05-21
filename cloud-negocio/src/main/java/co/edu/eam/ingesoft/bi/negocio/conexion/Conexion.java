@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -275,8 +276,11 @@ public class Conexion implements Serializable {
 		// }
 	}
 	
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void consultaNativa(String Consulta) {
-		emM.createNativeQuery(Consulta,DWProducto.class);
+		String slq = ("INSERT INTO dwproducto (descripcion,nombre,valor) VALUES ( 'a', 'a', '1');");
+		emM.createNativeQuery(slq);
+		
 	}
 	
 
