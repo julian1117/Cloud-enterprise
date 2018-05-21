@@ -41,14 +41,10 @@ public class DWVentaEJB {
 		listaVenta = new ArrayList<DWventa>();
 		em.setBd(bd);
 
-		list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
+		//list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
 
 		for (int i = 0; i < list.size(); i++) {
 
-			DWgestionVenta gestion = new DWgestionVenta();
-			gestion.setIdFactura(list.get(i).getGestionVenta().getIdFactura());
-			gestion.setFecha(list.get(i).getGestionVenta().getFecha());
-			
 
 			DWProducto producto = new DWProducto();
 			producto.setNombre(list.get(i).getInventario().getProducto().getNombre());
@@ -95,6 +91,10 @@ public class DWVentaEJB {
 			empleado.setSalario(list.get(i).getGestionVenta().getEmpleado().getSalario());
 			
 
+			DWgestionVenta gestion = new DWgestionVenta();
+			gestion.setIdFactura(list.get(i).getGestionVenta().getIdFactura());
+			gestion.setFecha(list.get(i).getGestionVenta().getFecha());
+			
 			
 			DWventa ve = new DWventa();
 
@@ -112,9 +112,15 @@ public class DWVentaEJB {
 	}
 	
 	public void enviarTransformacionDatosVenta() throws ParseException {
+		
+		
+		
+
 		for (int i = 0; i < listaVenta.size(); i++) {
+			
 			em.editarDWVenta(listaVenta.get(i));
 		}
+		
 	}
 
 }
