@@ -120,7 +120,7 @@ public class DWVentaEJB {
 			em.consultaNativa("INSERT INTO cloud.dwproducto (descripcion,nombre,valor) VALUES ('" 
 			+listaVenta.get(i).getInventario().getProducto().getDescirpcion()
 					+"','"+listaVenta.get(i).getInventario().getProducto().getNombre()
-					+"',"+listaVenta.get(i).getInventario().getProducto().getValor());
+					+"','"+listaVenta.get(i).getInventario().getProducto().getValor()+"');");
 		}
 		
 	}
