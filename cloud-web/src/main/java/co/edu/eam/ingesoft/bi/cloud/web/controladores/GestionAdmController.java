@@ -569,7 +569,6 @@ public class GestionAdmController implements Serializable {
 		try {
 
 			if (selecionDW == 1) {
-				//Messages.addFlashGlobalInfo(fechaIni+"");
 
 				listaAuDW = dwGeneral.cargarDWAuditoriaAcumulacion(fechaIni, fechaFin);
 				registrarAuditoria("Cargar DW", "Cargar datos", "N/A");
@@ -591,7 +590,7 @@ public class GestionAdmController implements Serializable {
 		try {
 			listaTransformacion = dwGeneral.transformacionAuditoria(sesion.getBd());
 			registrarAuditoria("Transformar DW", "Transformar datos", "N/A");
-			Messages.addFlashGlobalInfo("Transformacion exitosa");
+			Messages.addFlashGlobalInfo("Transformacion exitosa");			
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
@@ -633,7 +632,7 @@ public class GestionAdmController implements Serializable {
 
 	public void enviarDW() {
 		try {
-			dwGeneral.enviarTransformacionDatos();
+			dwGeneral.enviarTransformacionDatos(selecionDW);
 			registrarAuditoria("Envio auditoria DW", "Crear auditoria DW", "N/A");
 			Messages.addFlashGlobalInfo("Envio con éxito");
 
