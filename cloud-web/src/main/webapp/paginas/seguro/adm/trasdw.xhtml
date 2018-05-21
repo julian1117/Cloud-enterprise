@@ -26,7 +26,7 @@
 							<p:commandButton action="#{gestionAdmController.trasladarAudDW}"
 								styleClass="buttonIni" process="@this tftFechaIni tftFechaFinn"
 								value="Cargar datos" update="paneldatos panelTablas" />
-								
+
 							<p:outputLabel for="tftFechaIni" value="Fecha inicio" />
 							<h:inputText id="tftFechaIni" class="form-control"
 								value="#{gestionAdmController.fechaIni}" mode="inline"
@@ -110,8 +110,7 @@
 					<p:tab title="Enviar datos a DW">
 
 						<p:commandButton action="#{gestionAdmController.enviarDW}"
-							styleClass="buttonIni" process="@this" value="Enviar datos a DW"
-							onclick="start()" />
+							styleClass="buttonIni" process="@this" value="Enviar datos a DW" />
 					</p:tab>
 
 				</p:accordionPanel>

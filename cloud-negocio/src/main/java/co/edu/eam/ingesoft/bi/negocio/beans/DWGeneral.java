@@ -103,17 +103,17 @@ public class DWGeneral {
 	 * 
 	 * @throws ParseException
 	 */
-	public void enviarTransformacionDatos(int dw) throws ParseException {
-		/*if (dw == 1) {
-			for (int i = 0; i < listaTransformacion.size(); i++) {
-				em.editarDW(listaTransformacion.get(i));
-			}
-		} else if (dw == 2) {
-			for (int i = 0; i < listaTransformacion.size(); i++) {*/
-				em.consultaNativa("TRUNCATE TABLE dw_auditoria;");
-				//em.editarDW(listaTransformacion.get(i));
-			//}
-		//}
+	public void enviarTransformacionDatos() throws ParseException {
+		for (int i = 0; i < listaTransformacion.size(); i++) {
+			em.editarDW(listaTransformacion.get(i));
+		}
 	}
 
+	public void enviarTransformacionDatosRolling() throws ParseException {
+		em.consultaNativa("TRUNCATE TABLE cloud.dw_auditoria;");
+		for (int i = 0; i < listaTransformacion.size(); i++) {
+			// em.consultaNativa("TRUNCATE TABLE cloud.dw_auditoria;");
+			em.editarDW(listaTransformacion.get(i));
+		}
+	}
 }
