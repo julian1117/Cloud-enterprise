@@ -104,16 +104,16 @@ public class DWGeneral {
 	 * @throws ParseException
 	 */
 	public void enviarTransformacionDatos(int dw) throws ParseException {
-		if (dw == 1) {
+		/*if (dw == 1) {
 			for (int i = 0; i < listaTransformacion.size(); i++) {
 				em.editarDW(listaTransformacion.get(i));
 			}
 		} else if (dw == 2) {
-			for (int i = 0; i < listaTransformacion.size(); i++) {
-				em.consultaNativa("delete from cloud.dw_auditoria where 1");
+			for (int i = 0; i < listaTransformacion.size(); i++) {*/
+				em.consultaNativa("TRUNCATE TABLE dw_auditoria;");
 				//em.editarDW(listaTransformacion.get(i));
-			}
-		}
+			//}
+		//}
 	}
 
 }

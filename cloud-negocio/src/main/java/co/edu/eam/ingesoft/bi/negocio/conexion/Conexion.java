@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWProducto;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWauditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
 import co.edu.eam.ingesoft.bi.negocio.excepciones.ExcepcionNegocio;
@@ -275,7 +276,7 @@ public class Conexion implements Serializable {
 	}
 	
 	public void consultaNativa(String Consulta) {
-		emM.createNativeQuery(Consulta);
+		emM.createNativeQuery(Consulta,DWProducto.class);
 	}
 	
 
