@@ -15,6 +15,7 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWempleado;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWgestionVenta;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWpersona;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.dwentidades.DWventa;
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Venta;
 import co.edu.eam.ingesoft.bi.negocio.conexion.Conexion;
 
@@ -33,6 +34,17 @@ public class DWVentaEJB {
 		em.setBd(1);
 		list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
 		return list;
+	}
+
+	public List<Venta> cargarDWVentaAcumulacion(Date fechaIni, Date fechaFin) {
+		System.out.println(
+				fechaIni + " " + fechaFin + "------------------------------------------------------------------");
+		if (fechaIni.getDate() <= fechaFin.getDate()) {
+			em.setBd(1);
+			list = (List<Venta>) (Object) em.listarConDosParametros(Venta.POR_VENTA_FECHA, fechaIni, fechaFin);
+			return list;
+		}
+		return null;
 	}
 
 	public List<DWventa> tranformacionVenta(int bd) {
@@ -110,34 +122,64 @@ public class DWVentaEJB {
 					+ listaVenta.get(i).getInventario().getProducto().getDescirpcion() + "','"
 					+ listaVenta.get(i).getInventario().getProducto().getNombre() + "','"
 					+ listaVenta.get(i).getInventario().getProducto().getValor() + "');");
+
 			
 			em.consultaNativa("INSERT INTO cloud.dw_persona(cedula,fechaNacimiento,genero,nombre) VALUES ('"
-					+listaVenta.get(i).getPersona().getCedula()+"','"
-					+listaVenta.get(i).getPersona().getFechaNacimiento()+"','"
-					+listaVenta.get(i).getPersona().getGenero()+"','"
-					+listaVenta.get(i).getPersona().getNombreCompleto()+ "');");
-			
+					+ listaVenta.get(i).getPersona().getCedula() + "','"
+					+ listaVenta.get(i).getPersona().getFechaNacimiento() + "','"
+					+ listaVenta.get(i).getPersona().getGenero() + "','"
+					+ listaVenta.get(i).getPersona().getNombreCompleto() + "');");
+
 			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
-					+listaVenta.get(i).getGestionVenta().getFecha()+"');");
-			
-			//em.consultaNativa("INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
-				//	+listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
-					//+listaVenta.get(i).getEmpleado().getSalario()+"','"
-					//+listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
-			
-			
-			
-			//em.consultaNativa("INSERT INTO cloud.dwinventario (cantidad,fechaIngreso,producto) VALUES ('"
-				//	+listaVenta.get(i).getInventario().getCantidad()+"','"
-					//+listaVenta.get(i).getInventario().getFechaIngreso()+"','"
-					//+listaVenta.get(i).getInventario().getProducto().getIdProducto()+"');");
-			
-			
+					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
+
+			// em.consultaNativa("INSERT INTO cloud.dw_empleado
+			// (fechaIngreso,salario,persona_Id) VALUES ('"
+			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
+			// +listaVenta.get(i).getEmpleado().getSalario()+"','"
+			// +listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
+
+			// em.consultaNativa("INSERT INTO cloud.dwinventario
+			// (cantidad,fechaIngreso,producto) VALUES ('"
+			// +listaVenta.get(i).getInventario().getCantidad()+"','"
+			// +listaVenta.get(i).getInventario().getFechaIngreso()+"','"
+			// +listaVenta.get(i).getInventario().getProducto().getIdProducto()+"');");
 
 		}
-		
-		
 
+	}
+	
+	public void enviarTransformacionDatosRolling() throws ParseException {
+		em.consultaNativa("TRUNCATE TABLE cloud.dwventa;");
+		for (int i = 0; i < listaVenta.size(); i++) {
+
+			em.consultaNativa("INSERT INTO cloud.dwproducto (descripcion,nombre,valor) VALUES ('"
+					+ listaVenta.get(i).getInventario().getProducto().getDescirpcion() + "','"
+					+ listaVenta.get(i).getInventario().getProducto().getNombre() + "','"
+					+ listaVenta.get(i).getInventario().getProducto().getValor() + "');");
+
+			em.consultaNativa("INSERT INTO cloud.dw_persona(cedula,fechaNacimiento,genero,nombre) VALUES ('"
+					+ listaVenta.get(i).getPersona().getCedula() + "','"
+					+ listaVenta.get(i).getPersona().getFechaNacimiento() + "','"
+					+ listaVenta.get(i).getPersona().getGenero() + "','"
+					+ listaVenta.get(i).getPersona().getNombreCompleto() + "');");
+
+			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
+					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
+
+			// em.consultaNativa("INSERT INTO cloud.dw_empleado
+			// (fechaIngreso,salario,persona_Id) VALUES ('"
+			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
+			// +listaVenta.get(i).getEmpleado().getSalario()+"','"
+			// +listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
+
+			// em.consultaNativa("INSERT INTO cloud.dwinventario
+			// (cantidad,fechaIngreso,producto) VALUES ('"
+			// +listaVenta.get(i).getInventario().getCantidad()+"','"
+			// +listaVenta.get(i).getInventario().getFechaIngreso()+"','"
+			// +listaVenta.get(i).getInventario().getProducto().getIdProducto()+"');");
+
+		}
 	}
 
 }

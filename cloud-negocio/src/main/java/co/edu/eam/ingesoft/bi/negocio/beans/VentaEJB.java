@@ -1,5 +1,6 @@
 package co.edu.eam.ingesoft.bi.negocio.beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -95,7 +96,7 @@ public class VentaEJB {
 	}
 
 	
-	public void prueba(Integer a, Integer b, Integer c, int bd) {
+	public void prueba(Integer a, Integer b, Integer c,Date f, int bd) {
 		
 		Inventario inve = buscarInventario(a,bd);
 		GestionVenta gestion =  buscarIdGestionVenta(b,bd);
@@ -104,7 +105,7 @@ public class VentaEJB {
 		//System.out.println(busVenta.getGestionVenta() + "22222222222222222-----------------------"  );
 
 		if(busVenta ==null) {
-			Venta venta = new Venta(inve, gestion, c);
+			Venta venta = new Venta(inve, gestion, c,f);
 			em.setBd(bd);
 			em.crear(venta);
 		}else {

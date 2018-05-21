@@ -12,32 +12,64 @@
 			<p:panel header="Definir base de datos a usar" id="panelTab">
 				<p:accordionPanel>
 					<p:tab title="Cargar ventas para DW">
-					
-					<p:commandButton action="#{gestionAdmController.extraccionVentaDW}"
-						styleClass="buttonIni" process="@this" value="Cargar datos"
-						update="panelTab panelTablas" />
-						
-						
+						<h:panelGrid id="paneldatos" columns="8">
+
+							<h:selectOneMenu id="tftDW"
+								value="#{gestionAdmController.selecionDW}"
+								class="sizeselect form-control">
+								<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+								<f:selectItem itemValue="1" itemLabel="Acumulacion" />
+								<f:selectItem itemValue="2" itemLabel="Rolling" />
+								<p:ajax update="tftFechaIni tftFechaFinn" />
+							</h:selectOneMenu>
+
+							<p:commandButton
+								action="#{gestionAdmController.extraccionVentaDW}"
+								styleClass="buttonIni" process="@this tftFechaIni tftFechaFinn"
+								value="Cargar datos" update="panelTab panelTablas" />
+
+							<p:outputLabel for="tftFechaIni" value="Fecha inicio" />
+							<h:inputText id="tftFechaIni" class="form-control"
+								value="#{gestionAdmController.fechaIni}" mode="inline"
+								a:placeholder="dia-mes-anio"
+								disabled="#{gestionAdmController.selecionDW != '1'}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:inputText>
+							<p:message for="tftFechaIni" />
+
+							<p:outputLabel for="tftFechaFinn" value="Fecha fin" />
+							<h:inputText id="tftFechaFinn" class="form-control"
+								value="#{gestionAdmController.fechaFin}" mode="inline"
+								a:placeholder="dia-mes-anio"
+								disabled="#{gestionAdmController.selecionDW != '1'}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:inputText>
+							<p:message for="tftFechaFinn" />
+						</h:panelGrid>
+
+
 						<p:dataTable id="panelTablas"
 							value="#{gestionAdmController.listaVentaDW}" var="doc" border="1"
 							class="table table-striped">
 
 							<p:column headerText="Nombre del empleado">
-								<h:outputLabel value="#{doc.inventario.idPersona.idPersona.nombre}" />
+								<h:outputLabel
+									value="#{doc.inventario.idPersona.idPersona.nombre}" />
 							</p:column>
-							
+
 							<p:column headerText="Apellido del empleado">
-								<h:outputLabel value="#{doc.inventario.idPersona.idPersona.apellido}" />
+								<h:outputLabel
+									value="#{doc.inventario.idPersona.idPersona.apellido}" />
 							</p:column>
-							
+
 							<p:column headerText="Nombre del cliente">
 								<h:outputLabel value="#{doc.gestionVenta.persona.nombre}" />
 							</p:column>
-							
+
 							<p:column headerText="Apellido del cliente">
 								<h:outputLabel value="#{doc.gestionVenta.persona.apellido}" />
 							</p:column>
-							
+
 							<p:column headerText="Numero de factura">
 								<h:outputLabel value="#{doc.gestionVenta.idFactura}" />
 							</p:column>
@@ -55,28 +87,29 @@
 							</p:column>
 
 						</p:dataTable>
-						
-						<p:commandButton action="#{gestionAdmController.tranformarDatosVenta}"
-						styleClass="buttonIni" process="@this" value="Transformar Datos"
-						update="panelTablasTransormado" />
-						
-						
+
+						<p:commandButton
+							action="#{gestionAdmController.tranformarDatosVenta}"
+							styleClass="buttonIni" process="@this" value="Transformar Datos"
+							update="panelTablasTransormado" />
+
+
 					</p:tab>
-					
+
 					<p:tab title="Transformacion de datos para DW">
-						
+
 						<p:dataTable id="panelTablasTransormado"
-							value="#{gestionAdmController.listaTransVenta}" var="doc" border="1"
-							class="table table-striped">
+							value="#{gestionAdmController.listaTransVenta}" var="doc"
+							border="1" class="table table-striped">
 
 							<p:column headerText="Nombre completo del empleado">
 								<h:outputLabel value="#{doc.empleado.idPersona.nombreCompleto}" />
-							</p:column>					
-							
+							</p:column>
+
 							<p:column headerText="Nombre completo del cliente">
 								<h:outputLabel value="#{doc.persona.nombreCompleto} " />
 							</p:column>
-							 
+
 							<p:column headerText="Numero de factura">
 								<h:outputLabel value="#{doc.gestionVenta.idFactura}" />
 							</p:column>
@@ -91,22 +124,21 @@
 
 							<p:column headerText="Cantidad vendida">
 								<h:outputLabel value="#{doc.cantidad}" />
-							</p:column> 
+							</p:column>
 
 						</p:dataTable>
-						
-						
+
+
 					</p:tab>
 
-					
+
 					<p:tab title="Enviar datos a DW">
-					
-					<p:commandButton action="#{gestionAdmController.enviarDatosVenta}"
-							styleClass="buttonIni" process="@this" value="Enviar datos a DW"
-							 />
-					
+
+						<p:commandButton action="#{gestionAdmController.enviarDatosVenta}"
+							styleClass="buttonIni" process="@this" value="Enviar datos a DW" />
+
 					</p:tab>
-					
+
 				</p:accordionPanel>
 			</p:panel>
 		</h:form>

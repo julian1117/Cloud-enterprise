@@ -38,6 +38,8 @@ public class GestionVentaController implements Serializable {
 	private String idFactura;
 
 	private Date fecha;
+	
+	private Date fechaVenta;
 
 	private String empleado;
 	
@@ -78,6 +80,14 @@ public class GestionVentaController implements Serializable {
 	
 
 	
+
+	public Date getFechaVenta() {
+		return fechaVenta;
+	}
+
+	public void setFechaVenta(Date fechaVenta) {
+		this.fechaVenta = fechaVenta;
+	}
 
 	public List<Object> getListarFacturas() {
 		return listarFacturas;
@@ -239,7 +249,7 @@ public class GestionVentaController implements Serializable {
 		
 		
 		if(c <= buscaCan.getCantidad()) {
-			ventaEJB.prueba(a, b, c,sesion.getBd());
+			ventaEJB.prueba(a, b, c,fechaVenta,sesion.getBd());
 			
 			int resta = buscaCan.getCantidad() - c;
 			

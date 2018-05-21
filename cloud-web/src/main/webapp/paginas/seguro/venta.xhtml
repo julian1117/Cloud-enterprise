@@ -18,9 +18,18 @@
 
 								<h:outputLabel for="tftCantidad" id="lblCantidad"
 									value="Cantidad"></h:outputLabel>
-								<p:spinner id="tftCantidad"
-									value="#{gestionVentaController.cantidad}" class="form-control"></p:spinner>
+								<h:inputText id="tftCantidad" 
+									value="#{gestionVentaController.cantidad}" class="form-control"></h:inputText>
 								<p:message for="tftCantidad" />
+								
+								<h:outputLabel for="tftFechaIngreso" value="Fecha Ingreso" />
+								<h:inputText id="tftFechaIngreso"
+									value="#{gestionVentaController.fechaVenta}" mode="inline"
+									a:placeholder="dia-mes-año" class="form-control">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:inputText>
+								<p:message for="tftFechaIngreso" />
+								
 
 
 								<h:outputLabel id="lblInventario" value="Inventario"

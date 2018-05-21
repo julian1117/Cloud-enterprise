@@ -1,6 +1,7 @@
 package co.edu.eam.ingesoft.bi.cloud.persistencia.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,19 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @IdClass(VentaPK.class)
 @Table(name="Venta")
-@NamedQuery(name=Venta.LISTA_VENT,query="select V from Venta V")
+@NamedQueries({
+	@NamedQuery(name=Venta.LISTA_VENT,query="select V from Venta V"),
+	@NamedQuery(name = Venta.POR_VENTA_FECHA, query = "SELECT a FROM Venta a where a.fecha BETWEEN ?1 AND ?2")
+
+})
 public class Venta implements Serializable {
 	
 	public static final  String LISTA_VENT = "Venta:listVen";
+	public static final String POR_VENTA_FECHA = "Venta.listVentaFecha";
+	
 
 	@Id
 	@ManyToOne
@@ -36,17 +46,39 @@ public class Venta implements Serializable {
 	
 	@Column(name = "CANTIDAD")
 	private Integer cantidad;
+	
+	@Column(name="fecha")
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
 
 	public Venta() {
 		super();
 	}
 
-	public Venta(Inventario inventario, GestionVenta gestionVenta, Integer cantidad) {
+	
+
+	public Venta(Inventario inventario, GestionVenta gestionVenta, Integer cantidad, Date fecha) {
 		super();
 		this.inventario = inventario;
 		this.gestionVenta = gestionVenta;
 		this.cantidad = cantidad;
+		this.fecha = fecha;
 	}
+
+
+	
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+
 
 	public Inventario getInventario() {
 		return inventario;

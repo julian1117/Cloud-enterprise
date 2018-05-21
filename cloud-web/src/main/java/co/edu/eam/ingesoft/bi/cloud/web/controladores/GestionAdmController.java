@@ -586,6 +586,26 @@ public class GestionAdmController implements Serializable {
 		}
 	}
 
+
+	public void extraccionVentaDW() {
+		try {
+			if (selecionDW == 1) {
+			listaVentaDW = dwVenta.cargarDWVentaAcumulacion(fechaIni, fechaFin);
+			registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
+			Messages.addFlashGlobalInfo("Carga exitosa");
+			} else if (selecionDW == 2) {
+				listaVentaDW = dwVenta.cargarDWventa();
+				registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
+				Messages.addFlashGlobalInfo("Carga exitosa");
+			}else {
+				Messages.addFlashGlobalInfo("Seleccione una opcion valida");
+			}
+		} catch (Exception e) {
+			Messages.addFlashGlobalError(e.getMessage());
+		}
+	}
+	
+
 	public void tranformarDatos() {
 		try {
 			listaTransformacion = dwGeneral.transformacionAuditoria(sesion.getBd());
@@ -595,17 +615,6 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 
-	}
-
-	public void extraccionVentaDW() {
-		try {
-			listaVentaDW = dwVenta.cargarDWventa();
-			registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
-			Messages.addFlashGlobalInfo("Carga exitosa");
-
-		} catch (Exception e) {
-			Messages.addFlashGlobalError(e.getMessage());
-		}
 	}
 
 	public void tranformarDatosVenta() {
@@ -621,10 +630,16 @@ public class GestionAdmController implements Serializable {
 
 	public void enviarDatosVenta() {
 		try {
+			if (selecionDW == 1) {
 			dwVenta.enviarTransformacionDatosVenta();
-			registrarAuditoria("Envio ventas DW", "Crear auditoria DW", "N/A");
+			registrarAuditoria("Envio ventas DW Acumulacion", "Crear auditoria DW", "N/A");
 			Messages.addFlashGlobalInfo("Envio con éxito");
-
+			} else if (selecionDW == 2) {
+				dwVenta.enviarTransformacionDatosRolling();;
+				registrarAuditoria("Envio ventas DW Rolling", "Crear auditoria DW", "N/A");
+				Messages.addFlashGlobalInfo("Envio con éxito");
+				
+			}
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
