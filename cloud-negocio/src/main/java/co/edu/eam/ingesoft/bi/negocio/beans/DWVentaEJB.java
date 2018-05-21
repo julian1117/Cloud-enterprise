@@ -132,9 +132,10 @@ public class DWVentaEJB {
 
 			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
 					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
+			
+			
 
-			// em.consultaNativa("INSERT INTO cloud.dw_empleado
-			// (fechaIngreso,salario,persona_Id) VALUES ('"
+			// em.consultaNativa("INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
 			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
 			// +listaVenta.get(i).getEmpleado().getSalario()+"','"
 			// +listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
@@ -166,18 +167,26 @@ public class DWVentaEJB {
 
 			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
 					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
-
-			// em.consultaNativa("INSERT INTO cloud.dw_empleado
-			// (fechaIngreso,salario,persona_Id) VALUES ('"
+			
+			
+		//	 em.consultaNativa("INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
 			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
-			// +listaVenta.get(i).getEmpleado().getSalario()+"','"
-			// +listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
+			 //+listaVenta.get(i).getEmpleado().getSalario()+"','"
+			 //+listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
 
 			// em.consultaNativa("INSERT INTO cloud.dwinventario
 			// (cantidad,fechaIngreso,producto) VALUES ('"
 			// +listaVenta.get(i).getInventario().getCantidad()+"','"
 			// +listaVenta.get(i).getInventario().getFechaIngreso()+"','"
 			// +listaVenta.get(i).getInventario().getProducto().getIdProducto()+"');");
+			
+//			em.consultaNativa("INSERT INTO cloud.dwventa(CANTIDAD,empleado_id,GestionVenta_id,Inventario_id,persona_id) VALUES ('"
+					//		+listaVenta.get(i).getCantidad()+ "','"
+						//	+listaVenta.get(i).getEmpleado().getIdEmpleado()+ "','"
+							//+listaVenta.get(i).getGestionVenta().getIdFactura()+ "','"
+							//+listaVenta.get(i).getInventario().getIdInventario()+ "','"
+							//+listaVenta.get(i).getPersona().getIdPer()+"');");
+
 
 		}
 	}
