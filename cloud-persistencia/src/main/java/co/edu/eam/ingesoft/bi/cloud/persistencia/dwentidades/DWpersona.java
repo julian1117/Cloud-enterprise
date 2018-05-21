@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,11 @@ import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
 public class DWpersona  implements Serializable{
 	
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
+	private Integer idPer;
+	
+	
 	@Column(name="cedula")
 	private Integer cedula;
 	
@@ -37,12 +44,31 @@ public class DWpersona  implements Serializable{
 	}
 
 
-	public DWpersona(Integer cedula, String nombreCompleto, String fechaNacimiento, String genero) {
+	
+
+	
+
+	public DWpersona(Integer idPer, Integer cedula, String nombreCompleto, String fechaNacimiento, String genero) {
 		super();
+		this.idPer = idPer;
 		this.cedula = cedula;
 		this.nombreCompleto = nombreCompleto;
 		this.fechaNacimiento = fechaNacimiento;
 		this.genero = genero;
+	}
+
+
+
+
+
+
+	public Integer getIdPer() {
+		return idPer;
+	}
+
+
+	public void setIdPer(Integer idPer) {
+		this.idPer = idPer;
 	}
 
 
@@ -91,6 +117,10 @@ public class DWpersona  implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cedula == null) ? 0 : cedula.hashCode());
+		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
+		result = prime * result + ((genero == null) ? 0 : genero.hashCode());
+		result = prime * result + ((idPer == null) ? 0 : idPer.hashCode());
+		result = prime * result + ((nombreCompleto == null) ? 0 : nombreCompleto.hashCode());
 		return result;
 	}
 
@@ -109,8 +139,29 @@ public class DWpersona  implements Serializable{
 				return false;
 		} else if (!cedula.equals(other.cedula))
 			return false;
+		if (fechaNacimiento == null) {
+			if (other.fechaNacimiento != null)
+				return false;
+		} else if (!fechaNacimiento.equals(other.fechaNacimiento))
+			return false;
+		if (genero == null) {
+			if (other.genero != null)
+				return false;
+		} else if (!genero.equals(other.genero))
+			return false;
+		if (idPer == null) {
+			if (other.idPer != null)
+				return false;
+		} else if (!idPer.equals(other.idPer))
+			return false;
+		if (nombreCompleto == null) {
+			if (other.nombreCompleto != null)
+				return false;
+		} else if (!nombreCompleto.equals(other.nombreCompleto))
+			return false;
 		return true;
 	}
+
 
 	
 
