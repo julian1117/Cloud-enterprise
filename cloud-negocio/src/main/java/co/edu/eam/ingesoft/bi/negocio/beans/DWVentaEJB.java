@@ -114,7 +114,8 @@ public class DWVentaEJB {
 	public void enviarTransformacionDatosVenta() throws ParseException {
 		
 		
-		
+		em.consultaNativa("INSERT INTO dwproducto (id,descripcion,nombre,valor) VALUES ('1', 'a', 'a', '1');");
+
 
 		for (int i = 0; i < listaVenta.size(); i++) {
 			
