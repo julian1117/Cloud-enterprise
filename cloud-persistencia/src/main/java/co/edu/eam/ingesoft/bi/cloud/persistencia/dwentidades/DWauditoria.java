@@ -8,14 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
+
 @Entity
 @Table(name="DW_AUDITORIA")
+@NamedQuery(name = DWauditoria.ELIMINAR_TODO, query = "DELETE FROM DWauditoria a")
 public class DWauditoria implements Serializable{
+	
+	public static final String ELIMINAR_TODO = "DWauditoria.listAudtoriaFecha";
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

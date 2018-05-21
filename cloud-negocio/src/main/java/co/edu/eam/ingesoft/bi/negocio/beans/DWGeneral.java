@@ -110,7 +110,8 @@ public class DWGeneral {
 			}
 		} else if (dw == 2) {
 			for (int i = 0; i < listaTransformacion.size(); i++) {
-				em.editarDW(listaTransformacion.get(i));
+				em.consultaNativa("delete from cloud.dw_auditoria where 1");
+				//em.editarDW(listaTransformacion.get(i));
 			}
 		}
 	}

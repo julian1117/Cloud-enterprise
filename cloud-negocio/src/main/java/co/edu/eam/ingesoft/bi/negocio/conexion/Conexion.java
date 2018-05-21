@@ -25,29 +25,28 @@ public class Conexion implements Serializable {
 	 */
 	@PersistenceContext(unitName = "oracle")
 	private EntityManager emO;
-	
+
 	/**
 	 * Instancia a postgress (2)
 	 */
 	@PersistenceContext(unitName = "postgres")
 	private EntityManager emP;
-	
+
 	/**
 	 * Instancia a mysql (3)
 	 */
 	@PersistenceContext(unitName = "mysql")
 	private EntityManager emM;
-	
-	
+
 	/**
 	 * Es la base de dato en la cual esta funcionando el sistema actualmente
 	 */
 	private int bd;
-	
+
 	/**
 	 * Guarda en la base de datos
 	 */
-	public void crear(Object objeto){
+	public void crear(Object objeto) {
 		switch (this.bd) {
 		case 1:
 			emO.persist(objeto);
@@ -56,14 +55,14 @@ public class Conexion implements Serializable {
 			emP.persist(objeto);
 			break;
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Edita en la base de datos
 	 */
-	public void editar(Object objeto){
+	public void editar(Object objeto) {
 		switch (this.bd) {
 		case 1:
 			emO.merge(objeto);
@@ -72,15 +71,14 @@ public class Conexion implements Serializable {
 			emP.merge(objeto);
 			break;
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
-	
+
 	/**
 	 * Elimina de la base de datos
 	 */
-	public void eliminar(Object objeto){
+	public void eliminar(Object objeto) {
 		switch (this.bd) {
 		case 1:
 			emO.remove(objeto);
@@ -89,66 +87,59 @@ public class Conexion implements Serializable {
 			emP.remove(objeto);
 			break;
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Busca en una base de datos determinada
-	 * @param objeto el tipo de objeto a buscar
-	 * @param pk el identificador del registro a buscar
+	 * 
+	 * @param objeto
+	 *            el tipo de objeto a buscar
+	 * @param pk
+	 *            el identificador del registro a buscar
 	 * @return retorna el registro encontrado, de lo contrario null
 	 */
-	public Object buscar(Class type, Object pk){
+	public Object buscar(Class type, Object pk) {
 		switch (this.bd) {
 		case 1:
 			return emO.find(type, pk);
 		case 2:
 			return emP.find(type, pk);
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
-	 * Metodo que permite buscar en alguna base de datos por un parametro de tipo Integer
-	 * @param parametro el parametro por ql cual se desea busacar
+	 * Metodo que permite buscar en alguna base de datos por un parametro de tipo
+	 * Integer
+	 * 
+	 * @param parametro
+	 *            el parametro por ql cual se desea busacar
 	 * @return el objeto que se desea buscar
 	 */
 	/**
-	public Object buscarXParametroInt (Class type,int parametro){
-		switch (this.bd) {
-		case 1:
-			Query q = emO.createNamedQuery(Persona.buscarXCedula);
-			q.setParameter(1, parametro);
-			List<Persona> persona = q.getResultList();
-			if(persona.isEmpty()){
-				return null;
-			}else{
-				return persona.get(0);
-			}
-		case 2:
-			Query p = emO.createNamedQuery(Persona.buscarXCedula);
-			p.setParameter(1, parametro);
-			List<Persona> personaB = p.getResultList();
-			if(personaB.isEmpty()){
-				return null;
-			}else{
-				return personaB.get(0);
-			}
-		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
-		}
-	}
-	*/
-	
+	 * public Object buscarXParametroInt (Class type,int parametro){ switch
+	 * (this.bd) { case 1: Query q = emO.createNamedQuery(Persona.buscarXCedula);
+	 * q.setParameter(1, parametro); List<Persona> persona = q.getResultList();
+	 * if(persona.isEmpty()){ return null; }else{ return persona.get(0); } case 2:
+	 * Query p = emO.createNamedQuery(Persona.buscarXCedula); p.setParameter(1,
+	 * parametro); List<Persona> personaB = p.getResultList();
+	 * if(personaB.isEmpty()){ return null; }else{ return personaB.get(0); }
+	 * default: throw new ExcepcionNegocio("La base de datos #"+this.bd+" no
+	 * existe."); } }
+	 */
+
 	/**
 	 * Listar objetos
-	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * 
+	 * @param sql
+	 *            consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @return lista de los objetos encontrados
 	 */
-	//@TransactionAttribute
-	public List<Object> listar(String sql){
+	// @TransactionAttribute
+	public List<Object> listar(String sql) {
 		switch (this.bd) {
 		case 1:
 			Query q = emO.createNamedQuery(sql);
@@ -157,17 +148,19 @@ public class Conexion implements Serializable {
 			Query p = emP.createNamedQuery(sql);
 			return p.getResultList();
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Listar objetos usando un parametro
-	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * 
+	 * @param sql
+	 *            consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @parametro el parametro necesario para la consulta
 	 * @return lista de los objetos encontrados
 	 */
-	public List<Object> listarConParametroInteger(String sql, Object parametro){
+	public List<Object> listarConParametroInteger(String sql, Object parametro) {
 		switch (this.bd) {
 		case 1:
 			Query q = emO.createNamedQuery(sql);
@@ -178,17 +171,19 @@ public class Conexion implements Serializable {
 			p.setParameter(1, parametro);
 			return p.getResultList();
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Listar objetos usando un parametro String
-	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * 
+	 * @param sql
+	 *            consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @parametro el parametro necesario para la consulta
 	 * @return lista de los objetos encontrados
 	 */
-	public List<Object> listarConParametroString(String sql, String parametro){
+	public List<Object> listarConParametroString(String sql, String parametro) {
 		switch (this.bd) {
 		case 1:
 			Query q = emO.createNamedQuery(sql);
@@ -199,17 +194,19 @@ public class Conexion implements Serializable {
 			p.setParameter(1, parametro);
 			return p.getResultList();
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Listar objetos usando un parametro String
-	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * 
+	 * @param sql
+	 *            consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @parametro el parametro necesario para la consulta
 	 * @return lista de los objetos encontrados
 	 */
-	public List<Object> listarConDosParametros(String sql, Date parametro, Date  paramettro2){
+	public List<Object> listarConDosParametros(String sql, Date parametro, Date paramettro2) {
 		switch (this.bd) {
 		case 1:
 			Query q = emO.createNamedQuery(sql);
@@ -222,35 +219,36 @@ public class Conexion implements Serializable {
 			p.setParameter(2, paramettro2);
 			return p.getResultList();
 		default:
-			throw new ExcepcionNegocio("La base de datos #"+this.bd+" no existe.");
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
 	}
-	
+
 	/**
 	 * Listar objetos de una tabla usando las 2 bases de datos
-	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * 
+	 * @param sql
+	 *            consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @return lista de los objetos encontrados
 	 */
-	public List<Object> listarCon2BasesDatos(String sql){
-		try{
+	public List<Object> listarCon2BasesDatos(String sql) {
+		try {
 			Query q = emO.createNamedQuery(sql);
 			Query p = emP.createNamedQuery(sql);
 			List<Object> lista = new ArrayList<Object>(q.getResultList());
-			if(lista.addAll(p.getResultList())){
+			if (lista.addAll(p.getResultList())) {
 				return lista;
-			}else{
+			} else {
 				throw new ExcepcionNegocio("No se pudo unir los dos listados de las bases de datos");
 			}
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			throw new ExcepcionNegocio(ex.getMessage());
 		}
 	}
-	
 
 	/**
 	 * Accesores Y Modificadores
 	 */
-	
+
 	public int getBd() {
 		return bd;
 	}
@@ -258,25 +256,27 @@ public class Conexion implements Serializable {
 	public void setBd(int bd) {
 		this.bd = bd;
 	}
-	
+
 	/**
 	 * Guarda en la base de datos
 	 */
-	public void editarDW(DWauditoria objeto){
-		
-		//if(this.bd==3) {
-			emM.persist(objeto);
-		//}
-					
+	public void editarDW(DWauditoria objeto) {
+
+		// if(this.bd==3) {
+		emM.persist(objeto);
+		// }
+
+	}
+
+	public void editarDWVenta(DWventa objeto) {
+		// if(this.bd==3) {
+		emM.persist(objeto);
+		// }
 	}
 	
-public void editarDWVenta(DWventa objeto){
-		
-		//if(this.bd==3) {
-			emM.persist(objeto);
-		//}
-					
+	public void consultaNativa(String Consulta) {
+		emM.createNativeQuery(Consulta);
 	}
 	
-	
+
 }
