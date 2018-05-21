@@ -627,7 +627,7 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalInfo("Envio con éxito");
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
 
