@@ -249,6 +249,25 @@ public class GestionAdmEJB {
 		}
 		
 	}
+	
+	public void eliminarAcceso(Integer uss,Integer pagg,int bd) {
+		try {
+			Usuario us = buscarUsuario(uss, bd);
+			Paginas pag = buscarPagina(pagg, bd);
+			
+			Acceso buscarAc = buscarAccesos(us.getCodigo(), pag.getIdPagina(), bd);
+
+			
+			if (buscarAc !=null) {
+				em.setBd(bd);
+				em.eliminar(buscarAc);
+			}
+		} catch (
+
+		ExcepcionNegocio e) {
+			throw new ExcepcionNegocio("No fue posible eliminar el area de la empresa ");
+		}
+	}
 
 	/**
 	 * buscar accesos

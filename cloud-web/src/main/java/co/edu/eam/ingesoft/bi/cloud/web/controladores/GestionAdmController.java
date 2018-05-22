@@ -524,6 +524,18 @@ public class GestionAdmController implements Serializable {
 			Messages.addFlashGlobalError("=( lo snetimos no se puedo eliminar el registro");
 		}
 	}
+	
+	public void eliminarPXU(Acceso acceso) {
+		try {
+			gestionAdmEJB.eliminarAcceso(codigoUsuario, codigoPagina, sesion.getBd());
+			registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
+			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");			
+			
+		} catch (Exception e) {
+			Messages.addFlashGlobalError("lo sentimos no se puedo eliminar el registro");
+		}
+		
+	}
 
 	/**
 	 * Registro de usuarios con paginas
@@ -550,9 +562,7 @@ public class GestionAdmController implements Serializable {
 
 	}
 
-	public void eliminarPXU(Acceso acceso) {
-		registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
-	}
+	
 
 	public void cambiarBD() {
 		try {
