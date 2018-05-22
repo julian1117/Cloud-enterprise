@@ -551,6 +551,7 @@ public class GestionAdmController implements Serializable {
 	}
 
 	public void eliminarPXU(Acceso acceso) {
+		
 		registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
 	}
 
@@ -635,7 +636,7 @@ public class GestionAdmController implements Serializable {
 			registrarAuditoria("Envio ventas DW Acumulacion", "Crear auditoria DW", "N/A");
 			Messages.addFlashGlobalInfo("Envio con éxito");
 			} else if (selecionDW == 2) {
-				dwVenta.enviarTransformacionDatosRolling();;
+				dwVenta.enviarTransformacionDatosRolling();
 				registrarAuditoria("Envio ventas DW Rolling", "Crear auditoria DW", "N/A");
 				Messages.addFlashGlobalInfo("Envio con éxito");
 				

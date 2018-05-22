@@ -54,6 +54,8 @@ public class DWVentaEJB {
 
 		// list = (List<Venta>) (Object) em.listar(Venta.LISTA_VENT);
 
+		
+		
 		for (int i = 0; i < list.size(); i++) {
 
 			DWProducto producto = new DWProducto();
@@ -123,7 +125,6 @@ public class DWVentaEJB {
 					+ listaVenta.get(i).getInventario().getProducto().getNombre() + "','"
 					+ listaVenta.get(i).getInventario().getProducto().getValor() + "');");
 
-			
 			em.consultaNativa("INSERT INTO cloud.dw_persona(cedula,fechaNacimiento,genero,nombre) VALUES ('"
 					+ listaVenta.get(i).getPersona().getCedula() + "','"
 					+ listaVenta.get(i).getPersona().getFechaNacimiento() + "','"
@@ -132,10 +133,9 @@ public class DWVentaEJB {
 
 			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
 					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
-			
-			
 
-			// em.consultaNativa("INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
+			// em.consultaNativa("INSERT INTO cloud.dw_empleado
+			// (fechaIngreso,salario,persona_Id) VALUES ('"
 			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
 			// +listaVenta.get(i).getEmpleado().getSalario()+"','"
 			// +listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
@@ -149,9 +149,19 @@ public class DWVentaEJB {
 		}
 
 	}
-	
+
 	public void enviarTransformacionDatosRolling() throws ParseException {
+		
 		em.consultaNativa("TRUNCATE TABLE cloud.dwventa;");
+		em.consultaNativa("TRUNCATE TABLE cloud.dw_empleado;");	
+		em.consultaNativa("TRUNCATE TABLE cloud.dwinventario;");
+		em.consultaNativa("TRUNCATE TABLE cloud.dwgestionventa;");
+		em.consultaNativa("TRUNCATE TABLE cloud.dw_persona;");
+		em.consultaNativa("TRUNCATE TABLE cloud.dwproducto;");
+		em.consultaNativa("TRUNCATE TABLE cloud.dwventa;");
+		
+		
+		
 		for (int i = 0; i < listaVenta.size(); i++) {
 
 			em.consultaNativa("INSERT INTO cloud.dwproducto (descripcion,nombre,valor) VALUES ('"
@@ -167,26 +177,37 @@ public class DWVentaEJB {
 
 			em.consultaNativa("INSERT INTO cloud.dwgestionventa (fecha) VALUES ('"
 					+ listaVenta.get(i).getGestionVenta().getFecha() + "');");
-			
-			
-		//	 em.consultaNativa("INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
-			// +listaVenta.get(i).getEmpleado().getFechaIngreso()+"','"
-			 //+listaVenta.get(i).getEmpleado().getSalario()+"','"
-			 //+listaVenta.get(i).getEmpleado().getIdPersona().getIdPer()+"');");
 
-			// em.consultaNativa("INSERT INTO cloud.dwinventario
-			// (cantidad,fechaIngreso,producto) VALUES ('"
-			// +listaVenta.get(i).getInventario().getCantidad()+"','"
-			// +listaVenta.get(i).getInventario().getFechaIngreso()+"','"
-			// +listaVenta.get(i).getInventario().getProducto().getIdProducto()+"');");
-			
-//			em.consultaNativa("INSERT INTO cloud.dwventa(CANTIDAD,empleado_id,GestionVenta_id,Inventario_id,persona_id) VALUES ('"
-					//		+listaVenta.get(i).getCantidad()+ "','"
-						//	+listaVenta.get(i).getEmpleado().getIdEmpleado()+ "','"
-							//+listaVenta.get(i).getGestionVenta().getIdFactura()+ "','"
-							//+listaVenta.get(i).getInventario().getIdInventario()+ "','"
-							//+listaVenta.get(i).getPersona().getIdPer()+"');");
+			// Ella dice q aqui esta el problema
+			String sqlP = "INSERT INTO cloud.dw_empleado (fechaIngreso,salario,persona_Id) VALUES ('"
+					+ listaVenta.get(i).getEmpleado().getFechaIngreso() + "','"
+					+ listaVenta.get(i).getEmpleado().getSalario()
+					+ "',(select p.id from cloud.dw_persona p order by p.id desc limit 1));";
 
+			em.consultaNativa(sqlP);
+
+			String sqlI = "INSERT INTO cloud.dwinventario (cantidad,fechaIngreso,producto) VALUES ('"
+					+ listaVenta.get(i).getInventario().getCantidad() + "','"
+					+ listaVenta.get(i).getInventario().getFechaIngreso()
+					+ "',(select p.id from cloud.dwproducto  p order by  p.id desc limit 1));";
+			
+			em.consultaNativa(sqlI);
+			
+			System.out.println(sqlI + "----------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+			String sqlV = "INSERT INTO cloud.dwventa(CANTIDAD,empleado_id,GestionVenta_id,Inventario_id,persona_id) "
+					+ "VALUES ('" + listaVenta.get(i).getCantidad()
+					+ "',(select p.id from cloud.dw_empleado  p order by  p.id desc limit 1),"
+					+ "(select p.id from cloud.dwgestionventa  p order by  p.id desc limit 1),"
+					+ "(select p.id from cloud.dwinventario  p order by  p.id desc limit 1),"
+					+ "(select p.id from cloud.dw_persona  p order by  p.id desc limit 1));";
+			
+			System.out.println(sqlV + "----------------------------------------->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+			
+			em.consultaNativa(sqlV);
+
+			
 
 		}
 	}
