@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,44 +19,48 @@ import javax.persistence.TemporalType;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Auditoria;
 
 @Entity
-@Table(name="DW_AUDITORIA")
-@NamedQuery(name = DWauditoria.ELIMINAR_TODO, query = "DELETE FROM DWauditoria a")
-public class DWauditoria implements Serializable{
-	
-	public static final String ELIMINAR_TODO = "DWauditoria.listAudtoriaFecha";
-	
+@Table(name = "DW_AUDITORIA")
+@NamedQuery(name = DWauditoria.TRAER, query = "SELECT A FROM DWauditoria A")
+public class DWauditoria implements Serializable {
+
+	public static final String TRAER = "DWauditoria.listdwaU";
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Integer idAuditoria;
 
-	@Column(name = "nombre",nullable = false)
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
 
-	@Column(name = "accion",nullable = false)
+	@Column(name = "accion", nullable = false)
 	private String accion;
 
-	@Column(name = "origen",nullable = false)
+	@Column(name = "origen", nullable = false)
 	private String origen;
 
-	@Column(name = "navegador",nullable = false)
+	@Column(name = "navegador", nullable = false)
 	private String navegador;
 
-	@Column(name = "fecha",nullable = false)
+	@Column(name = "fecha", nullable = false)
 	private String fecha;
 
-	@Column(name = "usuarioSe",nullable = false)
+	@Column(name = "usuarioSe", nullable = false)
 	private String usuarioSe;
-	
-	@Column(name = "usuarioAfectado",nullable = false)
+
+	@Column(name = "usuarioAfectado", nullable = false)
 	private String usuarioAfectado;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "DW_usuario")
+	private DWusuario dwUsuario;
+
 	public DWauditoria() {
 		super();
 	}
-	
+
 	public DWauditoria(Integer idAuditoria, String nombre, String accion, String origen, String navegador, String fecha,
-			String usuarioSe, String usuarioAfectado) {
+			String usuarioSe, String usuarioAfectado, DWusuario dwUsuario) {
 		super();
 		this.idAuditoria = idAuditoria;
 		this.nombre = nombre;
@@ -64,6 +70,15 @@ public class DWauditoria implements Serializable{
 		this.fecha = fecha;
 		this.usuarioSe = usuarioSe;
 		this.usuarioAfectado = usuarioAfectado;
+		this.dwUsuario = dwUsuario;
+	}
+
+	public DWusuario getDwUsuario() {
+		return dwUsuario;
+	}
+
+	public void setDwUsuario(DWusuario dwUsuario) {
+		this.dwUsuario = dwUsuario;
 	}
 
 	public Integer getIdAuditoria() {
@@ -154,7 +169,5 @@ public class DWauditoria implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 
 }

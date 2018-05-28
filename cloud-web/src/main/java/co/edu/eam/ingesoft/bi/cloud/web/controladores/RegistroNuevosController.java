@@ -288,7 +288,7 @@ public class RegistroNuevosController implements Serializable {
 	public void crearUsuarioNuevo() {
 
 		try {
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(),1);
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getIdGenero(),1);
 			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad,1);
 
 			Persona persona = new Persona();

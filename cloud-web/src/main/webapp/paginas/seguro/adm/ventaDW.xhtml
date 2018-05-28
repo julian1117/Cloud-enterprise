@@ -103,7 +103,7 @@
 							border="1" class="table table-striped">
 
 							<p:column headerText="Nombre completo del empleado">
-								<h:outputLabel value="#{doc.empleado.idPersona.nombreCompleto}" />
+								<h:outputLabel value="#{doc.empleado.nombreEmpleado}" />
 							</p:column>
 
 							<p:column headerText="Nombre completo del cliente">
@@ -111,7 +111,7 @@
 							</p:column>
 
 							<p:column headerText="Numero de factura">
-								<h:outputLabel value="#{doc.gestionVenta.idFactura}" />
+								<h:outputLabel value="#{doc.gestionVenta.numeroFactura}" />
 							</p:column>
 
 							<p:column headerText="Fecha de venta">
@@ -119,7 +119,7 @@
 							</p:column>
 
 							<p:column headerText="Producto">
-								<h:outputLabel value="#{doc.inventario.producto.nombre}" />
+								<h:outputLabel value="#{doc.inventario.nombreProducto}" />
 							</p:column>
 
 							<p:column headerText="Cantidad vendida">

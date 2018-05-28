@@ -20,8 +20,7 @@ import javax.persistence.TemporalType;
 @Table(name="Persona")
 public class Persona implements Serializable {
 	
-	//public static final String PERSONAS = "Usuario.listPers";
-
+	// static final String LIS_PERSONAS = "Usuario.listPers";
 
 	@Id
 	@Column(name="cedula")
@@ -47,11 +46,11 @@ public class Persona implements Serializable {
 	private Date fechaNacimiento;
 	
 	@ManyToOne
-	@JoinColumn(name="Genero_id",nullable=false)
+	@JoinColumn(name="Genero_id")
 	private Genero genero;
 	
 	@ManyToOne
-	@JoinColumn(name="Ciudad_id",nullable=false)
+	@JoinColumn(name="Ciudad_id")
 	private Ciudad ciudad;
 
 	public Persona() {

@@ -18,9 +18,7 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Ciudad;
-import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Departamento;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Genero;
-import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Pais;
 import co.edu.eam.ingesoft.bi.cloud.persistencia.entidades.Persona;
 import co.edu.eam.ingesoft.bi.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.bi.negocio.beans.General_EJB;
@@ -241,10 +239,11 @@ public class ClienteControler implements Serializable {
 	public void crearCliente() {
 
 		try {
+			
+			System.out.println(nombre +" - " +apellido +" - " +cedula +" - " +direccion +" - " +email  +" - " +fechaNacimiento  +" - " +telefono);
 
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(), 1);
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getIdGenero(), 1);
 			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad, 1);
-
 			Persona persona = new Persona();
 			persona.setNombre(nombre);
 			persona.setApellido(apellido);
@@ -294,7 +293,7 @@ public class ClienteControler implements Serializable {
 		try {
 
 			Persona per = registroNuevosEJB.buscarPersona(Integer.parseInt(cedula), sesion.getBd());
-			Genero buscarGenero = generalEJB.buscarGenero(genero.getId(), sesion.getBd());
+			Genero buscarGenero = generalEJB.buscarGenero(genero.getIdGenero(), sesion.getBd());
 			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad, sesion.getBd());
 
 			if (per != null) {

@@ -18,7 +18,7 @@ public class Genero implements Serializable {
 	
 	@Id
 	@Column(name="id")
-	private Integer id;
+	private Integer idGenero;
 	
 	@Column(name="genero")
 	private String genero;
@@ -27,18 +27,18 @@ public class Genero implements Serializable {
 		super();
 	}
 
-	public Genero(Integer id, String genero) {
+	public Genero(Integer idGenero, String genero) {
 		super();
-		this.id = id;
+		this.idGenero = idGenero;
 		this.genero = genero;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getIdGenero() {
+		return idGenero;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setIdGenero(Integer idGenero) {
+		this.idGenero = idGenero;
 	}
 
 	public String getGenero() {
@@ -53,7 +53,7 @@ public class Genero implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idGenero == null) ? 0 : idGenero.hashCode());
 		return result;
 	}
 
@@ -66,20 +66,13 @@ public class Genero implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Genero other = (Genero) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idGenero == null) {
+			if (other.idGenero != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idGenero.equals(other.idGenero))
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return  genero;
-	}
-
-	
 	
 
 }

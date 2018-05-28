@@ -28,62 +28,36 @@ public class DWempleado implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
 	private Integer idEmpleado;
-		
-	
-	@ManyToOne
-	@JoinColumn(name="persona_Id")
-	private DWpersona idPersona;
 	
 	@Column(name="salario")
 	private double salario;
 	
-	@Column(name="fechaIngreso")
+	@Column(name="fechaIngreso_emp")
 	@Temporal(TemporalType.DATE)
-	private Date fechaIngreso;
+	private Date fechaIngresoEmp;
+	
+	@Column(name="Nombre_empleado")
+	private String nombreEmpleado;
 	
 
 	public DWempleado() {
 		super();
 	}
-
 	
-
-	
+	public DWempleado(Integer idEmpleado, double salario, Date fechaIngresoEmp, String nombreEmpleado) {
+		super();
+		this.idEmpleado = idEmpleado;
+		this.salario = salario;
+		this.fechaIngresoEmp = fechaIngresoEmp;
+		this.nombreEmpleado = nombreEmpleado;
+	}
 
 	public Integer getIdEmpleado() {
 		return idEmpleado;
 	}
 
-
-
-
-
 	public void setIdEmpleado(Integer idEmpleado) {
 		this.idEmpleado = idEmpleado;
-	}
-
-
-
-
-
-	public DWempleado(Integer idEmpleado, DWpersona idPersona, double salario, Date fechaIngreso) {
-		super();
-		this.idEmpleado = idEmpleado;
-		this.idPersona = idPersona;
-		this.salario = salario;
-		this.fechaIngreso = fechaIngreso;
-	}
-
-
-
-
-
-	public DWpersona getIdPersona() {
-		return idPersona;
-	}
-
-	public void setIdPersona(DWpersona idPersona) {
-		this.idPersona = idPersona;
 	}
 
 	public double getSalario() {
@@ -94,17 +68,21 @@ public class DWempleado implements Serializable {
 		this.salario = salario;
 	}
 
-	public Date getFechaIngreso() {
-		return fechaIngreso;
+	public Date getFechaIngresoEmp() {
+		return fechaIngresoEmp;
 	}
 
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+	public void setFechaIngresoEmp(Date fechaIngresoEmp) {
+		this.fechaIngresoEmp = fechaIngresoEmp;
 	}
 
+	public String getNombreEmpleado() {
+		return nombreEmpleado;
+	}
 
-
-
+	public void setNombreEmpleado(String nombreEmpleado) {
+		this.nombreEmpleado = nombreEmpleado;
+	}
 
 	@Override
 	public int hashCode() {
@@ -113,10 +91,6 @@ public class DWempleado implements Serializable {
 		result = prime * result + ((idEmpleado == null) ? 0 : idEmpleado.hashCode());
 		return result;
 	}
-
-
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -134,10 +108,5 @@ public class DWempleado implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-	
-	
-	
 
 }

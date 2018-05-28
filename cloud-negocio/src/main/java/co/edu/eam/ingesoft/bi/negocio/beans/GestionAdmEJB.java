@@ -264,6 +264,12 @@ public class GestionAdmEJB {
 		return (Acceso) em.buscar(Acceso.class, accesoPK);
 	}
 	
+	public void elimnarPXU(int pagina,int usuario, int bd) {
+		em.setBd(bd);
+		Acceso acc = buscarAccesos(usuario, pagina, bd);
+		em.eliminar(acc);		
+	}
+	
 	/**
 	 * lista de accesos por usuario
 	 * @return

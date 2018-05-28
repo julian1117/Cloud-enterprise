@@ -120,17 +120,21 @@ public class Conexion implements Serializable {
 	 *            el parametro por ql cual se desea busacar
 	 * @return el objeto que se desea buscar
 	 */
-	/**
-	 * public Object buscarXParametroInt (Class type,int parametro){ switch
-	 * (this.bd) { case 1: Query q = emO.createNamedQuery(Persona.buscarXCedula);
-	 * q.setParameter(1, parametro); List<Persona> persona = q.getResultList();
-	 * if(persona.isEmpty()){ return null; }else{ return persona.get(0); } case 2:
-	 * Query p = emO.createNamedQuery(Persona.buscarXCedula); p.setParameter(1,
-	 * parametro); List<Persona> personaB = p.getResultList();
-	 * if(personaB.isEmpty()){ return null; }else{ return personaB.get(0); }
-	 * default: throw new ExcepcionNegocio("La base de datos #"+this.bd+" no
-	 * existe."); } }
-	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public Object buscarXParametro(String sql) {
+		switch (this.bd) {
+		case 1:
+			Query q = emO.createNamedQuery(sql);
+			q.executeUpdate();
+			return q;
+		case 2:
+			Query p = emP.createNamedQuery(sql);
+			p.executeUpdate();
+			return p;
+		default:
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
+		}
+	}
 
 	/**
 	 * Listar objetos
@@ -148,6 +152,9 @@ public class Conexion implements Serializable {
 		case 2:
 			Query p = emP.createNamedQuery(sql);
 			return p.getResultList();
+		case 3:
+			Query x = emM.createNamedQuery(sql);
+			return x.getResultList();
 		default:
 			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
@@ -194,6 +201,10 @@ public class Conexion implements Serializable {
 			Query p = emP.createNamedQuery(sql);
 			p.setParameter(1, parametro);
 			return p.getResultList();
+		case 3:
+			Query m = emM.createNamedQuery(sql);
+			m.setParameter(1, parametro);
+			return m.getResultList();
 		default:
 			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
@@ -212,12 +223,12 @@ public class Conexion implements Serializable {
 		case 1:
 			Query q = emO.createNamedQuery(sql);
 			q.setParameter(1, parametro);
-			q.setParameter(2, paramettro2);
+			// q.setParameter(2, paramettro2);
 			return q.getResultList();
 		case 2:
 			Query p = emP.createNamedQuery(sql);
 			p.setParameter(1, parametro);
-			p.setParameter(2, paramettro2);
+			// p.setParameter(2, paramettro2);
 			return p.getResultList();
 		default:
 			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
@@ -261,11 +272,9 @@ public class Conexion implements Serializable {
 	/**
 	 * Guarda en la base de datos
 	 */
-	public void editarDW(DWauditoria objeto) {
+	public void crearDWAuditoria(DWauditoria objeto) {
 
-		// if(this.bd==3) {
 		emM.persist(objeto);
-		// }
 
 	}
 
@@ -274,13 +283,28 @@ public class Conexion implements Serializable {
 		emM.persist(objeto);
 		// }
 	}
-	
+
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void consultaNativa(String Consulta) {
-		
+
 		Query q = emM.createNativeQuery(Consulta);
 		q.executeUpdate();
 	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public void consultaNativaConBD(String Consulta) {
 	
+		switch (this.bd) {
+		case 1:
+			Query q = emO.createNativeQuery(Consulta);
+			q.executeUpdate();
+		case 2:
+			Query p = emP.createNativeQuery(Consulta);
+			p.executeUpdate();
+		default:
+			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
+		}
+	
+	}
 
 }

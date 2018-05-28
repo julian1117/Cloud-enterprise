@@ -19,8 +19,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="DWInventario")
-public class DWInventario implements Serializable{
-	
+public class DWInventario implements Serializable{	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,24 +29,32 @@ public class DWInventario implements Serializable{
 	@Column(name="cantidad")
 	private Integer cantidad;
 	
-	@Column(name="fechaIngreso")
-	private String fechaIngreso;
+	@Column(name="fecha_ingreso_inv")
+	@Temporal(TemporalType.DATE)
+	private Date fechaIngresoInv;
 	
-	@ManyToOne
-	@JoinColumn(name="producto")
-	private DWProducto producto;
-
+	@Column(name="nombre_producto")
+	private String nombreProducto;
+	
+	@Column(name="descripcion_producto")
+	private String descripcionProducto;
+	
+	@Column(name="valor_producto")
+	private String valorProducto;
+	
 	public DWInventario() {
 		super();
 	}
 
-	public DWInventario(Integer idInventario, Integer cantidad, String fechaIngreso, DWProducto producto,
-			DWempleado idPersona) {
+	public DWInventario(Integer idInventario, Integer cantidad, Date fechaIngresoInv, String nombreProducto,
+			String descripcionProducto, String valorProducto) {
 		super();
 		this.idInventario = idInventario;
 		this.cantidad = cantidad;
-		this.fechaIngreso = fechaIngreso;
-		this.producto = producto;
+		this.fechaIngresoInv = fechaIngresoInv;
+		this.nombreProducto = nombreProducto;
+		this.descripcionProducto = descripcionProducto;
+		this.valorProducto = valorProducto;
 	}
 
 	public Integer getIdInventario() {
@@ -66,20 +73,36 @@ public class DWInventario implements Serializable{
 		this.cantidad = cantidad;
 	}
 
-	public String getFechaIngreso() {
-		return fechaIngreso;
+	public Date getFechaIngresoInv() {
+		return fechaIngresoInv;
 	}
 
-	public void setFechaIngreso(String fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
+	public void setFechaIngresoInv(Date fechaIngresoInv) {
+		this.fechaIngresoInv = fechaIngresoInv;
 	}
 
-	public DWProducto getProducto() {
-		return producto;
+	public String getNombreProducto() {
+		return nombreProducto;
 	}
 
-	public void setProducto(DWProducto producto) {
-		this.producto = producto;
+	public void setNombreProducto(String nombreProducto) {
+		this.nombreProducto = nombreProducto;
+	}
+
+	public String getDescripcionProducto() {
+		return descripcionProducto;
+	}
+
+	public void setDescripcionProducto(String descripcionProducto) {
+		this.descripcionProducto = descripcionProducto;
+	}
+
+	public String getValorProducto() {
+		return valorProducto;
+	}
+
+	public void setValorProducto(String valorProducto) {
+		this.valorProducto = valorProducto;
 	}
 
 	@Override
@@ -106,11 +129,5 @@ public class DWInventario implements Serializable{
 			return false;
 		return true;
 	}
-
-
-
-	
-
-	
 
 }

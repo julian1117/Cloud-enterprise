@@ -552,7 +552,10 @@ public class GestionAdmController implements Serializable {
 
 	public void eliminarPXU(Acceso acceso) {
 		
+		gestionAdmEJB.elimnarPXU(acceso.getPaginas().getIdPagina(), acceso.getUsuario().getCodigo(), sesion.getBd());
 		registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
+		Messages.addFlashGlobalInfo("Eliminacion con exito");
+
 	}
 
 	public void cambiarBD() {
@@ -587,25 +590,23 @@ public class GestionAdmController implements Serializable {
 		}
 	}
 
-
 	public void extraccionVentaDW() {
 		try {
 			if (selecionDW == 1) {
-			listaVentaDW = dwVenta.cargarDWVentaAcumulacion(fechaIni, fechaFin);
-			registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
-			Messages.addFlashGlobalInfo("Carga exitosa");
+				listaVentaDW = dwVenta.cargarDWVentaAcumulacion(fechaIni, fechaFin);
+				registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
+				Messages.addFlashGlobalInfo("Carga exitosa");
 			} else if (selecionDW == 2) {
 				listaVentaDW = dwVenta.cargarDWventa();
 				registrarAuditoria("Cargar Ventas DW", "Cargar datos", "N/A");
 				Messages.addFlashGlobalInfo("Carga exitosa");
-			}else {
+			} else {
 				Messages.addFlashGlobalInfo("Seleccione una opcion valida");
 			}
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());
 		}
 	}
-	
 
 	public void tranformarDatos() {
 		try {
@@ -632,14 +633,14 @@ public class GestionAdmController implements Serializable {
 	public void enviarDatosVenta() {
 		try {
 			if (selecionDW == 1) {
-			dwVenta.enviarTransformacionDatosVenta();
-			registrarAuditoria("Envio ventas DW Acumulacion", "Crear auditoria DW", "N/A");
-			Messages.addFlashGlobalInfo("Envio con éxito");
+				dwVenta.enviarTransformacionDatosVenta();
+				registrarAuditoria("Envio ventas DW Acumulacion", "Crear auditoria DW", "N/A");
+				Messages.addFlashGlobalInfo("Envio con éxito");
 			} else if (selecionDW == 2) {
 				dwVenta.enviarTransformacionDatosRolling();
 				registrarAuditoria("Envio ventas DW Rolling", "Crear auditoria DW", "N/A");
 				Messages.addFlashGlobalInfo("Envio con éxito");
-				
+
 			}
 		} catch (Exception e) {
 			Messages.addFlashGlobalError(e.getMessage());

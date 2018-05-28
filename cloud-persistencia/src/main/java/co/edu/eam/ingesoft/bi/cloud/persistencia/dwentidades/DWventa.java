@@ -14,20 +14,22 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name="DWVenta")
+@NamedQuery(name = DWventa.TRAER_VENTA, query = "SELECT A FROM DWventa A")
 public class DWventa implements Serializable {
 	
+	public static final String TRAER_VENTA = "DWauditoria.listdwVENTA";
+	
 	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer id;
+	private Integer idVenta;
 	
 	@ManyToOne
 	@JoinColumn(name = "Inventario_id")
-	private DWInventario inventario;
-	
+	private DWInventario inventario;	
 	
 	@ManyToOne
 	@JoinColumn(name = "GestionVenta_id")
@@ -39,17 +41,14 @@ public class DWventa implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "persona_id")
-	private DWpersona persona;
-	
+	private DWpersona persona;	
 	
 	@Column(name = "CANTIDAD")
 	private Integer cantidad;
 
 	public DWventa() {
 		super();
-	}
-
-	
+	}	
 
 	public DWventa(DWInventario inventario, DWgestionVenta gestionVenta, DWempleado empleado, DWpersona persona,
 			Integer cantidad) {
@@ -61,7 +60,13 @@ public class DWventa implements Serializable {
 		this.cantidad = cantidad;
 	}
 
+	public Integer getIdVenta() {
+		return idVenta;
+	}
 
+	public void setIdVenta(Integer idVenta) {
+		this.idVenta = idVenta;
+	}
 
 	public DWInventario getInventario() {
 		return inventario;
@@ -85,27 +90,19 @@ public class DWventa implements Serializable {
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	
+	}	
 
 	public DWempleado getEmpleado() {
 		return empleado;
 	}
 
-
-
 	public void setEmpleado(DWempleado empleado) {
 		this.empleado = empleado;
 	}
 
-
-
 	public DWpersona getPersona() {
 		return persona;
 	}
-
-
 
 	public void setPersona(DWpersona persona) {
 		this.persona = persona;
@@ -115,23 +112,9 @@ public class DWventa implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((cantidad == null) ? 0 : cantidad.hashCode());
 		return result;
 	}
-	
-	
-
-	public Integer getId() {
-		return id;
-	}
-
-
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -142,26 +125,12 @@ public class DWventa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DWventa other = (DWventa) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (cantidad == null) {
+			if (other.cantidad != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!cantidad.equals(other.cantidad))
 			return false;
 		return true;
 	}
-
-
-
-	
-
-	
-	
-
-
-
-	
-
-	
-	
 
 }

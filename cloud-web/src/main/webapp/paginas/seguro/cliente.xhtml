@@ -30,11 +30,11 @@
 
 								<p:outputLabel for="tftFecha" value="Fecha" />
 								<h:inputText id="tftFecha" class="form-control"
-									value="#{gestionNuevosController.fechaNacimiento}"
+									value="#{gestionClienteController.fechaNacimiento}"
 									mode="inline" a:placeholder="dia-mes-anio">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
-								<p:message for="tftFecha" />
+								<br />
 
 								<h:outputLabel for="tftCedula" id="lblCedula" value="Cedula" />
 								<h:inputText id="tftCedula"
@@ -53,12 +53,12 @@
 								<h:inputText id="tftDireccion"
 									value="#{gestionClienteController.direccion}"
 									class="form-control" />
-								<p:message for="tftDireccion" />
+								<br />
 
 								<h:outputLabel for="tftEmail" id="lblEmail" value="Email" />
 								<h:inputText id="tftEmail"
 									value="#{gestionClienteController.email}" class=" form-control" />
-								<p:message for="tftEmail" />
+								<br />
 
 
 								<h:outputLabel for="tftSexo" id="lblSexo" value="Tipo de sexo"
@@ -70,10 +70,11 @@
 									<f:selectItem itemLabel="Seleccione el genero" itemValue=""
 										noSelectionOption="true" />
 									<f:selectItems value="#{gestionClienteController.listGeneros}"
-										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
+										var="doc" itemValue="#{doc.idGenero}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
+
 								</h:selectOneMenu>
-								<p:message for="tftSexo" />
+								<br />
 
 								<h:outputLabel for="tftPais" id="lblpais" value="Pais "
 									class="labelSelect" />
@@ -145,11 +146,11 @@
 							<h:outputLabel for="tftCedulaBuscar" id="lblCedulaBuscar"
 								value="#{msj['persona.cedula']}:"></h:outputLabel>
 							<h:inputText id="tftCedulaBuscar"
-								value="#{gestionClienteController.cedula}"></h:inputText>
+								value="#{gestionClienteController.cedula}" class=" form-control"></h:inputText>
 
 							<p:commandButton id="btnBuscar" value="#{msj['persona.buscar']}"
-								action="#{gestionClienteController.buscarCliente}" class="btn"
-								process="@this tftCedulaBuscar" update="paneldatosBuscar " />
+								action="#{gestionClienteController.buscarCliente}" class="buttonIni"
+								process="@this tftCedulaBuscar" update="paneldatosBuscar "  />
 						</h:panelGrid>
 
 
@@ -160,35 +161,35 @@
 								<h:outputLabel for="tftNombreBuscar" id="lblNombreBuscar"
 									value="#{msj['persona.nombre']}:"></h:outputLabel>
 								<h:inputText id="tftNombreBuscar"
-									value="#{gestionClienteController.nombre}"></h:inputText>
+									value="#{gestionClienteController.nombre}" class=" form-control"></h:inputText>
 
 								<h:outputLabel for="tftApellidoBuscar" id="lblApellidoBuscar"
 									value="#{msj['persona.apellido']}:"></h:outputLabel>
 								<h:inputText id="tftApellidoBuscar"
-									value="#{gestionClienteController.apellido}"></h:inputText>
+									value="#{gestionClienteController.apellido}" class=" form-control"></h:inputText>
 
 								<p:outputLabel for="tftFechaBuscar" value="Fecha" />
 								<h:inputText id="tftFechaBuscar"
 									value="#{gestionClienteController.fechaNacimiento}"
-									mode="inline" a:placeholder="dia-mes-anio">
+									mode="inline" a:placeholder="dia-mes-anio" class=" form-control">
 									<f:convertDateTime pattern="dd-MM-yyyy" />
 								</h:inputText>
 
 								<h:outputLabel for="tftTelefonoBuscar" id="lblTelefonoBuscar"
 									value="#{msj['persona.telefono']}:"></h:outputLabel>
 								<h:inputText id="tftTelefonoBuscar"
-									value="#{gestionClienteController.telefono}"></h:inputText>
+									value="#{gestionClienteController.telefono}" class=" form-control"></h:inputText>
 
 								<h:outputLabel for="tftDireccionBuscar" id="lblDireccionBuscar"
 									value="#{msj['persona.direccion']}:"></h:outputLabel>
 								<h:inputText id="tftDireccionBuscar"
-									value="#{gestionClienteController.direccion}"></h:inputText>
+									value="#{gestionClienteController.direccion}" class=" form-control"></h:inputText>
 
 
 								<h:outputLabel for="tftEmailBuscar" id="lblEmailBuscar"
 									value="#{msj['persona.email']}:"></h:outputLabel>
 								<h:inputText id="tftEmailBuscar"
-									value="#{gestionClienteController.email}"></h:inputText>
+									value="#{gestionClienteController.email}" class=" form-control"></h:inputText>
 
 								<h:outputLabel for="tftSexoB" id="lblSexoB" value="Tipo de sexo"
 									class="labelSelect" />
@@ -199,7 +200,7 @@
 									<f:selectItem itemLabel="Seleccione el genero" itemValue=""
 										noSelectionOption="true" />
 									<f:selectItems value="#{gestionClienteController.listGeneros}"
-										var="doc" itemValue="#{doc.id}" itemLabel="#{doc.genero}"
+										var="doc" itemValue="#{doc.idGenero}" itemLabel="#{doc.genero}"
 										class="sizeselect form-control" />
 								</h:selectOneMenu>
 								<p:message for="tftSexoB" />
@@ -215,13 +216,13 @@
 
 						<h:panelGrid id="panelbtns" columns="2">
 							<p:commandButton id="btnEditar" value="#{msj['persona.editar']}"
-								action="#{gestionClienteController.editarCliente}" class="btn"
+								action="#{gestionClienteController.editarCliente}" class="buttonIni"
 								process="@this paneldatosPBuscar" />
 
 
 							<p:commandButton id="btnEliminar"
 								value="#{msj['persona.eliminar']}"
-								action="#{gestionClienteController.eliminar}" class="btn"
+								action="#{gestionClienteController.eliminar}" class="buttonInactivar"
 								process="@this tftCedulaBuscar" />
 						</h:panelGrid>
 					</div>

@@ -4,24 +4,31 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 @Entity
 @Table(name="DW_USUARIO")
+@NamedQuery(name = DWusuario.TRAER_USUARIOS, query = "SELECT A FROM DWusuario A where A.nombreUs=?1")
 public class DWusuario implements Serializable{
 	
+	public static final String TRAER_USUARIOS = "DWauditoria.listDWUsu";
+	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
 	private int codigoUs;
 	
 	@Column(name="nombre_us")
-	private int nombreUs;
+	private String nombreUs;
 
 	public DWusuario() {
 		super();
 	}
 
-	public DWusuario(int codigoUs, int nombreUs) {
+	public DWusuario(int codigoUs, String nombreUs) {
 		super();
 		this.codigoUs = codigoUs;
 		this.nombreUs = nombreUs;
@@ -35,11 +42,11 @@ public class DWusuario implements Serializable{
 		this.codigoUs = codigoUs;
 	}
 
-	public int getNombreUs() {
+	public String getNombreUs() {
 		return nombreUs;
 	}
 
-	public void setNombreUs(int nombreUs) {
+	public void setNombreUs(String nombreUs) {
 		this.nombreUs = nombreUs;
 	}
 
@@ -48,7 +55,6 @@ public class DWusuario implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + codigoUs;
-		result = prime * result + nombreUs;
 		return result;
 	}
 
@@ -62,8 +68,6 @@ public class DWusuario implements Serializable{
 			return false;
 		DWusuario other = (DWusuario) obj;
 		if (codigoUs != other.codigoUs)
-			return false;
-		if (nombreUs != other.nombreUs)
 			return false;
 		return true;
 	}	

@@ -21,13 +21,16 @@ import javax.persistence.Table;
 		@NamedQuery(name = Usuario.USUARIO, query = "SELECT us FROM Usuario us WHERE us.nombre=?1"),
 		@NamedQuery(name = Usuario.USUARIO_I, query = "SELECT u FROM Usuario u"),
 		@NamedQuery(name = Usuario.USUARIOS_ACT,query ="SELECT U FROM Usuario U WHERE U.estado=TRUE")
+		//@NamedQuery(name = Usuario.USUARIOS_CEDULA_PER,query ="SELECT U FROM Usuario U WHERE U.persona.cedula= ?1")
 })
 public class Usuario implements Serializable {
 
 	public static final String USUARIO = "Usuario.listUs";
 	public static final String USUARIO_I = "Usuario.listUsI";
 	public static final String USUARIOS_ACT =  "Usuario.listAct";
+	//public static final String USUARIOS_CEDULA_PER =  "Usuario.listUsCed";
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEQ")
 	@SequenceGenerator(sequenceName = "USUARIOS_SEQ", allocationSize = 1, name = "USUARIO_SEQ")

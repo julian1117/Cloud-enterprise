@@ -23,7 +23,10 @@ public class DWgestionVenta implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
-	private Integer idFactura;
+	private Integer idGestionVenta;
+	
+	@Column(name="numero_factura")
+	private String numeroFactura;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha")
@@ -33,18 +36,27 @@ public class DWgestionVenta implements Serializable {
 		super();
 	}
 
-	public DWgestionVenta(Integer idFactura, Date fecha) {
+	public DWgestionVenta(Integer idGestionVenta, String numeroFactura, Date fecha) {
 		super();
-		this.idFactura = idFactura;
+		this.idGestionVenta = idGestionVenta;
+		this.numeroFactura = numeroFactura;
 		this.fecha = fecha;
 	}
 
-	public Integer getIdFactura() {
-		return idFactura;
+	public Integer getIdGestionVenta() {
+		return idGestionVenta;
 	}
 
-	public void setIdFactura(Integer idFactura) {
-		this.idFactura = idFactura;
+	public void setIdGestionVenta(Integer idGestionVenta) {
+		this.idGestionVenta = idGestionVenta;
+	}
+
+	public String getNumeroFactura() {
+		return numeroFactura;
+	}
+
+	public void setNumeroFactura(String numeroFactura) {
+		this.numeroFactura = numeroFactura;
 	}
 
 	public Date getFecha() {
@@ -55,14 +67,12 @@ public class DWgestionVenta implements Serializable {
 		this.fecha = fecha;
 	}
 
-	
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((idFactura == null) ? 0 : idFactura.hashCode());
+		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
+		result = prime * result + ((idGestionVenta == null) ? 0 : idGestionVenta.hashCode());
 		return result;
 	}
 
@@ -75,16 +85,17 @@ public class DWgestionVenta implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		DWgestionVenta other = (DWgestionVenta) obj;
-		if (idFactura == null) {
-			if (other.idFactura != null)
+		if (fecha == null) {
+			if (other.fecha != null)
 				return false;
-		} else if (!idFactura.equals(other.idFactura))
+		} else if (!fecha.equals(other.fecha))
+			return false;
+		if (idGestionVenta == null) {
+			if (other.idGestionVenta != null)
+				return false;
+		} else if (!idGestionVenta.equals(other.idGestionVenta))
 			return false;
 		return true;
 	}
-	
-	
-
-	
 	
 }

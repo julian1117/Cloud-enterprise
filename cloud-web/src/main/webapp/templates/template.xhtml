@@ -277,7 +277,7 @@
 	box-sizing: content-box !important;
 	cursor: pointer !important;
 	padding: 2px 19px !important;
-	border: 0px solid #ff7777!important;
+	border: 0px solid #ff7777 !important;
 	/*-webkit-border-radius: 3px !important;
   border-radius: 1px !important;*/
 	font: normal 16px/normal "fredoka-one", Helvetica, sans-serif !important;
@@ -340,6 +340,10 @@
 .ui-helper-reset {
 	line-height: 1;
 }
+
+.tamañoTablaVenta {
+	width: 2500px !important;
+}
 </style>
 
 </h:head>
@@ -382,18 +386,15 @@
 						<div class="gtco-container">
 
 							<div class="row">
-								<div align="right" class="col-xs-12 text-center menu-1" >
+								<div align="right" class="col-xs-12 text-center menu-1">
 									<ul>
-										<li class="active pr" >
-										    <a href="#">Accesos</a>
-										    <ul class="submenu">
-											    <ui:repeat var="pag"	value="#{sessionController.accesos}">
-													<li>
-														<h:commandLink action="#{pag.paginas.getLin}" value="#{pag.paginas.nombre}" />
-													</li>
+										<li class="active pr"><a href="#">Accesos</a>
+											<ul class="submenu">
+												<ui:repeat var="pag" value="#{sessionController.accesos}">
+													<li><h:commandLink action="#{pag.paginas.getLin}"
+															value="#{pag.paginas.nombre}" /></li>
 												</ui:repeat>
-											</ul>
-										</li>
+											</ul></li>
 										<li><h:commandLink
 												action="#{sessionController.cerrarSession()}" value="Salir"
 												rendered="#{sessionController.isSesion()}" /></li>
