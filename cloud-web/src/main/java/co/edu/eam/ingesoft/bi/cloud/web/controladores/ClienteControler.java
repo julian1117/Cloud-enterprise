@@ -240,7 +240,7 @@ public class ClienteControler implements Serializable {
 
 		try {
 			
-			System.out.println(nombre +" - " +apellido +" - " +cedula +" - " +direccion +" - " +email  +" - " +fechaNacimiento  +" - " +telefono);
+			//System.out.println(nombre +" - " +apellido +" - " +cedula +" - " +direccion +" - " +email  +" - " +fechaNacimiento  +" - " +telefono);
 
 			Genero buscarGenero = generalEJB.buscarGenero(genero.getIdGenero(), 1);
 			Ciudad buscarCiudad = generalEJB.buscarCiudad(ciudad, 1);
@@ -331,7 +331,7 @@ public class ClienteControler implements Serializable {
 			// String us = String.valueOf(sesion.getUse().getPersona().getCedula());
 
 			// ----Mando usuario null por que aqui no hay session de usuario
-			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, "N/A", "N/A");
+			auditoriaEJB.crearAuditoria(accion, nombreReg, browserDetails, String.valueOf(sesion.getUse().getPersona().getCedula()), "N/A");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -20,13 +20,13 @@
 							styleClass="buttonIni" process="@this "
 							value="Cargar datos de DW" update="panelTablas" />
 						<h:commandLink>
-							<h:graphicImage url="../../../images/csv.jpeg" />
+							<h:graphicImage url="./../../images/csv.jpeg" />
 							<p:dataExporter type="csv" target="panelTablas"
 								fileName="auditoria"></p:dataExporter>
 						</h:commandLink>
 
 						<h:commandLink>
-							<h:graphicImage url="../../../images/ex.png" />
+							<h:graphicImage url="./../../images/ex.png" />
 							<p:dataExporter type="xls" target="panelTablas"
 								fileName="auditoriaExcel"></p:dataExporter>
 						</h:commandLink>
@@ -69,81 +69,81 @@
 							styleClass="buttonIni" process="@this "
 							value="Cargar datos de DW" update="panelTablasVentas" />
 						<h:commandLink>
-							<h:graphicImage url="../../../images/csv.jpeg" />
+							<h:graphicImage url="./../../images/csv.jpeg" />
 							<p:dataExporter type="csv" target="panelTablasVentas"
 								fileName="venta"></p:dataExporter>
 						</h:commandLink>
 
 						<h:commandLink>
-							<h:graphicImage url="../../../images/ex.png" />
+							<h:graphicImage url="./../../images/ex.png" />
 							<p:dataExporter type="xls" target="panelTablasVentas"
 								fileName="ventaExcel"></p:dataExporter>
 						</h:commandLink>
 					</h:panelGrid>
 					
 					<p:dataTable id="panelTablasVentas" value="#{csvController.listaVentaDW}"
-						scrollable="true" var="doc" border="1" class="table tamañoTablaVenta" >
+						scrollable="true" var="doc" border="1" class="table tamañoTablaVenta" style="background:white">
 
-						<p:column headerText="Id venta">
+						<p:column width="150" headerText="Id venta">
 							<h:outputLabel value="#{doc.idVenta}" />
 						</p:column>
-						<p:column headerText="Id inventario">
+						<p:column width="150" headerText="Id inventario">
 							<h:outputLabel value="#{doc.inventario.idInventario}" />
 						</p:column>
 
-						<p:column headerText="Fecha ingreso inventario">
+						<p:column width="150" headerText="Fecha ingreso inventario">
 							<h:outputLabel value="#{doc.inventario.fechaIngresoInv}" />
 						</p:column>
 
-						<p:column headerText="Nombre del producto">
+						<p:column width="150" headerText="Nombre del producto">
 							<h:outputLabel value="#{doc.inventario.nombreProducto}" />
 						</p:column>
 
-						<p:column headerText="Descripción del produto">
+						<p:column width="150" headerText="Descripción del produto">
 							<h:outputLabel value="#{doc.inventario.descripcionProducto}" />
 						</p:column>
 
-						<p:column headerText="Valor del producto">
+						<p:column width="150" headerText="Valor del producto">
 							<h:outputLabel value="#{doc.inventario.valorProducto}" />
 						</p:column>
 
-						<p:column headerText="Id gestion venta">
+						<p:column width="150" headerText="Id gestion venta">
 							<h:outputLabel value="#{doc.gestionVenta.idGestionVenta}" />
 						</p:column>
-						<p:column headerText="Fecha gestion venta">
+						<p:column width="150" headerText="Fecha gestion venta">
 							<h:outputLabel value="#{doc.gestionVenta.fecha}" />
 						</p:column>
-						<p:column headerText="Numero factura gestion venta">
+						<p:column width="150" headerText="Numero factura gestion venta">
 							<h:outputLabel value="#{doc.gestionVenta.numeroFactura}" />
 						</p:column>
-						<p:column headerText="Id empleado">
+						<p:column width="150" headerText="Id empleado">
 							<h:outputLabel value="#{doc.empleado.idEmpleado}" />
 						</p:column>
-						<p:column headerText="Salario empleado">
+						<p:column width="150" headerText="Salario empleado">
 							<h:outputLabel value="#{doc.empleado.salario}" />
 						</p:column>
-						<p:column headerText="Fecha ingreso empleado">
+						<p:column width="150" headerText="Fecha ingreso empleado">
 							<h:outputLabel value="#{doc.empleado.fechaIngresoEmp}" />
 						</p:column>
-						<p:column headerText="Nombre del empleado">
+						<p:column width="150" headerText="Nombre del empleado">
 							<h:outputLabel value="#{doc.empleado.nombreEmpleado}" />
 						</p:column>
-						<p:column headerText="Id cliente">
+						<p:column width="150" headerText="Id cliente">
 							<h:outputLabel value="#{doc.persona.idPersona}" />
 						</p:column>
-						<p:column headerText="Cedula cliente">
+						<p:column width="150" headerText="Cedula cliente">
 							<h:outputLabel value="#{doc.persona.cedula}" />
 						</p:column>
-						<p:column headerText="Nombre del cliente">
+						<p:column width="150" headerText="Nombre del cliente">
 							<h:outputLabel value="#{doc.persona.nombreCompleto}" />
 						</p:column>
-						<p:column headerText="Edad del cliente">
+						<p:column width="150" headerText="Edad del cliente">
 							<h:outputLabel value="#{doc.persona.fechaNacimiento}" />
 						</p:column>
-						<p:column headerText="Genero del cliente">
+						<p:column width="150" headerText="Genero del cliente">
 							<h:outputLabel value="#{doc.persona.genero}" />
 						</p:column>
-						<p:column headerText="Cantidad del producto">
+						<p:column width="150" headerText="Cantidad del producto">
 							<h:outputLabel value="#{doc.cantidad}" />
 						</p:column>
 						
