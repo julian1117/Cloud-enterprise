@@ -527,7 +527,7 @@ public class GestionAdmController implements Serializable {
 	
 	public void eliminarPXU(Acceso acceso) {
 		try {
-			gestionAdmEJB.eliminarAcceso(codigoUsuario, codigoPagina, sesion.getBd());
+			gestionAdmEJB.eliminarAcceso(acceso.getUsuario().getCodigo(), acceso.getPaginas().getIdPagina(), sesion.getBd());
 			registrarAuditoria("Eliminar", "Registro de usuarios * pagina", "N/A");
 			Messages.addFlashGlobalInfo("Registro Eliminado Con Exito!!");			
 			

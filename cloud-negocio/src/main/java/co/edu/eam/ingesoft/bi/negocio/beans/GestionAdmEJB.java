@@ -33,7 +33,7 @@ public class GestionAdmEJB {
 	 * 
 	 * @return listado de usuarios
 	 */
-	public List<Object> listaUsuarioI( int bd) {
+	public List<Object> listaUsuarioI(int bd) {
 		em.setBd(bd);
 		return em.listar(Usuario.USUARIO_I);
 	}
@@ -44,7 +44,7 @@ public class GestionAdmEJB {
 	 * @param idUsuario
 	 * @return
 	 */
-	public Usuario buscarUsuario(Integer idUsuario,int bd) {
+	public Usuario buscarUsuario(Integer idUsuario, int bd) {
 		em.setBd(bd);
 		return (Usuario) em.buscar(Usuario.class, idUsuario);
 	}
@@ -55,7 +55,7 @@ public class GestionAdmEJB {
 	 * @param usuario
 	 */
 	public void ActivarUsario(Usuario usuario, int bd) {
-		Usuario us = buscarUsuario(usuario.getCodigo(),bd);
+		Usuario us = buscarUsuario(usuario.getCodigo(), bd);
 		if (us != null) {
 			us.setEstado(true);
 			em.setBd(bd);
@@ -98,7 +98,7 @@ public class GestionAdmEJB {
 	 * 
 	 * @param areaEmpresa
 	 */
-	public void crearAreaEmpresa(AreaEmpresa areaEmpresa,int bd) {
+	public void crearAreaEmpresa(AreaEmpresa areaEmpresa, int bd) {
 		em.setBd(bd);
 		em.crear(areaEmpresa);
 	}
@@ -109,7 +109,7 @@ public class GestionAdmEJB {
 	 * @param tipoUsuario
 	 * @return
 	 */
-	public List<Object> listaTipoUs( int bd) {
+	public List<Object> listaTipoUs(int bd) {
 		em.setBd(bd);
 		return em.listar(TipoUsuario.TIPO_IS);
 	}
@@ -224,42 +224,43 @@ public class GestionAdmEJB {
 
 	/**
 	 * Crear accesos
+	 * 
 	 * @param acceso
 	 */
-	public void crearAcceso(Integer uss,Integer pagg, int bd) {
-		
+	public void crearAcceso(Integer uss, Integer pagg, int bd) {
+
 		em.setBd(bd);
-		
-		//busco en el ejb
+
+		// busco en el ejb
 		Usuario us = buscarUsuario(uss, bd);
 		Paginas pag = buscarPagina(pagg, bd);
-		
-		//creo el obj
+
+		// creo el obj
 		Acceso acc = new Acceso();
 		acc.setUsuario(us);
 		acc.setPaginas(pag);
-		
-		//BUsco si la relacion ya existe
+
+		// BUsco si la relacion ya existe
 		Acceso buscarAc = buscarAccesos(acc.getUsuario().getCodigo(), acc.getPaginas().getIdPagina(), bd);
 		if (buscarAc == null) {
-			//creo el objeto si no existe
+			// creo el objeto si no existe
 			em.crear(acc);
 		} else {
 			throw new ExcepcionNegocio("No fue posible realizar el registro ");
 		}
-		
+
 	}
-	
-	public void eliminarAcceso(Integer uss,Integer pagg,int bd) {
+
+	public void eliminarAcceso(Integer uss, Integer pagg, int bd) {
 		try {
+			em.setBd(bd);
 			Usuario us = buscarUsuario(uss, bd);
 			Paginas pag = buscarPagina(pagg, bd);
-			
+
 			Acceso buscarAc = buscarAccesos(us.getCodigo(), pag.getIdPagina(), bd);
 
-			
-			if (buscarAc !=null) {
-				em.setBd(bd);
+			if (buscarAc != null) {
+
 				em.eliminar(buscarAc);
 			}
 		} catch (
@@ -271,6 +272,7 @@ public class GestionAdmEJB {
 
 	/**
 	 * buscar accesos
+	 * 
 	 * @param us
 	 * @param pag
 	 * @return
@@ -282,47 +284,49 @@ public class GestionAdmEJB {
 
 		return (Acceso) em.buscar(Acceso.class, accesoPK);
 	}
-	
-	public void elimnarPXU(int pagina,int usuario, int bd) {
+
+	public void elimnarPXU(int pagina, int usuario, int bd) {
 		em.setBd(bd);
 		Acceso acc = buscarAccesos(usuario, pagina, bd);
-		em.eliminar(acc);		
+		em.eliminar(acc);
 	}
-	
+
 	/**
 	 * lista de accesos por usuario
+	 * 
 	 * @return
 	 */
-	public List<Object> listaAcceso(Integer codUser,int bd){
+	public List<Object> listaAcceso(Integer codUser, int bd) {
 		return em.listarConParametroInteger(Acceso.LISTA_ACCESO_US, codUser);
 	}
-	
-	public void cambiarBDOra(int empresa) {	
+
+	public void cambiarBDOra(int empresa) {
 		em.setBd(1);
 		Empresa emp = buscarEmpresa(1);
 		emp.setBd(empresa);
-		em.editar(emp);		
+		em.editar(emp);
 	}
-	
-	public void cambiarBDPost(int empresa) {	
+
+	public void cambiarBDPost(int empresa) {
 		em.setBd(2);
 		Empresa emp = buscarEmpresa(1);
 		emp.setBd(empresa);
-		em.editar(emp);		
+		em.editar(emp);
 	}
-	
+
 	public Empresa buscarEmpresa(int pk) {
 		em.setBd(1);
 		return (Empresa) em.buscar(Empresa.class, pk);
 	}
-	
+
 	/**
 	 * Cambia el valor de la base de datos
+	 * 
 	 * @param empresa
 	 */
-	public void cambiarValorBD(int empresa) {	
+	public void cambiarValorBD(int empresa) {
 		cambiarBDPost(empresa);
 		cambiarBDOra(empresa);
-		
+
 	}
 }
