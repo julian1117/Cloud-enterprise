@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+			<div align="center">
+
+				<p:accordionPanel>
+					<p:tab title="Cargar datos de WIKI">
+
+						<p:dataTable id="panelTablas" value="#{wikiController.listaWiki}"
+							var="doc" border="1" class="table table-striped">
+
+							<p:column headerText="ID de Usuario">
+								<h:outputLabel value="#{doc.idUser}" />
+							</p:column>
+
+							<p:column headerText="Titulo de la pagina">
+								<h:outputLabel value="#{doc.titulo}" />
+							</p:column>
+
+							<p:column headerText="Fecha de ultima modificación">
+								<h:outputLabel value="#{doc.fechaModificacion}" />
+							</p:column>
+
+							<p:column headerText="Comentario" >
+								<h:outputLabel value="#{doc.texto}"/>
+							</p:column>
+
+							<p:column headerText="IP de ultima modificación">
+								<h:outputLabel value="#{doc.ip}" />
+							</p:column>
+
+							<p:column headerText="Es nueva">
+								<h:outputLabel value="#{doc.esNueva}" />
+							</p:column>
+
+							<p:column headerText="Tipo de pagina">
+								<h:outputLabel value="#{doc.tipoPagina}" />
+							</p:column>
+
+						</p:dataTable>
+
+						<p:commandButton action="#{wikiController.tranformarDatosWiki}"
+							styleClass="buttonIni" process="@this"
+							value="Transformar Datos y enviar datos a D.W."
+							update="panelTablasTransfor" />
+					</p:tab>
+					<p:tab title="Transformacion de datos para DW">
+
+						<h:panelGrid id="paneldatosWikiCSV" columns="3">
+							<h:commandLink>							
+								<h:graphicImage url="./../../images/csv.jpeg" />
+								<p:dataExporter type="csv" target="panelTablasTransfor"
+									fileName="wiki_csv"></p:dataExporter>
+							</h:commandLink>
+
+							<h:commandLink>
+								<h:graphicImage url="./../../images/ex.png" />
+								<p:dataExporter type="xls" target="panelTablasTransfor"
+									fileName="wiki_Excel"></p:dataExporter>
+							</h:commandLink>
+						</h:panelGrid>
+
+						<p:dataTable id="panelTablasTransfor"
+							value="#{wikiController.listaWikiDW}" scrollable="true" var="doc"
+							border="1" class="table tamañoTablaVenta"
+							style="background:white">
+							
+							
+							<p:column width="150" headerText="Nombre de usuario">
+								<h:outputLabel value="#{doc.cambiosWIKI.nombreUs}" />
+							</p:column>
+
+							<p:column width="150" headerText="Nombre real de usuario">
+								<h:outputLabel value="#{doc.cambiosWIKI.nombreReal}" />
+							</p:column>
+
+							<p:column width="150" headerText="Email de usuario">
+								<h:outputLabel value="#{doc.cambiosWIKI.email}" />
+							</p:column>
+
+							<p:column width="150"
+								headerText="Cantidad de modificaciones en general">
+								<h:outputLabel value="#{doc.cambiosWIKI.camntidadCambios}" />
+							</p:column>
+
+							<p:column width="150" headerText="Titulo de la pagina">
+								<h:outputLabel value="#{doc.titulo}" />
+							</p:column>
+
+							<p:column width="150" headerText="Fecha de modificacion">
+								<h:outputLabel value="#{doc.fechaModificacion}" />
+							</p:column>
+
+							<p:column width="150" headerText="Comentario realizado">
+								<h:outputLabel value="#{doc.texto}" />
+							</p:column>
+
+							<p:column width="150" headerText="Ip desde la que edito">
+								<h:outputLabel value="#{doc.ip}" />
+							</p:column>
+							<p:column width="150" headerText="La pagina es nueva">
+								<h:outputLabel value="#{doc.esNueva}" />
+							</p:column>
+							<p:column width="150" headerText="Tipo de pagina creada">
+								<h:outputLabel value="#{doc.tipoPagina}" />
+							</p:column>
+							
+							<p:column width="150" headerText="La pagina redirige">
+								<h:outputLabel value="#{doc.paginaPrinWiki.redirige}" />
+							</p:column>
+
+							<p:column width="150" headerText="Tamaño de la pagina (BYTES)">
+								<h:outputLabel value="#{doc.paginaPrinWiki.tamanoPagina}" />
+							</p:column>
+
+						</p:dataTable>
+
+					</p:tab>
+				</p:accordionPanel>
+
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
