@@ -40,6 +40,12 @@ public class Conexion implements Serializable {
 	private EntityManager emM;
 
 	/**
+	 * Instancia a mysql WIKI WIKI (4)
+	 */
+	@PersistenceContext(unitName = "mysql_Wiki")
+	private EntityManager emWIKI;
+
+	/**
 	 * Es la base de dato en la cual esta funcionando el sistema actualmente
 	 */
 	private int bd;
@@ -155,6 +161,9 @@ public class Conexion implements Serializable {
 		case 3:
 			Query x = emM.createNamedQuery(sql);
 			return x.getResultList();
+		case 4:
+			Query w = emWIKI.createNamedQuery(sql);
+			return w.getResultList();
 		default:
 			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
@@ -293,7 +302,7 @@ public class Conexion implements Serializable {
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void consultaNativaConBD(String Consulta) {
-	
+
 		switch (this.bd) {
 		case 1:
 			Query q = emO.createNativeQuery(Consulta);
@@ -304,7 +313,18 @@ public class Conexion implements Serializable {
 		default:
 			throw new ExcepcionNegocio("La base de datos #" + this.bd + " no existe.");
 		}
-	
+
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
+	public List<Object[]> traerDatosWiki(String Consulta) {
+		switch (this.bd) {
+		case 4:
+			List<Object[]> q = emWIKI.createNativeQuery(Consulta).getResultList();
+			//System.out.println(q.get(0).g);
+			return q;
+		}
+		return null;
 	}
 
 }

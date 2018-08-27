@@ -10,55 +10,60 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="DWVenta")
-@NamedQuery(name = DWventa.TRAER_VENTA, query = "SELECT A FROM DWventa A")
+@Table(name = "DWVenta")
+@NamedQueries({ 
+	@NamedQuery(name = DWventa.TRAER_VENTA, query = "SELECT A FROM DWventa A")
+})
 public class DWventa implements Serializable {
-	
+
 	public static final String TRAER_VENTA = "DWauditoria.listdwVENTA";
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Integer idVenta;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Inventario_id")
-	private DWInventario inventario;	
-	
+	private DWInventario inventario;
+
 	@ManyToOne
 	@JoinColumn(name = "GestionVenta_id")
 	private DWgestionVenta gestionVenta;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "empleado_id")
 	private DWempleado empleado;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "persona_id")
-	private DWpersona persona;	
-	
+	private DWpersona persona;
+
 	@Column(name = "CANTIDAD")
-	private Integer cantidad;
+	private Integer cantidad;	
 
 	public DWventa() {
 		super();
-	}	
+	}
 
-	public DWventa(DWInventario inventario, DWgestionVenta gestionVenta, DWempleado empleado, DWpersona persona,
-			Integer cantidad) {
+	public DWventa(Integer idVenta, DWInventario inventario, DWgestionVenta gestionVenta, DWempleado empleado,
+			DWpersona persona, Integer cantidad) {
 		super();
+		this.idVenta = idVenta;
 		this.inventario = inventario;
 		this.gestionVenta = gestionVenta;
 		this.empleado = empleado;
 		this.persona = persona;
 		this.cantidad = cantidad;
 	}
+
+
 
 	public Integer getIdVenta() {
 		return idVenta;
@@ -84,14 +89,6 @@ public class DWventa implements Serializable {
 		this.gestionVenta = gestionVenta;
 	}
 
-	public Integer getCantidad() {
-		return cantidad;
-	}
-
-	public void setCantidad(Integer cantidad) {
-		this.cantidad = cantidad;
-	}	
-
 	public DWempleado getEmpleado() {
 		return empleado;
 	}
@@ -106,6 +103,14 @@ public class DWventa implements Serializable {
 
 	public void setPersona(DWpersona persona) {
 		this.persona = persona;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
 	@Override

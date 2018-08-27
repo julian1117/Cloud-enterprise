@@ -43,4 +43,17 @@
 		</properties>
 	</persistence-unit>
 	
+	<persistence-unit name="mysql_Wiki">		
+		<jta-data-source>java:jboss/datasources/CloudMySqlWIKIDS</jta-data-source>
+		<properties>
+			<!-- Properties for Hibernate -->
+			<property name="hibernate.hbm2ddl.auto" value="none"></property>
+					<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+			
+		</properties>
+	</persistence-unit>
+	
+	
+	
 </persistence>
