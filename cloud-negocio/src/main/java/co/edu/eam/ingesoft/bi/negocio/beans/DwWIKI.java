@@ -135,10 +135,11 @@ public class DwWIKI {
 				comentario = "No hay comentarios regsitrados";
 			}
 
-			for (int m = 0; m < listaDatosWiki.size(); m++) {
+			for (int m = 0; m < listaPaginaWiki.size(); m++) {
 
 				if (listaDatosWiki.get(i).getTitulo().equals(listaPaginaWiki.get(m).getTitulo())) {
-					pagina = listaPaginaWiki.get(i).getIdPagina();
+					
+					pagina = listaPaginaWiki.get(m).getIdPagina();
 
 					em.consultaNativa("INSERT INTO cloud.dwpaginawiki "
 							+ "(titulo, fecha_modificacion, comentario, ip_edicion, nueva, Tipo_pagina,cambiosPaginaWiki,PaginaPrinWiki) "

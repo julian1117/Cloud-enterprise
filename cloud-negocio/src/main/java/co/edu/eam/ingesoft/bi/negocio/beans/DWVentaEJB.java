@@ -47,11 +47,12 @@ public class DWVentaEJB {
 	}
 
 	public List<DWventa> tranformacionVenta(int bd) {
-
+System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> bd" + bd);
 		listaVenta = new ArrayList<DWventa>();
 		em.setBd(bd);
 
 		for (int i = 0; i < list.size(); i++) {
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> for" + bd);
 
 			// Inventario
 			DWInventario inv = new DWInventario();
@@ -60,11 +61,13 @@ public class DWVentaEJB {
 			inv.setValorProducto(String.valueOf(list.get(i).getInventario().getProducto().getValor()));
 			inv.setDescripcionProducto(list.get(i).getInventario().getProducto().getDescirpcion());
 			inv.setNombreProducto(list.get(i).getInventario().getProducto().getNombre());
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> inventario" + bd);
 
 			// Cliente
 			Date fechaActual = new Date();
 			int fecha = list.get(i).getGestionVenta().getPersona().getFechaNacimiento().getYear();
 			int edad = fechaActual.getYear() - fecha;
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>Cliente" + bd);
 
 			DWpersona persona = new DWpersona();
 			persona.setCedula(list.get(i).getGestionVenta().getPersona().getCedula());
