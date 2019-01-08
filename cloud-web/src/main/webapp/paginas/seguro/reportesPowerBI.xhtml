@@ -1,0 +1,39 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/templates/template.xhtml"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="cuerpo">
+
+		<h:form prependId="false">
+
+			<p:tabView id="tabs">
+				<p:tab title="Reporte Ventas">
+					<div align="center">
+
+						<iframe width="933" height="700"
+							src="https://app.powerbi.com/view?r=eyJrIjoiOWRiNmZjMTctYWM3ZS00ODA1LWEyYmUtZGRjNmFiMTYyM2NhIiwidCI6IjVjZDI2YTJmLTE1NTAtNDk3ZS1iZDYzLTcxNDFjNzQ2OTg1YiIsImMiOjR9"
+							frameborder="0" allowFullScreen="true"></iframe>
+
+					</div>
+				</p:tab>
+				<p:tab title="Reporte Wiki">
+					<div align="center">
+						<iframe width="933" height="700"
+							src="https://app.powerbi.com/view?r=eyJrIjoiYTViNDMxY2QtMzViNC00ZDM0LWIxNzktZTZmN2M3ZGVkZThhIiwidCI6IjVjZDI2YTJmLTE1NTAtNDk3ZS1iZDYzLTcxNDFjNzQ2OTg1YiIsImMiOjR9"
+							frameborder="0" allowFullScreen="true"></iframe>
+					</div>/
+				</p:tab>
+				<p:tab title="Reporte Auditoria">
+					<div align="center">
+						<iframe width="933" height="700"
+							src="https://app.powerbi.com/view?r=eyJrIjoiYWE1ZWQxODMtYmExMC00N2VlLTg5NjUtMmU4MWUyZTRhMTlmIiwidCI6IjVjZDI2YTJmLTE1NTAtNDk3ZS1iZDYzLTcxNDFjNzQ2OTg1YiIsImMiOjR9"
+							frameborder="0" allowFullScreen="true"></iframe>
+					</div>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>
